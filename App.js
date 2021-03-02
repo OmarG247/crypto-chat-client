@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { Button, TextInput } from "react-native";
 import styled from "styled-components";
 
 const Container = styled.View`
