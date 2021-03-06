@@ -11,22 +11,24 @@ const buttonColors = {
 
 const Button = ({ text, color, secondary = false, onPress }) => {
   const buttonColor = buttonColors[color];
-  const buttonTextStyle = () =>
-    secondary ? { color: colors.light } : { color: colors.dark };
+  
+  const buttonTextStyle = {
+    color: secondary ? colors.light : colors.dark,
+  };
+
   const buttonContainerStyle = () =>
     secondary
-      ? { backgroundColor: colors.dark }
+      ? {}
       : {
-          backgroundColor: buttonColor,
           shadowColor: buttonColor,
           shadowOpacity: 0.25,
           shadowRadius: 12,
         };
-  const buttonBase = () => {
-    return {
-      borderColor: buttonColor,
-      ...buttonContainerStyle(),
-    };
+
+  const buttonBase = {
+    borderColor: buttonColor,
+    backgroundColor: secondary ? colors.dark : buttonColor,
+    ...buttonContainerStyle(),
   };
 
   return (
@@ -34,9 +36,9 @@ const Button = ({ text, color, secondary = false, onPress }) => {
       activeOpacity={0.5}
       underlayColor={secondary ? colors.dark : buttonColor}
       onPress={onPress}
-      style={[ButtonStyles.container, buttonBase()]}
+      style={[ButtonStyles.container, buttonBase]}
     >
-      <Text style={[typography.button, buttonTextStyle()]}>{text}</Text>
+      <Text style={[typography.button, buttonTextStyle]}>{text}</Text>
     </TouchableHighlight>
   );
 };
