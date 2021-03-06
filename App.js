@@ -1,48 +1,36 @@
-import { StatusBar } from "expo-status-bar";
-import React, { useEffect, useState } from "react";
-import { Button, TextInput } from "react-native";
-import styled from "styled-components";
+import React from "react";
+import { Platform, StatusBar } from "react-native";
+import "react-native-gesture-handler";
+import Home from "./components/Home";
+import TestNavigation from "./components/TestNavigation";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 
-const Container = styled.View`
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
+const ANDROID_STATUSBAR_HEIGHT = 20;
 
-export default function App() {
-  const [message, setMessage] = useState("");
-  let socket = null;
+const Stack = createStackNavigator();
 
-  useEffect(() => {});
+const App = () => (
+  <NavigationContainer>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        cardStyle: {
+          paddingTop:
+            Platform.OS === "ios"
+              ? StatusBar.currentHeight + 40
+              : ANDROID_STATUSBAR_HEIGHT,
+        },
+      }}
+    >
+      <Stack.Screen
+        name="Test Nav"
+        component={TestNavigation}
+        options={{ title: "Test Nav" }}
+      />
+      <Stack.Screen name="Home" component={Home} options={{ title: "Home" }} />
+    </Stack.Navigator>
+  </NavigationContainer>
+);
 
-  useEffect(() => {
-    socket = new WebSocket("ws://192.168.1.21:8080");
-    socket.addEventListener("open", (event) => {
-      socket.send("Hello Server!");
-    });
-
-    socket.addEventListener("message", (event) => {
-      console.log("Message from server ", event.data);
-    });
-
-    socket.addEventListener("close", (event) => {
-      console.log("The connection has been closed");
-    });
-  });
-
-  const emmitMessage = () => {
-    socket.send(message);
-  };
-
-  return (
-    <Container>
-      <TextInput
-        style={{ height: 20 }}
-        onChangeText={(text) => setMessage(text)}
-      ></TextInput>
-      <Button onPress={() => emmitMessage()} title="send message"></Button>
-    </Container>
-  );
-}
+export default App;
