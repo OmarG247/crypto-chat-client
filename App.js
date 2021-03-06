@@ -6,7 +6,7 @@ import TestNavigation from "./components/TestNavigation";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { loadAsync } from "expo-font";
-import { colors } from "./shared/colors";
+import { colors } from "./styles/colors";
 
 const ANDROID_STATUSBAR_HEIGHT = 20;
 
