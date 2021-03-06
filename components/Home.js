@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Text, StyleSheet, View } from "react-native";
+import { typography } from "../shared/typography";
 
 const Home = () => {
   return (
@@ -8,7 +9,7 @@ const Home = () => {
         height: "100%",
       }}
     >
-      <Text>This is home</Text>
+      <Text style={typography.display}>This is home</Text>
     </View>
   );
 };
