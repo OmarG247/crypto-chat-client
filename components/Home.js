@@ -1,5 +1,6 @@
 import React from "react";
 import { Text, StyleSheet, View } from "react-native";
+import { colors } from "../styles/colors";
 import { typography } from "../styles/typography";
 import Button from "./Button";
 import Fab from "./Fab";
@@ -10,6 +11,7 @@ const Home = () => {
     <View
       style={{
         height: "100%",
+        backgroundColor: colors.dark
       }}
     >
       <Header

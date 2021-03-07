@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { TouchableHighlight } from "react-native-gesture-handler";
+import { colors } from "../styles/colors";
 import { typography } from "../styles/typography";
 import Fab from "./Fab";
 
@@ -44,6 +45,7 @@ const HeaderStyles = StyleSheet.create({
     width: "100%",
     alignItems: "flex-start",
     justifyContent: "flex-end",
+    backgroundColor: colors.darkSurface
   },
   content: {
     display: "flex",
