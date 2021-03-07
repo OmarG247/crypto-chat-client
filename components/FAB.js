@@ -3,8 +3,12 @@ import { StyleSheet, TouchableHighlight, Image } from "react-native";
 import { colors } from "../styles/colors";
 import { typography } from "../styles/typography";
 
-const FAB = ({}) => {};
+const Fab = ({ color, action, secondary }) => {};
 
-const FABStyles = StyleSheet.create({});
+const FabStyles = StyleSheet.create({
+  container: {
+    
+  },
+});
 
-export default FAB;
+export default Fab;
