@@ -11,33 +11,31 @@ const Header = ({
   cancelText = "",
   cancel = false,
   handleCancel = null,
-}) => {
-  return (
-    <View style={HeaderStyles.container}>
-      {cancel && (
-        <TouchableHighlight style={{ padding: 16 }} onPress={handleCancel}>
-          <Text style={typography.detail}>{cancelText}</Text>
-        </TouchableHighlight>
+}) => (
+  <View style={HeaderStyles.container}>
+    {cancel && (
+      <TouchableHighlight style={{ padding: 16 }} onPress={handleCancel}>
+        <Text style={typography.detail}>{cancelText}</Text>
+      </TouchableHighlight>
+    )}
+    <View
+      style={[
+        HeaderStyles.content,
+        { justifyContent: options ? "space-between" : "flex-start" },
+      ]}
+    >
+      <Text style={typography.header2}>{text}</Text>
+      {options && (
+        <Fab
+          onPress={handleOptions}
+          action="options"
+          secondary
+          color="lime"
+        ></Fab>
       )}
-      <View
-        style={[
-          HeaderStyles.content,
-          { justifyContent: options ? "space-between" : "flex-start" },
-        ]}
-      >
-        <Text style={typography.header2}>{text}</Text>
-        {options && (
-          <Fab
-            onPress={handleOptions}
-            action="options"
-            secondary
-            color="lime"
-          ></Fab>
-        )}
-      </View>
     </View>
-  );
-};
+  </View>
+);
 
 const HeaderStyles = StyleSheet.create({
   container: {
