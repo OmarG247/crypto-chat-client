@@ -9,15 +9,21 @@ const buttonColors = {
   lime: colors.limeAccent,
 };
 
-const Button = ({ text, color, secondary = false, onPress }) => {
+const Button = ({
+  text,
+  color,
+  secondary = false,
+  onPress,
+  disabled = false,
+}) => {
   const buttonColor = buttonColors[color];
-  
+
   const buttonTextStyle = {
-    color: secondary ? colors.light : colors.dark,
+    color: secondary && !disabled ? colors.light : colors.dark,
   };
 
-  const buttonContainerStyle = () =>
-    secondary
+  const buttonShadows = () =>
+    secondary || disabled
       ? {}
       : {
           shadowColor: buttonColor,
@@ -26,13 +32,18 @@ const Button = ({ text, color, secondary = false, onPress }) => {
         };
 
   const buttonBase = {
-    borderColor: buttonColor,
-    backgroundColor: secondary ? colors.dark : buttonColor,
-    ...buttonContainerStyle(),
+    borderColor: disabled ? colors.surface : buttonColor,
+    backgroundColor: disabled
+      ? colors.surface
+      : secondary
+      ? colors.dark
+      : buttonColor,
+    ...buttonShadows(),
   };
 
   return (
     <TouchableHighlight
+      disabled={disabled}
       activeOpacity={0.5}
       underlayColor={secondary ? colors.dark : buttonColor}
       onPress={onPress}

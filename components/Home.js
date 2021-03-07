@@ -2,6 +2,7 @@ import React from "react";
 import { Text, StyleSheet, View } from "react-native";
 import { typography } from "../styles/typography";
 import Button from "./Button";
+import Fab from "./Fab";
 
 const Home = () => {
   return (
@@ -13,6 +14,7 @@ const Home = () => {
     >
       <Text style={typography.display}>This is home</Text>
       <Button text="test" color="lime" onPress={() => {}} />
+      <Fab action="new" color="lime" />
     </View>
   );
 };
