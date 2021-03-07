@@ -49,7 +49,7 @@ const Fab = ({
       disabled={disabled}
       style={[FabStyles.container, fabBase]}
     >
-      <Icon name={action} color={secondary ? "light" : "dark"} />
+      <Icon name={action} color={secondary && !disabled ? "light" : "dark"} />
     </TouchableHighlight>
   );
 };
