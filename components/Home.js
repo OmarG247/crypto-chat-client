@@ -4,6 +4,7 @@ import { colors } from "../styles/colors";
 import { typography } from "../styles/typography";
 import Button from "./Button";
 import Fab from "./Fab";
+import Footer from "./Footer";
 import Header from "./Header";
 
 const Home = () => {
@@ -24,6 +25,7 @@ const Home = () => {
       />
       <Button text="test" color="lime" onPress={() => {}} />
       <Fab action="new" color="lime" />
+      <Footer action="new" handleAction={() => {}} />
     </View>
   );
 };
