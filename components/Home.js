@@ -24,8 +24,8 @@ const Home = () => {
         handleCancel={() => {}}
         text="header"
       />
-      <Button text="test" color="lime" onPress={() => {}} />
-      <Fab action="new" color="lime" />
+      {/* <Button text="test" color="lime" onPress={() => {}} /> */}
+      {/* <Fab action="new" color="lime" /> */}
       <Option text="test" onPress={() => {}} />
       <Footer action="new" handleAction={() => {}} />
     </View>

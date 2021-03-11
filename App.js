@@ -36,7 +36,7 @@ const App = () => {
             cardStyle: {
               paddingTop:
                 Platform.OS === "ios"
-                  ? StatusBar.currentHeight + 40
+                  ? 20
                   : ANDROID_STATUSBAR_HEIGHT,
               backgroundColor: colors.dark,
             },
