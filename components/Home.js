@@ -6,13 +6,14 @@ import Button from "./Button";
 import Fab from "./Fab";
 import Footer from "./Footer";
 import Header from "./Header";
+import Option from "./Option";
 
 const Home = () => {
   return (
     <View
       style={{
         height: "100%",
-        backgroundColor: colors.dark
+        backgroundColor: colors.dark,
       }}
     >
       <Header
@@ -25,6 +26,7 @@ const Home = () => {
       />
       <Button text="test" color="lime" onPress={() => {}} />
       <Fab action="new" color="lime" />
+      <Option text="test" onPress={() => {}} />
       <Footer action="new" handleAction={() => {}} />
     </View>
   );

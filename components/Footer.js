@@ -3,23 +3,21 @@ import { StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Fab from "./Fab";
 
-const Footer = ({ action, handleAction }) => {
-  return (
-    <LinearGradient
-      colors={["rgba(33, 33, 33, 0)", "rgba(239, 239, 239, 0.1)"]}
-      style={FooterStyles.container}
-    >
-      {action && (
-        <Fab
-          action={action}
-          color="lime"
-          size="large"
-          onPress={handleAction}
-        ></Fab>
-      )}
-    </LinearGradient>
-  );
-};
+const Footer = ({ action, handleAction }) => (
+  <LinearGradient
+    colors={["rgba(33, 33, 33, 0)", "rgba(239, 239, 239, 0.1)"]}
+    style={FooterStyles.container}
+  >
+    {action && (
+      <Fab
+        action={action}
+        color="lime"
+        size="large"
+        onPress={handleAction}
+      ></Fab>
+    )}
+  </LinearGradient>
+);
 
 const FooterStyles = StyleSheet.create({
   container: {
@@ -29,7 +27,7 @@ const FooterStyles = StyleSheet.create({
     paddingHorizontal: 16,
     alignItems: "flex-end",
     position: "absolute",
-    overflow: 'visible',
+    overflow: "visible",
     bottom: 0,
   },
 });
