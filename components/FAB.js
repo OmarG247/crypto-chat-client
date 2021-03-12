@@ -58,7 +58,7 @@ const Fab = ({
 const FabStyles = StyleSheet.create({
   container: {
     display: "flex",
-    borderWidth: 2,
+    borderWidth: 1,
     borderRadius: 200,
     alignItems: "center",
     justifyContent: "center",

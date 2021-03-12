@@ -61,7 +61,7 @@ const ButtonStyles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 12,
     borderRadius: 10,
-    borderWidth: 2,
+    borderWidth: 1,
     alignSelf: "flex-start",
   },
 });

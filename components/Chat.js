@@ -64,11 +64,21 @@ const Message = ({ text, type }) => (
           : MessageStyles.messageOutgoing
       }
     >
-      <Text style={typography.body}>{text}</Text>
+      <Text selectable style={typography.body}>
+        {text}
+      </Text>
     </View>
   </View>
 );
 
+const baseMessageBox = {
+  display: "flex",
+  paddingVertical: 8,
+  paddingHorizontal: 12,
+  borderRadius: 10,
+  borderWidth: 1,
+  maxWidth: "80%",
+};
 const MessageStyles = StyleSheet.create({
   container: {
     display: "flex",
@@ -76,17 +86,17 @@ const MessageStyles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   messageIncoming: {
-    display: "flex",
-    paddingVertical: 8,
-    paddingHorizontal: 12,
+    ...baseMessageBox,
     backgroundColor: colors.dark,
-    borderRadius: 10,
-    borderWidth: 2,
     borderColor: colors.light,
-    maxWidth: "80%",
     alignSelf: "flex-start",
   },
-  messageOutgoing: {},
+  messageOutgoing: {
+    ...baseMessageBox,
+    backgroundColor: colors.bluePrimary,
+    borderColor: colors.bluePrimary,
+    alignSelf: "flex-end",
+  },
 });
 
 export default Chat;
