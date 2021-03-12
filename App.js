@@ -7,6 +7,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { loadAsync } from "expo-font";
 import { colors } from "./styles/colors";
+import Chat from "./components/Chat";
 
 const ANDROID_STATUSBAR_HEIGHT = 20;
 
@@ -34,24 +35,14 @@ const App = () => {
           screenOptions={{
             headerShown: false,
             cardStyle: {
-              paddingTop:
-                Platform.OS === "ios"
-                  ? 20
-                  : ANDROID_STATUSBAR_HEIGHT,
+              paddingTop: Platform.OS === "ios" ? 20 : ANDROID_STATUSBAR_HEIGHT,
               backgroundColor: colors.dark,
             },
           }}
         >
-          <Stack.Screen
-            name="Test Nav"
-            component={TestNavigation}
-            options={{ title: "Test Nav" }}
-          />
-          <Stack.Screen
-            name="Home"
-            component={Home}
-            options={{ title: "Home" }}
-          />
+          <Stack.Screen name="TestNav" component={TestNavigation} />
+          <Stack.Screen name="Chat" component={Chat} />
+          <Stack.Screen name="Home" component={Home} />
         </Stack.Navigator>
       </NavigationContainer>
     )

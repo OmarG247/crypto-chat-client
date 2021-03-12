@@ -1,20 +1,24 @@
 import React from "react";
-import { Button, StyleSheet, View } from "react-native";
+import { View } from "react-native";
+import { containers } from "../styles/containers";
+import Button from "./Button";
+import Footer from "./Footer";
+import Header from "./Header";
 
 const TestNavigation = ({ navigation }) => {
   return (
-    <View style={Styles.container}>
-      <Button onPress={() => navigation.navigate("Home")} title="Home" />
+    <View style={containers.parent}>
+      <Header text="Screens" />
+      <View style={[containers.basic, { paddingHorizontal: 16 }]}>
+        <Button
+          onPress={() => navigation.navigate("Home")}
+          text="Home"
+          color="lime"
+        />
+      </View>
+      <Footer />
     </View>
   );
 };
-
-const Styles = StyleSheet.create({
-  container: {
-    height: "100%",
-    display: "flex",
-    justifyContent: "space-around",
-  },
-});
 
 export default TestNavigation;

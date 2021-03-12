@@ -17,21 +17,16 @@ const sampleContact = {
   color: colors.tealSecondary,
 };
 
-const Home = () => {
+const Home = ({ navigation }) => {
   return (
-    <View
-      style={{
-        height: "100%",
-        backgroundColor: colors.dark,
-      }}
-    >
+    <View style={containers.parent}>
       <Header
         options
         handleOptions={() => {}}
         cancel
         cancelText="back"
-        handleCancel={() => {}}
-        text="header"
+        handleCancel={() => { navigation.navigate('TestNav') }}
+        text="Messages"
       />
       <ScrollView style={containers.basic}>
         <Option text="test" onPress={() => {}} />
