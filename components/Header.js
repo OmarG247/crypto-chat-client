@@ -45,7 +45,7 @@ const HeaderStyles = StyleSheet.create({
     width: "100%",
     alignItems: "flex-start",
     justifyContent: "flex-end",
-    backgroundColor: colors.darkSurface
+    backgroundColor: colors.darkSurface,
   },
   content: {
     display: "flex",
