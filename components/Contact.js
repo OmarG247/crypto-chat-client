@@ -4,8 +4,8 @@ import { colors } from "../styles/colors";
 import { typography } from "../styles/typography";
 import Divider from "./Divider";
 
-const Contact = ({ contact, newMessage, onPress }) => (
-  <View style={ContactStyles.container}>
+const Contact = ({ contact, newMessage, onPress, style }) => (
+  <View style={[ContactStyles.container, style]}>
     <TouchableOpacity onPress={onPress} style={ContactStyles.content}>
       <View style={ContactStyles.name}>
         <View style={[ContactStyles.bar, { backgroundColor: contact.color }]} />

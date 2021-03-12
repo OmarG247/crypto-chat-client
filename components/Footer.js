@@ -3,10 +3,10 @@ import { StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Fab from "./Fab";
 
-const Footer = ({ action, handleAction }) => (
+const Footer = ({ action, handleAction, style }) => (
   <LinearGradient
     colors={["rgba(33, 33, 33, 0)", "rgba(239, 239, 239, 0.1)"]}
-    style={FooterStyles.container}
+    style={[FooterStyles.container, style]}
   >
     {action && (
       <Fab

@@ -16,6 +16,7 @@ const Fab = ({
   size = "medium",
   onPress,
   disabled = false,
+  style
 }) => {
   const dimensions = size === "large" ? 48 : 36;
   const fabColor = fabColors[color];
@@ -47,7 +48,7 @@ const Fab = ({
       underlayColor={secondary ? colors.dark : fabColor}
       onPress={onPress}
       disabled={disabled}
-      style={[FabStyles.container, fabBase]}
+      style={[FabStyles.container, fabBase, style]}
     >
       <Icon name={action} color={secondary && !disabled ? "light" : "dark"} />
     </TouchableHighlight>

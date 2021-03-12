@@ -1,6 +1,8 @@
 import React from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View, Text } from "react-native";
+import { colors } from "../styles/colors";
 import { containers } from "../styles/containers";
+import { typography } from "../styles/typography";
 import Header from "./Header";
 
 const messages = [
@@ -53,7 +55,19 @@ const Chat = ({ navigation }) => {
   );
 };
 
-const Message = ({ text, type }) => <View></View>;
+const Message = ({ text, type }) => (
+  <View style={MessageStyles.container}>
+    <View
+      style={
+        type === "incoming"
+          ? MessageStyles.messageIncoming
+          : MessageStyles.messageOutgoing
+      }
+    >
+      <Text style={typography.body}>{text}</Text>
+    </View>
+  </View>
+);
 
 const MessageStyles = StyleSheet.create({
   container: {
@@ -61,7 +75,18 @@ const MessageStyles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 16,
   },
-  message: {},
+  messageIncoming: {
+    display: "flex",
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    backgroundColor: colors.dark,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: colors.light,
+    maxWidth: "80%",
+    alignSelf: "flex-start",
+  },
+  messageOutgoing: {},
 });
 
 export default Chat;

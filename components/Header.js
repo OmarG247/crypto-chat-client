@@ -12,8 +12,9 @@ const Header = ({
   cancelText = "",
   cancel = false,
   handleCancel = null,
+  style,
 }) => (
-  <View style={HeaderStyles.container}>
+  <View style={[HeaderStyles.container, style]}>
     {cancel && (
       <TouchableHighlight style={{ padding: 16 }} onPress={handleCancel}>
         <Text style={typography.detail}>{cancelText}</Text>

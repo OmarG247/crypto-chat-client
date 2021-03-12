@@ -52,11 +52,11 @@ const Icons = {
   },
 };
 
-const Icon = ({ name, color }) => {
+const Icon = ({ name, color, style }) => {
   const iconFile = Icons[name][color];
 
   return (
-    <View style={IconStyles.container}>
+    <View style={[IconStyles.container, style]}>
       <Image style={IconStyles.icon} source={iconFile} />
     </View>
   );

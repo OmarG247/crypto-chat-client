@@ -2,8 +2,8 @@ import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { typography } from "../styles/typography";
 
-const Option = ({ text, onPress }) => (
-  <TouchableOpacity onPress={onPress} style={OptionStyles.container}>
+const Option = ({ text, onPress, style }) => (
+  <TouchableOpacity onPress={onPress} style={[OptionStyles.container, style]}>
     <Text style={typography.subtitle}>{text}</Text>
   </TouchableOpacity>
 );

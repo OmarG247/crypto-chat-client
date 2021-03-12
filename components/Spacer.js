@@ -1,6 +1,8 @@
 import React from "react";
 import { View } from "react-native";
 
-const Spacer = () => <View style={{ height: 300 }} />;
+const Spacer = ({ height, style }) => (
+  <View style={[{ height: height }, style]} />
+);
 
 export default Spacer;

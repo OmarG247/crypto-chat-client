@@ -37,7 +37,7 @@ const Home = ({ navigation }) => (
       <Contact onPress={() => {}} newMessage contact={sampleContact} />
       <Contact onPress={() => {}} newMessage contact={sampleContact} />
       <Contact onPress={() => {}} newMessage contact={sampleContact} />
-      <Spacer />
+      <Spacer height={200} />
     </ScrollView>
     {/* <Button text="test" color="lime" onPress={() => {}} /> */}
     {/* <Fab action="new" color="lime" /> */}

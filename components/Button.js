@@ -15,6 +15,7 @@ const Button = ({
   secondary = false,
   onPress,
   disabled = false,
+  style,
 }) => {
   const buttonColor = buttonColors[color];
 
@@ -47,7 +48,7 @@ const Button = ({
       activeOpacity={0.5}
       underlayColor={secondary ? colors.dark : buttonColor}
       onPress={onPress}
-      style={[ButtonStyles.container, buttonBase]}
+      style={[ButtonStyles.container, buttonBase, style]}
     >
       <Text style={[typography.button, buttonTextStyle]}>{text}</Text>
     </TouchableHighlight>
@@ -61,6 +62,7 @@ const ButtonStyles = StyleSheet.create({
     paddingHorizontal: 12,
     borderRadius: 10,
     borderWidth: 2,
+    alignSelf: "flex-start",
   },
 });
 
