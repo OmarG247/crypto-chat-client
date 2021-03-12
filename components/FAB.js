@@ -16,7 +16,7 @@ const Fab = ({
   size = "medium",
   onPress,
   disabled = false,
-  style
+  style,
 }) => {
   const dimensions = size === "large" ? 48 : 36;
   const fabColor = fabColors[color];

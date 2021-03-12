@@ -1,9 +1,12 @@
 import React from "react";
-import { ScrollView, StyleSheet, View, Text } from "react-native";
+import { ScrollView, StyleSheet, View, Text, TextBase } from "react-native";
 import { colors } from "../styles/colors";
 import { containers } from "../styles/containers";
 import { typography } from "../styles/typography";
+import Divider from "./Divider";
 import Header from "./Header";
+
+const TIME_DIFFERENCE = 10;
 
 const messages = [
   {
@@ -14,7 +17,7 @@ const messages = [
   {
     type: "incoming",
     time: new Date("March 12, 2021 12:06:00"),
-    text: "test message",
+    text: "test message very very very very very very very long message",
   },
   {
     type: "outgoing",
@@ -23,10 +26,18 @@ const messages = [
   },
   {
     type: "incoming",
-    time: new Date("March 12, 2021 12:20:00"),
+    time: new Date("March 12, 2021 12:37:00"),
     text: "test message",
   },
+  {
+    type: "outgoing",
+    time: new Date("March 13, 2021 12:32:00"),
+    text: "long message",
+  },
 ];
+
+const timeBetween = (timeA, timeB) =>
+  (timeA.getTime() - timeB.getTime()) / 60 / 1000 > TIME_DIFFERENCE;
 
 const Chat = ({ navigation }) => {
   return (
@@ -44,19 +55,48 @@ const Chat = ({ navigation }) => {
       <ScrollView style={containers.basic}>
         {messages.length > 0 &&
           messages.map((message, index) => (
-            <Message
-              key={`message-${index}`}
-              type={message.type}
-              text={message.text}
-            />
+            <View key={`message-${index}`}>
+              {index > 1 &&
+                timeBetween(message.time, messages[index - 1].time) && (
+                  <Divider />
+                )}
+              <Message
+                timeStamp={
+                  index > 1 &&
+                  timeBetween(message.time, messages[index - 1].time)
+                    ? message.time
+                    : false
+                }
+                type={message.type}
+                text={message.text}
+              />
+            </View>
           ))}
       </ScrollView>
     </View>
   );
 };
 
-const Message = ({ text, type }) => (
+const Message = ({ text, type, timeStamp }) => (
   <View style={MessageStyles.container}>
+    {timeStamp && (
+      <Text
+        style={[
+          typography.detail,
+          MessageStyles.timeStamp,
+          {
+            marginBottom: 8,
+            marginLeft: type === "incoming" ? 12 : 0,
+            marginRight: type === "outgoing" ? 12 : 0,
+            textAlign: type === "incoming" ? "left" : "right",
+          },
+        ]}
+      >
+        {`${timeStamp
+          .getHours()
+          .toString()}:${timeStamp.getMinutes().toString()}`}
+      </Text>
+    )}
     <View
       style={
         type === "incoming"
@@ -96,6 +136,10 @@ const MessageStyles = StyleSheet.create({
     backgroundColor: colors.bluePrimary,
     borderColor: colors.bluePrimary,
     alignSelf: "flex-end",
+  },
+  timeStamp: {
+    color: colors.surface,
+    marginBottom: 8,
   },
 });
 
