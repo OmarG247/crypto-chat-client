@@ -1,10 +1,20 @@
 import React from "react";
-import { ScrollView, StyleSheet, View, Text, TextBase } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  Keyboard,
+  KeyboardAvoidingView,
+} from "react-native";
 import { colors } from "../styles/colors";
 import { containers } from "../styles/containers";
 import { typography } from "../styles/typography";
 import Divider from "./Divider";
 import Header from "./Header";
+import Spacer from "./Spacer";
 
 const TIME_DIFFERENCE = 10;
 
@@ -34,12 +44,41 @@ const messages = [
     time: new Date("March 13, 2021 12:32:00"),
     text: "long message",
   },
+  {
+    type: "incoming",
+    time: new Date("March 14, 2021 12:37:00"),
+    text: "test message",
+  },
+  {
+    type: "outgoing",
+    time: new Date("March 17, 2021 12:32:00"),
+    text: "long message",
+  },
 ];
 
 const timeBetween = (timeA, timeB) =>
   (timeA.getTime() - timeB.getTime()) / 60 / 1000 > TIME_DIFFERENCE;
 
 const Chat = ({ navigation }) => {
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const keyboardOnListener = useRef();
+  const keyboardOffListener = useRef();
+
+  useEffect(() => {
+    keyboardOnListener.current = Keyboard.addListener(
+      "keyboardWillShow",
+      (event) => {
+        setKeyboardHeight(event.endCoordinates.height);
+      }
+    );
+    keyboardOffListener.current = Keyboard.addListener(
+      "keyboardWillHide",
+      () => {
+        setKeyboardHeight(0);
+      }
+    );
+  }, []);
+
   return (
     <View style={containers.parent}>
       <Header
@@ -52,27 +91,41 @@ const Chat = ({ navigation }) => {
         }}
         text="Nick Kazan"
       />
-      <ScrollView style={containers.basic}>
-        {messages.length > 0 &&
-          messages.map((message, index) => (
-            <View key={`message-${index}`}>
-              {index > 1 &&
-                timeBetween(message.time, messages[index - 1].time) && (
-                  <Divider />
-                )}
-              <Message
-                timeStamp={
-                  index > 1 &&
-                  timeBetween(message.time, messages[index - 1].time)
-                    ? message.time
-                    : false
-                }
-                type={message.type}
-                text={message.text}
-              />
-            </View>
-          ))}
-      </ScrollView>
+      <KeyboardAvoidingView>
+        <ScrollView
+          style={[containers.basic, { marginBottom: keyboardHeight }]}
+        >
+          {messages.length > 0 &&
+            messages.map((message, index) => (
+              <View key={`message-${index}`}>
+                {index > 1 &&
+                  timeBetween(message.time, messages[index - 1].time) && (
+                    <Divider />
+                  )}
+                <Message
+                  timeStamp={
+                    index > 1 &&
+                    timeBetween(message.time, messages[index - 1].time)
+                      ? message.time
+                      : false
+                  }
+                  type={message.type}
+                  text={message.text}
+                />
+              </View>
+            ))}
+          {keyboardHeight > 0 && <Spacer height={16 + 52} />}
+        </ScrollView>
+      </KeyboardAvoidingView>
+      <View
+        style={{
+          position: "absolute",
+          bottom: keyboardHeight,
+          marginBottom: 40,
+        }}
+      >
+        <TextInput style={{ color: colors.tealSecondary }}>enter</TextInput>
+      </View>
     </View>
   );
 };
