@@ -1,20 +1,17 @@
 import React from "react";
 import { View } from "react-native";
 import { containers } from "../styles/containers";
-import Button from "./Button";
 import Footer from "./Footer";
 import Header from "./Header";
+import Option from "./Option";
 
 const TestNavigation = ({ navigation }) => {
   return (
     <View style={containers.parent}>
       <Header text="Screens" />
-      <View style={[containers.basic, { paddingHorizontal: 16 }]}>
-        <Button
-          onPress={() => navigation.navigate("Home")}
-          text="Home"
-          color="lime"
-        />
+      <View style={containers.basic}>
+        <Option onPress={() => navigation.navigate("Home")} text="Home" />
+        <Option onPress={() => navigation.navigate("Chat")} text="Chat" />
       </View>
       <Footer />
     </View>

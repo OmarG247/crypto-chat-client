@@ -24,7 +24,7 @@ const Home = ({ navigation }) => (
       cancel
       cancelText="back"
       handleCancel={() => {
-        navigation.navigate("TestNav");
+        navigation.goBack();
       }}
       text="Messages"
     />

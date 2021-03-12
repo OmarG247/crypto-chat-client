@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Platform, StatusBar } from "react-native";
 import "react-native-gesture-handler";
-import Home from "./components/Home";
-import TestNavigation from "./components/TestNavigation";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { loadAsync } from "expo-font";
 import { colors } from "./styles/colors";
+import TestNavigation from "./components/TestNavigation";
+import Home from "./components/Home";
 import Chat from "./components/Chat";
 
 const ANDROID_STATUSBAR_HEIGHT = 20;
