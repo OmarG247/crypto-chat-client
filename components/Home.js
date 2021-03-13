@@ -5,7 +5,7 @@ import { colors } from "../styles/colors";
 import { containers } from "../styles/containers";
 import Button from "./Button";
 import Contact from "./Contact";
-import Fab from "./Fab";
+import Fab from "./Fab1";
 import Footer from "./Footer";
 import Header from "./Header";
 import Option from "./Option";

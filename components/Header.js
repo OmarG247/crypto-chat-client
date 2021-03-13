@@ -3,7 +3,7 @@ import { StyleSheet, View, Text } from "react-native";
 import { TouchableHighlight } from "react-native-gesture-handler";
 import { colors } from "../styles/colors";
 import { typography } from "../styles/typography";
-import Fab from "./Fab";
+import Fab from "./Fab1";
 
 const Header = ({
   text,

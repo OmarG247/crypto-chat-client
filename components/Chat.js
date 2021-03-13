@@ -13,13 +13,13 @@ import { colors } from "../styles/colors";
 import { containers } from "../styles/containers";
 import { typography } from "../styles/typography";
 import Divider from "./Divider";
-import Fab from "./Fab";
+import Fab from "./Fab1";
 import Header from "./Header";
 import Spacer from "./Spacer";
 
 const TIME_DIFFERENCE = 10;
 
-const messages = [
+const sampleMessages = [
   {
     type: "incoming",
     time: new Date("March 12, 2021 12:05:00"),
@@ -62,6 +62,7 @@ const timeBetween = (timeA, timeB) =>
 
 const Chat = ({ navigation }) => {
   const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const [messages, setMessages] = useState(sampleMessages);
   const keyboardOnListener = useRef();
   const keyboardOffListener = useRef();
 
