@@ -13,6 +13,7 @@ import { colors } from "../styles/colors";
 import { containers } from "../styles/containers";
 import { typography } from "../styles/typography";
 import Divider from "./Divider";
+import Fab from "./Fab";
 import Header from "./Header";
 import Spacer from "./Spacer";
 
@@ -91,40 +92,42 @@ const Chat = ({ navigation }) => {
         }}
         text="Nick Kazan"
       />
-      <KeyboardAvoidingView>
-        <ScrollView
-          style={[containers.basic, { marginBottom: keyboardHeight }]}
-        >
-          {messages.length > 0 &&
-            messages.map((message, index) => (
-              <View key={`message-${index}`}>
-                {index > 1 &&
-                  timeBetween(message.time, messages[index - 1].time) && (
-                    <Divider />
-                  )}
-                <Message
-                  timeStamp={
-                    index > 1 &&
-                    timeBetween(message.time, messages[index - 1].time)
-                      ? message.time
-                      : false
-                  }
-                  type={message.type}
-                  text={message.text}
-                />
-              </View>
-            ))}
-          {keyboardHeight > 0 && <Spacer height={16 + 52} />}
-        </ScrollView>
-      </KeyboardAvoidingView>
+      <ScrollView style={[containers.basic, { marginBottom: keyboardHeight }]}>
+        {messages.length > 0 &&
+          messages.map((message, index) => (
+            <View key={`message-${index}`}>
+              {index > 1 &&
+                timeBetween(message.time, messages[index - 1].time) && (
+                  <Divider />
+                )}
+              <Message
+                timeStamp={
+                  index > 1 &&
+                  timeBetween(message.time, messages[index - 1].time)
+                    ? message.time
+                    : false
+                }
+                type={message.type}
+                text={message.text}
+              />
+            </View>
+          ))}
+        {keyboardHeight > 0 && <Spacer height={16 + 52} />}
+      </ScrollView>
       <View
         style={{
+          display: "flex",
+          width: "100%",
+          flexDirection: "row",
           position: "absolute",
           bottom: keyboardHeight,
-          marginBottom: 40,
+          marginBottom: 20,
         }}
       >
-        <TextInput style={{ color: colors.tealSecondary }}>enter</TextInput>
+        <TextInput style={{ color: colors.tealSecondary, width: "50%" }}>
+          enter
+        </TextInput>
+        <Fab color="blue" action="send" />
       </View>
     </View>
   );
