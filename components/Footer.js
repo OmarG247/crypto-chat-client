@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import Fab from "./Fab1";
+import Fab from "./Fab";
 
 const Footer = ({ action, handleAction, style }) => (
   <LinearGradient

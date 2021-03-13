@@ -13,7 +13,7 @@ import { colors } from "../styles/colors";
 import { containers } from "../styles/containers";
 import { typography } from "../styles/typography";
 import Divider from "./Divider";
-import Fab from "./Fab1";
+import Fab from "./Fab";
 import Header from "./Header";
 import Spacer from "./Spacer";
 
