@@ -50,7 +50,10 @@ const Fab = ({
       disabled={disabled}
       style={[FabStyles.container, fabBase, style]}
     >
-      <Icon name={action} color={secondary && !disabled ? "light" : "dark"} />
+      <Icon
+        name={action}
+        color={color === "blue" || (secondary && !disabled) ? "light" : "dark"}
+      />
     </TouchableHighlight>
   );
 };

@@ -8,4 +8,5 @@ export const colors = {
   surface: "#C2C2C2",
   darkSurface: "#000000CC",
   surface10: "#A2A2A21A",
+  grey: '#202020'
 };

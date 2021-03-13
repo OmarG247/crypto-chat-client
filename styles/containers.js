@@ -3,6 +3,7 @@ import { colors } from "./colors";
 
 export const containers = StyleSheet.create({
   parent: {
+    position: 'relative',
     flex: 1,
     backgroundColor: colors.dark,
   },

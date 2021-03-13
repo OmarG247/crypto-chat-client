@@ -15,6 +15,7 @@ import { typography } from "../styles/typography";
 import Divider from "./Divider";
 import Fab from "./Fab";
 import Header from "./Header";
+import KeyboardInput from "./KeyboardInput";
 import Spacer from "./Spacer";
 
 const TIME_DIFFERENCE = 10;
@@ -113,23 +114,14 @@ const Chat = ({ navigation }) => {
               />
             </View>
           ))}
-        {keyboardHeight > 0 && <Spacer height={16 + 52} />}
+        {keyboardHeight > 0 && <Spacer height={24 + 52} />}
       </ScrollView>
-      <View
-        style={{
-          display: "flex",
-          width: "100%",
-          flexDirection: "row",
-          position: "absolute",
-          bottom: keyboardHeight,
-          marginBottom: 20,
-        }}
-      >
-        <TextInput style={{ color: colors.tealSecondary, width: "50%" }}>
-          enter
-        </TextInput>
-        <Fab color="blue" action="send" />
-      </View>
+      <KeyboardInput
+        keyboardHeight={keyboardHeight}
+        onChangeText={() => {}}
+        onPress={() => {}}
+        action="send"
+      />
     </View>
   );
 };
