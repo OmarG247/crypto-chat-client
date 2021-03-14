@@ -6,7 +6,6 @@ import {
   View,
   Text,
   Keyboard,
-  _ScrollView,
 } from "react-native";
 import { colors } from "../styles/colors";
 import { containers } from "../styles/containers";
