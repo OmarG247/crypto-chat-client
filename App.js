@@ -1,48 +1,52 @@
-import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
-import { Button, TextInput } from "react-native";
-import styled from "styled-components";
+import { Platform, StatusBar } from "react-native";
+import "react-native-gesture-handler";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { loadAsync } from "expo-font";
+import { colors } from "./styles/colors";
+import TestNavigation from "./components/TestNavigation";
+import Home from "./components/Home";
+import Chat from "./components/Chat";
 
-const Container = styled.View`
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
+const ANDROID_STATUSBAR_HEIGHT = 20;
 
-export default function App() {
-  const [message, setMessage] = useState("");
-  let socket = null;
+const Stack = createStackNavigator();
 
-  useEffect(() => {});
+const App = () => {
+  const [fontsLoaded, setFontsLoaded] = useState(false);
 
   useEffect(() => {
-    socket = new WebSocket("ws://192.168.1.21:8080");
-    socket.addEventListener("open", (event) => {
-      socket.send("Hello Server!");
+    loadAsync({
+      "DMSans-Regular": require("./assets/fonts/DMSans-Regular.ttf"),
+      "DMSans-Medium": require("./assets/fonts/DMSans-Medium.ttf"),
+      "DMSans-Bold": require("./assets/fonts/DMSans-Bold.ttf"),
+      "SourceSansPro-Regular": require("./assets/fonts/SourceSansPro-Regular.ttf"),
+      "SourceSansPro-Light": require("./assets/fonts/SourceSansPro-Light.ttf"),
+    }).then(() => {
+      setFontsLoaded(true);
     });
-
-    socket.addEventListener("message", (event) => {
-      console.log("Message from server ", event.data);
-    });
-
-    socket.addEventListener("close", (event) => {
-      console.log("The connection has been closed");
-    });
-  });
-
-  const emmitMessage = () => {
-    socket.send(message);
-  };
+  }, []);
 
   return (
-    <Container>
-      <TextInput
-        style={{ height: 20 }}
-        onChangeText={(text) => setMessage(text)}
-      ></TextInput>
-      <Button onPress={() => emmitMessage()} title="send message"></Button>
-    </Container>
+    fontsLoaded && (
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+            cardStyle: {
+              paddingTop: Platform.OS === "ios" ? 20 : ANDROID_STATUSBAR_HEIGHT,
+              backgroundColor: colors.dark,
+            },
+          }}
+        >
+          <Stack.Screen name="TestNav" component={TestNavigation} />
+          <Stack.Screen name="Chat" component={Chat} />
+          <Stack.Screen name="Home" component={Home} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    )
   );
-}
+};
+
+export default App;
