@@ -66,11 +66,11 @@ const Home = ({ navigation }) => {
           />
         ))}
         <Spacer height={200} />
+        {/* <Option text="test" onPress={() => {}} /> */}
+        {/* <Input onChangeText={() => {}} label="test" /> */}
+        {/* <Button text="test" color="lime" onPress={() => {}} /> */}
+        {/* <Fab action="new" color="lime" /> */}
       </ScrollView>
-      {/* <Option text="test" onPress={() => {}} /> */}
-      {/* <Input onChangeText={() => {}} label="test" /> */}
-      {/* <Button text="test" color="lime" onPress={() => {}} /> */}
-      {/* <Fab action="new" color="lime" /> */}
       <Footer action="new" handleAction={() => {}} />
     </View>
   );
