@@ -1,11 +1,6 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useState } from "react";
-import {
-  ScrollView,
-  StyleSheet,
-  View,
-  Text,
-} from "react-native";
+import { ScrollView, StyleSheet, View, Text, Keyboard } from "react-native";
 import { colors } from "../styles/colors";
 import { containers } from "../styles/containers";
 import { typography } from "../styles/typography";
@@ -73,29 +68,66 @@ const timeBetween = (timeA, timeB) =>
 
 const Chat = ({ navigation }) => {
   const [messages, setMessages] = useState(sampleMessages);
+  const [messagesHeight, setMessagesHeight] = useState(0);
+  const [scrollOffset, setScrollOffset] = useState(0);
+  const _scrollView = useRef();
+
+  const scrollTo = (position) => {
+    if (position !== null && _scrollView.current !== null) {
+      _scrollView.current.scrollTo({ y: position });
+    }
+  };
+
+  const handleScroll = (event) => {
+    const currOffset = event.nativeEvent.contentOffset.y;
+    if (currOffset < scrollOffset) {
+      Keyboard.dismiss();
+    }
+    setScrollOffset(currOffset);
+  };
+
+  const addKeyboardListeners = () => {
+    Keyboard.addListener("keyboardWillShow", (event) => {
+      scrollTo(event.endCoordinates.height + messagesHeight + 100);
+    });
+  };
+
+  useEffect(() => {
+    addKeyboardListeners();
+  }, []);
+
+  useEffect(() => {
+    scrollTo(messagesHeight);
+    addKeyboardListeners();
+  }, [messagesHeight]);
 
   return (
     <View style={containers.parent}>
       <Header
         options
         handleOptions={() => {}}
-        cancel
         cancelText="back"
         handleCancel={() => {
+          Keyboard.removeAllListeners();
           navigation.goBack();
         }}
         text="Nick Kazan"
       />
       <View
         style={[
-          containers.basic,
+          containers.main,
           {
             flex: 1,
             paddingBottom: 0,
           },
         ]}
       >
-        <ScrollView>
+        <ScrollView
+          scrollEventThrottle={2}
+          onContentSizeChange={(_, height) => setMessagesHeight(height)}
+          ref={_scrollView}
+          onScroll={handleScroll}
+        >
           {messages.length > 0 &&
             messages.map((message, index) => (
               <View key={`message-${index}`}>
@@ -129,6 +161,7 @@ const Chat = ({ navigation }) => {
             },
           ]);
         }}
+        style={{ marginBottom: 40 }}
         action="send"
       />
     </View>

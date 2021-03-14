@@ -7,13 +7,7 @@ const KeyboardInput = ({ onChangeText, onPress, action, style }) => (
   <KeyboardAvoidingView
     behavior="padding"
     keyboardVerticalOffset={28}
-    style={[
-      KeyboardInputStyles.container,
-      {
-        marginBottom: 40,
-      },
-      style,
-    ]}
+    style={[KeyboardInputStyles.container, style]}
   >
     <TextInput
       keyboardAppearance="dark"

@@ -1,6 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
-import { TouchableHighlight } from "react-native-gesture-handler";
+import { StyleSheet, View, Text, TouchableHighlight } from "react-native";
 import { colors } from "../styles/colors";
 import { typography } from "../styles/typography";
 import Fab from "./Fab";
@@ -9,13 +8,12 @@ const Header = ({
   text,
   options = false,
   handleOptions = null,
-  cancelText = "",
-  cancel = false,
+  cancelText,
   handleCancel = null,
   style,
 }) => (
   <View style={[HeaderStyles.container, style]}>
-    {cancel && (
+    {cancelText && (
       <TouchableHighlight style={{ padding: 16 }} onPress={handleCancel}>
         <Text style={typography.detail}>{cancelText}</Text>
       </TouchableHighlight>

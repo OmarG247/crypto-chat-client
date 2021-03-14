@@ -8,6 +8,9 @@ import { colors } from "./styles/colors";
 import TestNavigation from "./components/TestNavigation";
 import Home from "./components/Home";
 import Chat from "./components/Chat";
+import Welcome from "./components/Welcome";
+import Contacts from "./components/Contacts";
+import NewMessage from "./components/NewMessage";
 
 const ANDROID_STATUSBAR_HEIGHT = 20;
 
@@ -43,6 +46,9 @@ const App = () => {
           <Stack.Screen name="TestNav" component={TestNavigation} />
           <Stack.Screen name="Chat" component={Chat} />
           <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Welcome" component={Welcome} />
+          <Stack.Screen name="Contacts" component={Contacts} />
+          <Stack.Screen name="NewMessage" component={NewMessage} />
         </Stack.Navigator>
       </NavigationContainer>
     )
