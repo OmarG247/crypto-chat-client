@@ -1,12 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useState } from "react";
-import {
-  ScrollView,
-  StyleSheet,
-  View,
-  Text,
-  Keyboard,
-} from "react-native";
+import { ScrollView, StyleSheet, View, Text, Keyboard } from "react-native";
 import { colors } from "../styles/colors";
 import { containers } from "../styles/containers";
 import { typography } from "../styles/typography";
@@ -75,12 +69,21 @@ const timeBetween = (timeA, timeB) =>
 const Chat = ({ navigation }) => {
   const [messages, setMessages] = useState(sampleMessages);
   const [messagesHeight, setMessagesHeight] = useState(0);
+  const [scrollOffset, setScrollOffset] = useState(0);
   const _scrollView = useRef();
 
   const scrollTo = (position) => {
     if (position !== null && _scrollView.current !== null) {
       _scrollView.current.scrollTo({ y: position });
     }
+  };
+
+  const handleScroll = (event) => {
+    const currOffset = event.nativeEvent.contentOffset.y;
+    if (currOffset < scrollOffset) {
+      Keyboard.dismiss();
+    }
+    setScrollOffset(currOffset);
   };
 
   const addKeyboardListeners = () => {
@@ -121,8 +124,10 @@ const Chat = ({ navigation }) => {
         ]}
       >
         <ScrollView
+          scrollEventThrottle={2}
           onContentSizeChange={(_, height) => setMessagesHeight(height)}
           ref={_scrollView}
+          onScroll={handleScroll}
         >
           {messages.length > 0 &&
             messages.map((message, index) => (
