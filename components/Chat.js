@@ -161,6 +161,7 @@ const Chat = ({ navigation }) => {
             },
           ]);
         }}
+        style={{ marginBottom: 40 }}
         action="send"
       />
     </View>

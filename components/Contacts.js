@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { View, ScrollView} from "react-native";
 import { colors } from "../styles/colors";
 import { containers } from "../styles/containers";
 import Contact from "./Contact";
