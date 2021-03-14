@@ -12,6 +12,7 @@ const TestNavigation = ({ navigation }) => {
       <View style={containers.basic}>
         <Option onPress={() => navigation.navigate("Home")} text="Home" />
         <Option onPress={() => navigation.navigate("Chat")} text="Chat" />
+        <Option onPress={() => navigation.navigate("Welcome")} text="Welcome" />
       </View>
       <Footer />
     </View>
