@@ -72,7 +72,7 @@ const NewMessage = () => {
           ).map((contact, index) => (
             <Contact key={`contact-${index}`} contact={contact} />
           ))}
-          {searchResults.length === 0 && (
+          {searchResults.length === 0 && search !== '' && (
             <Text
               style={[typography.subtitle, { paddingLeft: 16, paddingTop: 8 }]}
             >
