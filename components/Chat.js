@@ -106,7 +106,6 @@ const Chat = ({ navigation }) => {
       <Header
         options
         handleOptions={() => {}}
-        cancel
         cancelText="back"
         handleCancel={() => {
           Keyboard.removeAllListeners();
@@ -116,7 +115,7 @@ const Chat = ({ navigation }) => {
       />
       <View
         style={[
-          containers.basic,
+          containers.main,
           {
             flex: 1,
             paddingBottom: 0,

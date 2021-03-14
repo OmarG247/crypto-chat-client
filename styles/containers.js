@@ -7,7 +7,7 @@ export const containers = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.dark,
   },
-  basic: {
+  main: {
     width: "100%",
     display: "flex",
     flexDirection: "column",

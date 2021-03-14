@@ -11,7 +11,7 @@ import icon from "../assets/icon-color.png";
 const Welcome = () => {
   return (
     <View style={containers.parent}>
-      <View style={[containers.basic, WelcomeStyles.container]}>
+      <View style={[containers.main, WelcomeStyles.container]}>
         <View style={[WelcomeStyles.iconContainer, effects.glow]}>
           <Image style={[WelcomeStyles.icon]} source={icon} />
         </View>

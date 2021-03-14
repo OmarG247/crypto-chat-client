@@ -9,10 +9,14 @@ const TestNavigation = ({ navigation }) => {
   return (
     <View style={containers.parent}>
       <Header text="Screens" />
-      <View style={containers.basic}>
+      <View style={containers.main}>
         <Option onPress={() => navigation.navigate("Home")} text="Home" />
         <Option onPress={() => navigation.navigate("Chat")} text="Chat" />
         <Option onPress={() => navigation.navigate("Welcome")} text="Welcome" />
+        <Option
+          onPress={() => navigation.navigate("Contacts")}
+          text="Contacts"
+        />
       </View>
       <Footer />
     </View>
