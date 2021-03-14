@@ -35,7 +35,7 @@ const sampleContacts = [
   },
 ];
 
-const NewMessage = () => {
+const NewMessage = ({ navigation }) => {
   const [contacts, setContacts] = useState([]);
   const [searchResults, setSearchResult] = useState([]);
   const [search, setSearch] = useState("");
@@ -57,7 +57,11 @@ const NewMessage = () => {
 
   return (
     <View style={containers.parent}>
-      <Header cancelText="back" text="New message" />
+      <Header
+        cancelText="back"
+        text="New message"
+        handleCancel={() => navigation.goBack()}
+      />
       <View style={containers.main}>
         <KeyboardInput
           onChangeText={(input) => setSearch(input)}
@@ -72,7 +76,7 @@ const NewMessage = () => {
           ).map((contact, index) => (
             <Contact key={`contact-${index}`} contact={contact} />
           ))}
-          {searchResults.length === 0 && search !== '' && (
+          {searchResults.length === 0 && search !== "" && (
             <Text
               style={[typography.subtitle, { paddingLeft: 16, paddingTop: 8 }]}
             >
