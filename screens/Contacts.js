@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { View, ScrollView} from "react-native";
 import { colors } from "../styles/colors";
 import { containers } from "../styles/containers";
-import Contact from "./Contact";
-import Footer from "./Footer";
-import Header from "./Header";
-import Spacer from "./Spacer";
+import Contact from "../components/Contact";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
+import Spacer from "../components/Spacer";
 
 const sampleContacts = [
   {

@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { ScrollView, View, Text } from "react-native";
 import { containers } from "../styles/containers";
 import { colors } from "../styles/colors";
-import Header from "./Header";
-import Spacer from "./Spacer";
-import KeyboardInput from "./KeyboardInput";
-import Contact from "./Contact";
+import Header from "../components/Header";
+import Spacer from "../components/Spacer";
+import KeyboardInput from "../components/KeyboardInput";
+import Contact from "../components/Contact";
 import { typography } from "../styles/typography";
 
 const sampleContacts = [

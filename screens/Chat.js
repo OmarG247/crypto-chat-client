@@ -4,9 +4,9 @@ import { ScrollView, StyleSheet, View, Text, Keyboard } from "react-native";
 import { colors } from "../styles/colors";
 import { containers } from "../styles/containers";
 import { typography } from "../styles/typography";
-import Divider from "./Divider";
-import Header from "./Header";
-import KeyboardInput from "./KeyboardInput";
+import Divider from "../components/Divider";
+import Header from "../components/Header";
+import KeyboardInput from "../components/KeyboardInput";
 
 const TIME_DIFFERENCE = 10;
 

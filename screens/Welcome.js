@@ -3,9 +3,9 @@ import { StyleSheet, View, Text, Image } from "react-native";
 import { containers } from "../styles/containers";
 import { effects } from "../styles/effects";
 import { typography } from "../styles/typography";
-import Button from "./Button";
-import Footer from "./Footer";
-import Input from "./Input";
+import Button from "../components/Button";
+import Footer from "../components/Footer";
+import Input from "../components/Input";
 import icon from "../assets/icon-color.png";
 
 const Welcome = () => {

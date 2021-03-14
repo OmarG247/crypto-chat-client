@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Platform, StatusBar } from "react-native";
+import { Platform } from "react-native";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { loadAsync } from "expo-font";
 import { colors } from "./styles/colors";
-import TestNavigation from "./components/TestNavigation";
-import Home from "./components/Home";
-import Chat from "./components/Chat";
-import Welcome from "./components/Welcome";
-import Contacts from "./components/Contacts";
-import NewMessage from "./components/NewMessage";
+import TestNavigation from "./screens/TestNavigation";
+import Home from "./screens/Home";
+import Chat from "./screens/Chat";
+import Welcome from "./screens/Welcome";
+import Contacts from "./screens/Contacts";
+import NewMessage from "./screens/NewMessage";
 
 const ANDROID_STATUSBAR_HEIGHT = 20;
 

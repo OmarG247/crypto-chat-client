@@ -2,14 +2,14 @@ import React from "react";
 import { View, ScrollView } from "react-native";
 import { colors } from "../styles/colors";
 import { containers } from "../styles/containers";
-import Contact from "./Contact";
-import Footer from "./Footer";
-import Header from "./Header";
-import Spacer from "./Spacer";
-import Option from "./Option";
-import Button from "./Button";
-import Fab from "./Fab";
-import Input from "./Input";
+import Contact from "../components/Contact";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
+import Spacer from "../components/Spacer";
+import Option from "../components/Option";
+import Button from "../components/Button";
+import Fab from "../components/Fab";
+import Input from "../components/Input";
 
 const sampleContact = {
   name: "Nick Kazan",
