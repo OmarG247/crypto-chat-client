@@ -1,6 +1,13 @@
 import React, { useEffect, useRef } from "react";
 import { useState } from "react";
-import { ScrollView, StyleSheet, View, Text, Keyboard } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  Text,
+  Keyboard,
+  _ScrollView,
+} from "react-native";
 import { colors } from "../styles/colors";
 import { containers } from "../styles/containers";
 import { typography } from "../styles/typography";
@@ -70,34 +77,21 @@ const Chat = ({ navigation }) => {
   const [messages, setMessages] = useState(sampleMessages);
   const [messagesHeight, setMessagesHeight] = useState(0);
   const _scrollView = useRef();
-  const keyboardOnEvent = useRef();
-  const keyBoardOffEvent = useRef();
 
   const scrollTo = (position) => {
-    _scrollView.current.scrollTo({ y: position });
+    if (position !== null && _scrollView.current !== null) {
+      _scrollView.current.scrollTo({ y: position });
+    }
   };
 
   const addKeyboardListeners = () => {
-    keyboardOnEvent.current = Keyboard.addListener(
-      "keyboardWillShow",
-      (event) => {
-        scrollTo(event.endCoordinates.height + messagesHeight + 100);
-      }
-    );
-    keyBoardOffEvent.current = Keyboard.addListener(
-      "keyboardWillHide",
-      (event) => {
-        scrollTo(event.endCoordinates.height + messagesHeight + 100);
-      }
-    );
+    Keyboard.addListener("keyboardWillShow", (event) => {
+      scrollTo(event.endCoordinates.height + messagesHeight + 100);
+    });
   };
 
   useEffect(() => {
-    setMessagesHeight(_scrollView.current.height);
     addKeyboardListeners();
-    return () => {
-      Keyboard.removeAllListeners();
-    };
   }, []);
 
   useEffect(() => {
