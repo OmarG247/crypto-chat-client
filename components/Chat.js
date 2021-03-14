@@ -1,22 +1,17 @@
 import React from "react";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import {
   ScrollView,
   StyleSheet,
   View,
   Text,
-  TextInput,
-  Keyboard,
-  KeyboardAvoidingView,
 } from "react-native";
 import { colors } from "../styles/colors";
 import { containers } from "../styles/containers";
 import { typography } from "../styles/typography";
 import Divider from "./Divider";
-import Fab from "./Fab";
 import Header from "./Header";
 import KeyboardInput from "./KeyboardInput";
-import Spacer from "./Spacer";
 
 const TIME_DIFFERENCE = 10;
 
@@ -56,31 +51,28 @@ const sampleMessages = [
     time: new Date("March 17, 2021 12:32:00"),
     text: "long message",
   },
+  {
+    type: "outgoing",
+    time: new Date("March 17, 2021 12:34:00"),
+    text: "long message",
+  },
+  {
+    type: "incoming",
+    time: new Date("March 17, 2021 13:34:00"),
+    text: "test message",
+  },
+  {
+    type: "outgoing",
+    time: new Date("March 17, 2021 13:36:00"),
+    text: "long message",
+  },
 ];
 
 const timeBetween = (timeA, timeB) =>
   (timeA.getTime() - timeB.getTime()) / 60 / 1000 > TIME_DIFFERENCE;
 
 const Chat = ({ navigation }) => {
-  const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [messages, setMessages] = useState(sampleMessages);
-  const keyboardOnListener = useRef();
-  const keyboardOffListener = useRef();
-
-  useEffect(() => {
-    keyboardOnListener.current = Keyboard.addListener(
-      "keyboardWillShow",
-      (event) => {
-        setKeyboardHeight(event.endCoordinates.height);
-      }
-    );
-    keyboardOffListener.current = Keyboard.addListener(
-      "keyboardWillHide",
-      () => {
-        setKeyboardHeight(0);
-      }
-    );
-  }, []);
 
   return (
     <View style={containers.parent}>
@@ -94,32 +86,49 @@ const Chat = ({ navigation }) => {
         }}
         text="Nick Kazan"
       />
-      <ScrollView style={[containers.basic, { marginBottom: keyboardHeight }]}>
-        {messages.length > 0 &&
-          messages.map((message, index) => (
-            <View key={`message-${index}`}>
-              {index > 1 &&
-                timeBetween(message.time, messages[index - 1].time) && (
-                  <Divider />
-                )}
-              <Message
-                timeStamp={
-                  index > 1 &&
-                  timeBetween(message.time, messages[index - 1].time)
-                    ? message.time
-                    : false
-                }
-                type={message.type}
-                text={message.text}
-              />
-            </View>
-          ))}
-        {keyboardHeight > 0 && <Spacer height={24 + 52} />}
-      </ScrollView>
+      <View
+        style={[
+          containers.basic,
+          {
+            flex: 1,
+            paddingBottom: 0,
+          },
+        ]}
+      >
+        <ScrollView>
+          {messages.length > 0 &&
+            messages.map((message, index) => (
+              <View key={`message-${index}`}>
+                {index > 1 &&
+                  timeBetween(message.time, messages[index - 1].time) && (
+                    <Divider />
+                  )}
+                <Message
+                  timeStamp={
+                    index > 1 &&
+                    timeBetween(message.time, messages[index - 1].time)
+                      ? message.time
+                      : false
+                  }
+                  type={message.type}
+                  text={message.text}
+                />
+              </View>
+            ))}
+        </ScrollView>
+      </View>
       <KeyboardInput
-        keyboardHeight={keyboardHeight}
         onChangeText={() => {}}
-        onPress={() => {}}
+        onPress={() => {
+          setMessages([
+            ...messages,
+            {
+              type: messages.length % 2 === 0 ? "incoming" : "outgoing",
+              time: new Date(),
+              text: "test",
+            },
+          ]);
+        }}
         action="send"
       />
     </View>
