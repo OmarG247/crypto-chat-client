@@ -3,13 +3,14 @@ import { StyleSheet, Text, View, TextInput } from "react-native";
 import { colors } from "../styles/colors";
 import { typography } from "../styles/typography";
 
-const Input = ({ label, error, placeholder, onChangeText, style }) => (
+const Input = ({ label, error, placeholder, onChangeText, value, style }) => (
   <View style={[InputStyles.container, style]}>
     <Text style={[typography.detail, InputStyles.label]}>{label}</Text>
     <TextInput
       placeholder={placeholder}
       placeholderTextColor={colors.surface}
       onChangeText={onChangeText}
+      value={value}
       style={[
         InputStyles.input,
         { borderBottomColor: error ? colors.redError : colors.limeAccent },

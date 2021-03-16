@@ -11,6 +11,7 @@ import Chat from "./screens/Chat";
 import Welcome from "./screens/Welcome";
 import Contacts from "./screens/Contacts";
 import NewMessage from "./screens/NewMessage";
+import NewContact from "./screens/NewContact";
 
 const ANDROID_STATUSBAR_HEIGHT = 20;
 
@@ -49,6 +50,7 @@ const App = () => {
           <Stack.Screen name="Welcome" component={Welcome} />
           <Stack.Screen name="Contacts" component={Contacts} />
           <Stack.Screen name="NewMessage" component={NewMessage} />
+          <Stack.Screen name="NewContact" component={NewContact} />
         </Stack.Navigator>
       </NavigationContainer>
     )
