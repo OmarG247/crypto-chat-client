@@ -44,7 +44,7 @@ const InputStyles = StyleSheet.create({
   error: {
     position: 'absolute',
     left: 16,
-    bottom: 0,
+    bottom: -4,
     color: colors.redError,
   },
 });
