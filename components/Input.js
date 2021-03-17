@@ -13,6 +13,7 @@ const Input = ({ label, error, placeholder, onChangeText, value, style }) => (
       value={value}
       style={[
         InputStyles.input,
+        typography.body,
         { borderBottomColor: error ? colors.redError : colors.limeAccent },
       ]}
     />
