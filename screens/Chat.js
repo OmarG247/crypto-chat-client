@@ -150,6 +150,7 @@ const Chat = ({ navigation }) => {
         </ScrollView>
       </View>
       <KeyboardInput
+        type="action"
         onChangeText={() => {}}
         onPress={() => {
           setMessages([

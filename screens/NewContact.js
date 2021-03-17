@@ -7,8 +7,8 @@ import Input from "../components/Input";
 
 const NewContact = ({ navigation }) => {
   const [userInfo, setUserInfo] = useState({
-    firstName: "first",
-    lastName: "last",
+    firstName: "",
+    lastName: "",
     color: null,
   });
 

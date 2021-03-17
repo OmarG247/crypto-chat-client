@@ -64,10 +64,9 @@ const NewMessage = ({ navigation }) => {
       />
       <View style={containers.main}>
         <KeyboardInput
+          type="search"
           onChangeText={(input) => setSearch(input)}
           style={{ marginBottom: 8 }}
-          action="search"
-          onPress={() => searchContacts()}
         />
         <ScrollView style={containers.main}>
           {(searchResults.length === 0 && search === ""
