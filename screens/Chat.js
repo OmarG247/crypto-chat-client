@@ -7,6 +7,7 @@ import { typography } from "../styles/typography";
 import Divider from "../components/Divider";
 import Header from "../components/Header";
 import KeyboardInput from "../components/KeyboardInput";
+import Spacer from '../components/Spacer';
 
 const TIME_DIFFERENCE = 10;
 
@@ -138,7 +139,7 @@ const Chat = ({ navigation }) => {
           containers.main,
           {
             flex: 1,
-            paddingBottom: 0,
+            paddingVertical: 0
           },
         ]}
       >
@@ -148,6 +149,7 @@ const Chat = ({ navigation }) => {
           ref={_scrollView}
           onScroll={handleScroll}
         >
+          <Spacer height={16} />
           {messages.length > 0 &&
             messages.map((message, index) => (
               <View key={`message-${index}`}>
