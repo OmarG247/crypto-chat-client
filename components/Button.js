@@ -11,7 +11,7 @@ const buttonColors = {
 
 const Button = ({
   text,
-  color,
+  color = "lime",
   secondary = false,
   onPress,
   disabled = false,

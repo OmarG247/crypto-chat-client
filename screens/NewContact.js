@@ -4,6 +4,8 @@ import { containers } from "../styles/containers";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Input from "../components/Input";
+import ColorPicker from "../components/ColorPicker";
+import Button from '../components/Button';
 
 const NewContact = ({ navigation }) => {
   const [userInfo, setUserInfo] = useState({
@@ -40,6 +42,8 @@ const NewContact = ({ navigation }) => {
           value={userInfo.lastName}
           error={!userInfo.lastName && "field is mandatory"}
         />
+        <ColorPicker />
+        <Button text="generate messaging key" />
       </View>
       <Footer actionDisabled={!formIsValid()} action="save" />
     </View>
@@ -49,6 +53,7 @@ const NewContact = ({ navigation }) => {
 const NewContactStyles = StyleSheet.create({
   input: {
     paddingVertical: 16,
+    paddingHorizontal: 12,
   },
 });
 
