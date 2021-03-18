@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, ScrollView } from "react-native";
 import { colors } from "../styles/colors";
 import { containers } from "../styles/containers";
@@ -11,38 +11,69 @@ import Button from "../components/Button";
 import Fab from "../components/Fab";
 import Input from "../components/Input";
 
-const sampleContact = {
-  name: "Nick Kazan",
-  color: colors.tealSecondary,
-};
+const sampleContacts = [
+  {
+    name: "Bob",
+    color: colors.tealSecondary,
+  },
+  {
+    name: "Nick Kazan",
+    color: colors.tealSecondary,
+  },
+  {
+    name: "Rachel",
+    color: colors.bluePrimary,
+  },
+  {
+    name: "Susan",
+    color: colors.redError,
+  },
+  {
+    name: "Zach",
+    color: colors.bluePrimary,
+  },
+  {
+    name: "Aidan",
+    color: colors.grey,
+  },
+];
 
-const Home = ({ navigation }) => (
-  <View style={containers.parent}>
-    <Header
-      options
-      handleOptions={() => {}}
-      cancelText="back"
-      handleCancel={() => {
-        navigation.goBack();
-      }}
-      text="Messages"
-    />
-    <ScrollView style={containers.main}>
-      <Contact onPress={() => {}} newMessage contact={sampleContact} />
-      <Contact onPress={() => {}} newMessage contact={sampleContact} />
-      <Contact onPress={() => {}} newMessage contact={sampleContact} />
-      <Contact onPress={() => {}} newMessage contact={sampleContact} />
-      <Contact onPress={() => {}} newMessage contact={sampleContact} />
-      <Contact onPress={() => {}} newMessage contact={sampleContact} />
-      <Contact onPress={() => {}} newMessage contact={sampleContact} />
-      <Spacer height={200} />
-    </ScrollView>
-    {/* <Option text="test" onPress={() => {}} /> */}
-    {/* <Input onChangeText={() => {}} label="test" /> */}
-    {/* <Button text="test" color="lime" onPress={() => {}} /> */}
-    {/* <Fab action="new" color="lime" /> */}
-    <Footer action="new" handleAction={() => {}} />
-  </View>
-);
+const Home = ({ navigation }) => {
+  const [contacts, setContacts] = useState([]);
+
+  useEffect(() => {
+    setContacts(sampleContacts);
+  }, []);
+
+  return (
+    <View style={containers.parent}>
+      <Header
+        options
+        handleOptions={() => {}}
+        cancelText="back"
+        handleCancel={() => {
+          navigation.goBack();
+        }}
+        text="Messages"
+      />
+      <ScrollView style={containers.main}>
+        {contacts.map((contact, index) => (
+          <Contact
+            key={`contact-${index}`}
+            onPress={() => {}}
+            newMessage
+            contact={contact}
+          />
+        ))}
+        <Spacer height={200} />
+        {/* <Option text="test" onPress={() => {}} /> */}
+        {/* <Input onChangeText={() => {}} label="test" /> */}
+        {/* <Button text="test" color="lime" onPress={() => {}} /> */}
+        {/* <Fab action="new" color="lime" /> */}
+      </ScrollView>
+      <Footer action="new" handleAction={() => {}} />
+    </View>
+  );
+};
 
 export default Home;
