@@ -12,52 +12,52 @@ const TIME_DIFFERENCE = 10;
 
 const sampleMessages = [
   {
-    type: "incoming",
+    senderId: "nick",
     time: new Date("March 12, 2021 12:05:00"),
     text: "test message",
   },
   {
-    type: "incoming",
+    senderId: "nick",
     time: new Date("March 12, 2021 12:06:00"),
     text: "test message very very very very very very very long message",
   },
   {
-    type: "outgoing",
+    senderId: "zach",
     time: new Date("March 12, 2021 12:06:30"),
     text: "test message",
   },
   {
-    type: "incoming",
+    senderId: "zach",
     time: new Date("March 12, 2021 12:37:00"),
     text: "test message",
   },
   {
-    type: "outgoing",
+    senderId: "nick",
     time: new Date("March 13, 2021 12:32:00"),
     text: "long message",
   },
   {
-    type: "incoming",
+    senderId: "nick",
     time: new Date("March 14, 2021 12:37:00"),
     text: "test message",
   },
   {
-    type: "outgoing",
+    senderId: "nick",
     time: new Date("March 17, 2021 12:32:00"),
     text: "long message",
   },
   {
-    type: "outgoing",
+    senderId: "zach",
     time: new Date("March 17, 2021 12:34:00"),
     text: "long message",
   },
   {
-    type: "incoming",
+    senderId: "zach",
     time: new Date("March 17, 2021 13:34:00"),
     text: "test message",
   },
   {
-    type: "outgoing",
+    senderId: "zach",
     time: new Date("March 17, 2021 13:36:00"),
     text: "long message",
   },
@@ -68,9 +68,21 @@ const timeBetween = (timeA, timeB) =>
 
 const Chat = ({ navigation }) => {
   const [messages, setMessages] = useState(sampleMessages);
+  const [userId, setUserId] = useState("");
+  const [messageText, setMessageText] = useState("");
   const [messagesHeight, setMessagesHeight] = useState(0);
   const [scrollOffset, setScrollOffset] = useState(0);
   const _scrollView = useRef();
+
+  useEffect(() => {
+    addKeyboardListeners();
+    setUserId("nick");
+  }, []);
+
+  useEffect(() => {
+    scrollTo(messagesHeight);
+    addKeyboardListeners();
+  }, [messagesHeight]);
 
   const scrollTo = (position) => {
     if (position !== null && _scrollView.current !== null) {
@@ -92,14 +104,22 @@ const Chat = ({ navigation }) => {
     });
   };
 
-  useEffect(() => {
-    addKeyboardListeners();
-  }, []);
+  const messageType = (message) =>
+    message.senderId === userId ? "outgoing" : "incoming";
 
-  useEffect(() => {
-    scrollTo(messagesHeight);
-    addKeyboardListeners();
-  }, [messagesHeight]);
+  const sendMessage = () => {
+    const cleanText = messageText.trim();
+
+    setMessages([
+      ...messages,
+      {
+        senderId: messages.length % 2 === 0 ? "nick" : "zach",
+        time: new Date(),
+        text: cleanText,
+      },
+    ]);
+    setMessageText("");
+  };
 
   return (
     <View style={containers.parent}>
@@ -142,7 +162,7 @@ const Chat = ({ navigation }) => {
                       ? message.time
                       : false
                   }
-                  type={message.type}
+                  type={messageType(message)}
                   text={message.text}
                 />
               </View>
@@ -150,18 +170,11 @@ const Chat = ({ navigation }) => {
         </ScrollView>
       </View>
       <KeyboardInput
+        disabled={messageText.trim() === ""}
         type="action"
-        onChangeText={() => {}}
-        onPress={() => {
-          setMessages([
-            ...messages,
-            {
-              type: messages.length % 2 === 0 ? "incoming" : "outgoing",
-              time: new Date(),
-              text: "test",
-            },
-          ]);
-        }}
+        onChangeText={(input) => setMessageText(input)}
+        value={messageText}
+        onPress={() => sendMessage()}
         style={{ marginBottom: 40 }}
         action="send"
       />

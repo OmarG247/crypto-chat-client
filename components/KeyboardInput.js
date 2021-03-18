@@ -14,8 +14,10 @@ const KeyboardInput = ({
   onChangeText,
   onPress,
   action,
+  value,
   style,
   type = "action",
+  disabled,
 }) => {
   return (
     <KeyboardAvoidingView
@@ -26,6 +28,7 @@ const KeyboardInput = ({
       {type === "action" ? (
         <>
           <TextInput
+            value={value}
             keyboardAppearance="dark"
             placeholder="Aa"
             placeholderTextColor={colors.surface}
@@ -33,11 +36,17 @@ const KeyboardInput = ({
             onChangeText={onChangeText}
             multiline
           ></TextInput>
-          <Fab color="blue" action={action} onPress={onPress} />
+          <Fab
+            color="blue"
+            action={action}
+            onPress={onPress}
+            disabled={disabled}
+          />
         </>
       ) : (
         <View style={KeyboardInputStyles.searchContainer}>
           <TextInput
+            value={value}
             keyboardAppearance="dark"
             placeholder="Aa"
             placeholderTextColor={colors.surface}
