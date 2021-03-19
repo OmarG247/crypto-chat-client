@@ -5,17 +5,22 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Input from "../components/Input";
 import ColorPicker from "../components/ColorPicker";
-import Button from '../components/Button';
+import Button from "../components/Button";
+import { colors } from "../styles/colors";
 
 const NewContact = ({ navigation }) => {
   const [userInfo, setUserInfo] = useState({
     firstName: "",
     lastName: "",
-    color: null,
+    color: colors.limeAccent,
   });
 
   const handleInput = (type, input) => {
     setUserInfo({ ...userInfo, [type]: input });
+  };
+
+  const handleColor = (color) => {
+    setUserInfo({ ...userInfo, color });
   };
 
   const formIsValid = () => userInfo.firstName && userInfo.lastName;
@@ -42,7 +47,7 @@ const NewContact = ({ navigation }) => {
           value={userInfo.lastName}
           error={!userInfo.lastName && "field is mandatory"}
         />
-        <ColorPicker />
+        <ColorPicker color={userInfo.color} handleColor={handleColor} />
         <Button text="generate messaging key" />
       </View>
       <Footer actionDisabled={!formIsValid()} action="save" />

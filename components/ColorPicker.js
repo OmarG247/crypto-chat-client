@@ -1,18 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { colors } from "../styles/colors";
 import { typography } from "../styles/typography";
 
 const options = [
-  "limeAccent",
-  "bluePrimary",
-  "tealSecondary",
-  "redError",
-  "light",
+  colors.limeAccent,
+  colors.bluePrimary,
+  colors.tealSecondary,
+  colors.redError,
+  colors.light,
 ];
 
-const ColorPicker = ({ style }) => {
+const ColorPicker = ({ style, color = colors.limeAccent, handleColor }) => {
+  const [selectedColor, setSelectedColor] = useState(color);
+
+  useEffect(() => {
+    handleColor(selectedColor);
+  }, [selectedColor]);
+
   return (
     <View style={[ColorPickerStyles.container, style]}>
       <Text
@@ -27,11 +33,14 @@ const ColorPicker = ({ style }) => {
         <View style={ColorPickerStyles.colorSlider}>
           {options.map((option) => (
             <View style={ColorPickerStyles.colorContainer}>
-              <View style={[ColorPickerStyles.colorSelector]} />
-              <View
+              {selectedColor === option && (
+                <View style={ColorPickerStyles.colorSelector} />
+              )}
+              <TouchableOpacity
+                onPress={() => setSelectedColor(option)}
                 style={[
                   ColorPickerStyles.colorOption,
-                  { backgroundColor: colors[option] },
+                  { backgroundColor: option },
                 ]}
               />
             </View>
