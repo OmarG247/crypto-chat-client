@@ -31,8 +31,11 @@ const ColorPicker = ({ style, color = colors.limeAccent, handleColor }) => {
       </Text>
       <ScrollView horizontal>
         <View style={ColorPickerStyles.colorSlider}>
-          {options.map((option) => (
-            <View style={ColorPickerStyles.colorContainer}>
+          {options.map((option, index) => (
+            <View
+              key={`color-${index}`}
+              style={ColorPickerStyles.colorContainer}
+            >
               {selectedColor === option && (
                 <View style={ColorPickerStyles.colorSelector} />
               )}

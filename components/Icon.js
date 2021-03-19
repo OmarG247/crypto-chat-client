@@ -16,6 +16,8 @@ import searchDark from "../assets/icons/search-dark.png";
 import searchLight from "../assets/icons/search-light.png";
 import sendDark from "../assets/icons/send-dark.png";
 import sendLight from "../assets/icons/send-light.png";
+import unlockDark from "../assets/icons/unlock-dark.png";
+import unlockLight from "../assets/icons/unlock-light.png";
 
 const Icons = {
   back: {
@@ -49,6 +51,10 @@ const Icons = {
   send: {
     dark: sendDark,
     light: sendLight,
+  },
+  unlock: {
+    dark: unlockDark,
+    light: unlockLight,
   },
 };
 
