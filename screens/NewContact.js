@@ -48,7 +48,9 @@ const NewContact = ({ navigation }) => {
           error={!userInfo.lastName && "field is mandatory"}
         />
         <ColorPicker color={userInfo.color} handleColor={handleColor} />
-        <Button text="generate messaging key" />
+        <View style={{ paddingVertical: 16, paddingHorizontal: 12 }}>
+          <Button style={{ width: "100%" }} text="generate messaging key" />
+        </View>
       </View>
       <Footer actionDisabled={!formIsValid()} action="save" />
     </View>
