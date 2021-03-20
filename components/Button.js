@@ -11,7 +11,7 @@ const buttonColors = {
 
 const Button = ({
   text,
-  color,
+  color = "lime",
   secondary = false,
   onPress,
   disabled = false,
@@ -58,6 +58,7 @@ const Button = ({
 const ButtonStyles = StyleSheet.create({
   container: {
     display: "flex",
+    alignItems: "center",
     paddingVertical: 8,
     paddingHorizontal: 12,
     borderRadius: 10,

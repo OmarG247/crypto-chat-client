@@ -19,7 +19,11 @@ const Welcome = () => {
           Welcome to a new kind of security
         </Text>
         <Input style={WelcomeStyles.input} label="username" />
-        <Button text="chat" color="lime" style={WelcomeStyles.button} />
+        <Input style={WelcomeStyles.input} label="password" />
+        <View style={WelcomeStyles.actions}>
+          <Button text="register" color="lime" secondary style={WelcomeStyles.button} />
+          <Button text="login" color="lime" />
+        </View>
       </View>
       <Footer />
     </View>
@@ -48,9 +52,15 @@ const WelcomeStyles = StyleSheet.create({
     paddingVertical: 24,
   },
   button: {
-    margin: 16,
-    alignSelf: "flex-end",
+    marginRight: 12,
   },
+  actions: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: 'flex-end',
+    margin: 16,
+  }
 });
 
 export default Welcome;

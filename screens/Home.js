@@ -49,7 +49,7 @@ const Home = ({ navigation }) => {
     <View style={containers.parent}>
       <Header
         options
-        handleOptions={() => {}}
+        handleOptions={() => navigation.navigate("AppOptions")}
         cancelText="back"
         handleCancel={() => {
           navigation.goBack();
@@ -66,10 +66,6 @@ const Home = ({ navigation }) => {
           />
         ))}
         <Spacer height={200} />
-        {/* <Option text="test" onPress={() => {}} /> */}
-        {/* <Input onChangeText={() => {}} label="test" /> */}
-        {/* <Button text="test" color="lime" onPress={() => {}} /> */}
-        {/* <Fab action="new" color="lime" /> */}
       </ScrollView>
       <Footer action="new" handleAction={() => {}} />
     </View>
