@@ -7,7 +7,7 @@ import { typography } from "../styles/typography";
 import Divider from "../components/Divider";
 import Header from "../components/Header";
 import KeyboardInput from "../components/KeyboardInput";
-import Spacer from '../components/Spacer';
+import Spacer from "../components/Spacer";
 
 const TIME_DIFFERENCE = 10;
 
@@ -128,10 +128,7 @@ const Chat = ({ navigation }) => {
         options
         handleOptions={() => {}}
         cancelText="back"
-        handleCancel={() => {
-          Keyboard.removeAllListeners();
-          navigation.goBack();
-        }}
+        handleCancel={() => navigation.goBack()}
         text="Nick Kazan"
       />
       <View
@@ -139,7 +136,7 @@ const Chat = ({ navigation }) => {
           containers.main,
           {
             flex: 1,
-            paddingVertical: 0
+            paddingVertical: 0,
           },
         ]}
       >

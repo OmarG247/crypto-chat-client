@@ -21,9 +21,13 @@ const TestNavigation = ({ navigation }) => {
           onPress={() => navigation.navigate("NewMessage")}
           text="New Message"
         />
-                <Option
+        <Option
           onPress={() => navigation.navigate("NewContact")}
           text="New Contact"
+        />
+        <Option
+          onPress={() => navigation.navigate("AppOptions")}
+          text="App Options"
         />
       </View>
       <Footer />
