@@ -48,7 +48,7 @@ const Contacts = ({ navigation }) => {
         cancelText="back"
         handleCancel={() => navigation.goBack()}
       />
-      <ScrollView style={contacts.main}>
+      <ScrollView style={containers.main}>
         {contacts.map((contact, index) => (
           <Contact key={`contact-${index}`} contact={contact} />
         ))}
