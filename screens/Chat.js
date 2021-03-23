@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import { ScrollView, StyleSheet, View, Text, Keyboard } from "react-native";
 import { colors } from "../styles/colors";
-import { containers } from "../styles/containers";
+import { containers, headerHeight } from "../styles/containers";
 import { typography } from "../styles/typography";
 import Divider from "../components/Divider";
 import Header from "../components/Header";
@@ -137,7 +137,7 @@ const Chat = ({ navigation }) => {
           onContentSizeChange={(_, height) => setMessagesHeight(height)}
           ref={_scrollView}
           onScroll={handleScroll}
-          contentInset={{ top: 124 }}
+          contentContainerStyle={{ paddingTop: headerHeight }}
         >
           <Spacer height={16} />
           {messages.length > 0 &&

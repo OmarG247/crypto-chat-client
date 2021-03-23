@@ -9,7 +9,7 @@ const TestNavigation = ({ navigation }) => {
   return (
     <View style={containers.parent}>
       <ScrollView
-        contentInset={{ top: headerHeight }}
+        contentContainerStyle={{ paddingTop: headerHeight }}
         style={containers.main}
         scrollEnabled={false}
       >

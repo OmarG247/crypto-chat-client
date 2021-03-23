@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text } from "react-native";
-import { containers } from "../styles/containers";
+import { StyleSheet, View, Text, ScrollView } from "react-native";
+import { containers, headerHeight } from "../styles/containers";
 import { colors } from "../styles/colors";
 import { typography } from "../styles/typography";
 import Header from "../components/Header";
@@ -32,12 +32,11 @@ const NewContact = ({ navigation }) => {
 
   return (
     <View style={containers.parent}>
-      <Header
-        text="New contact"
-        cancelText="cancel"
-        handleCancel={() => navigation.goBack()}
-      />
-      <View style={containers.main}>
+      <ScrollView
+        style={containers.main}
+        contentContainerStyle={{ paddingTop: headerHeight }}
+        scrollEnabled={false}
+      >
         <Input
           style={NewContactStyles.block}
           onChangeText={(input) => handleInput("firstName", input)}
@@ -78,7 +77,12 @@ const NewContact = ({ navigation }) => {
             onPress={() => setKeyScanned(!keyScanned)}
           />
         </View>
-      </View>
+      </ScrollView>
+      <Header
+        text="New contact"
+        cancelText="cancel"
+        handleCancel={() => navigation.goBack()}
+      />
       <Footer actionDisabled={!isReady()} action="save" />
     </View>
   );

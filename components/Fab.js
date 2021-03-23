@@ -37,7 +37,7 @@ const Fab = ({
     backgroundColor: disabled
       ? colors.surface
       : secondary
-      ? colors.dark
+      ? colors.darkSurface
       : fabColor,
     ...fabShadow(),
   };

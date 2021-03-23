@@ -43,7 +43,10 @@ const Home = ({ navigation }) => {
 
   return (
     <View style={containers.parent}>
-      <ScrollView style={containers.main} contentInset={{ top: headerHeight }}>
+      <ScrollView
+        style={containers.main}
+        contentContainerStyle={{ paddingTop: headerHeight }}
+      >
         {contacts.map((contact, index) => (
           <Contact
             key={`contact-${index}`}
