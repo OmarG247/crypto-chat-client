@@ -124,13 +124,6 @@ const Chat = ({ navigation }) => {
 
   return (
     <View style={containers.parent}>
-      <Header
-        options
-        handleOptions={() => {}}
-        cancelText="back"
-        handleCancel={() => navigation.goBack()}
-        text="Nick Kazan"
-      />
       <View
         style={[
           containers.main,
@@ -144,6 +137,7 @@ const Chat = ({ navigation }) => {
           onContentSizeChange={(_, height) => setMessagesHeight(height)}
           ref={_scrollView}
           onScroll={handleScroll}
+          contentInset={{ top: 124 }}
         >
           <Spacer height={16} />
           {messages.length > 0 &&
@@ -167,6 +161,13 @@ const Chat = ({ navigation }) => {
             ))}
         </ScrollView>
       </View>
+      <Header
+        options
+        handleOptions={() => {}}
+        cancelText="back"
+        handleCancel={() => navigation.goBack()}
+        text="Nick Kazan"
+      />
       <KeyboardInput
         disabled={messageText.trim() === ""}
         type="action"

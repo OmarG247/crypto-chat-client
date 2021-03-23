@@ -3,7 +3,7 @@ import { colors } from "./colors";
 
 export const containers = StyleSheet.create({
   parent: {
-    position: 'relative',
+    position: "relative",
     flex: 1,
     backgroundColor: colors.dark,
   },
@@ -15,3 +15,5 @@ export const containers = StyleSheet.create({
     paddingTop: 16,
   },
 });
+
+export const headerHeight = 124;

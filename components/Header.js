@@ -3,6 +3,8 @@ import { StyleSheet, View, Text, TouchableHighlight } from "react-native";
 import { colors } from "../styles/colors";
 import { typography } from "../styles/typography";
 import Fab from "./Fab";
+import { BlurView } from 'expo-blur';
+import { headerHeight } from "../styles/containers";
 
 const Header = ({
   text,
@@ -12,7 +14,7 @@ const Header = ({
   handleCancel = null,
   style,
 }) => (
-  <View style={[HeaderStyles.container, style]}>
+  <BlurView tint="dark" intensity={90} style={[HeaderStyles.container, style]}>
     {cancelText && (
       <TouchableHighlight style={{ padding: 16 }} onPress={handleCancel}>
         <Text style={typography.detail}>{cancelText}</Text>
@@ -34,13 +36,14 @@ const Header = ({
         ></Fab>
       )}
     </View>
-  </View>
+  </BlurView>
 );
 
 const HeaderStyles = StyleSheet.create({
   container: {
+    position: "absolute",
     display: "flex",
-    height: 124,
+    height: headerHeight,
     width: "100%",
     alignItems: "flex-start",
     justifyContent: "flex-end",

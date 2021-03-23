@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { View, ScrollView} from "react-native";
+import { View, ScrollView } from "react-native";
 import { colors } from "../styles/colors";
-import { containers } from "../styles/containers";
+import { containers, headerHeight } from "../styles/containers";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
@@ -43,17 +43,17 @@ const Contacts = ({ navigation }) => {
 
   return (
     <View style={containers.parent}>
-      <Header
-        text="Contacts"
-        cancelText="back"
-        handleCancel={() => navigation.goBack()}
-      />
-      <ScrollView style={containers.main}>
+      <ScrollView style={containers.main} contentInset={{ top: headerHeight }}>
         {contacts.map((contact, index) => (
           <Contact key={`contact-${index}`} contact={contact} />
         ))}
         <Spacer height={200} />
       </ScrollView>
+      <Header
+        text="Contacts"
+        cancelText="back"
+        handleCancel={() => navigation.goBack()}
+      />
       <Footer action="new" handleAction={() => {}} />
     </View>
   );
