@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableHighlight,
-} from "react-native";
+import { StyleSheet, View, Text, TouchableHighlight } from "react-native";
 import { colors } from "../styles/colors";
 import { typography } from "../styles/typography";
 import Fab from "./Fab";

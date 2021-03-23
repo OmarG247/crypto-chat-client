@@ -12,7 +12,6 @@ import Contacts from "./screens/Contacts";
 import NewMessage from "./screens/NewMessage";
 import NewContact from "./screens/NewContact";
 import AppOptions from "./screens/AppOptions";
-import { STATUS_BAR_HEIGHT } from "./styles/containers";
 
 const Stack = createStackNavigator();
 
