@@ -54,7 +54,6 @@ const Contacts = ({ navigation }) => {
         ))}
         <Spacer height={200} />
       </ScrollView>
-      <View style={containers.main}></View>
       <Footer action="new" handleAction={() => {}} />
     </View>
   );

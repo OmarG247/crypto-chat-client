@@ -69,10 +69,11 @@ const NewContact = ({ navigation }) => {
           )}
         </View>
         <View style={NewContactStyles.block}>
-          <Button style={{ width: "100%" }} text="scan key" />
+          <Button expanded text="scan key" />
           <Button
             secondary
-            style={{ width: "100%", marginTop: 12 }}
+            expanded
+            style={{ marginTop: 12 }}
             text="display key"
             onPress={() => setKeyScanned(!keyScanned)}
           />

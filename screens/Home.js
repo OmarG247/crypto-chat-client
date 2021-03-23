@@ -6,10 +6,6 @@ import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Spacer from "../components/Spacer";
-import Option from "../components/Option";
-import Button from "../components/Button";
-import Fab from "../components/Fab";
-import Input from "../components/Input";
 
 const sampleContacts = [
   {

@@ -9,8 +9,9 @@ export const containers = StyleSheet.create({
   },
   main: {
     width: "100%",
+    flex: 1,
     display: "flex",
     flexDirection: "column",
-    paddingVertical: 16,
+    paddingTop: 16,
   },
 });
