@@ -6,6 +6,7 @@ import { typography } from "../styles/typography";
 import { effects } from "../styles/effects";
 import Fab from "../components/Fab";
 import { BarCodeScanner } from "expo-barcode-scanner";
+import { colors } from "../styles/colors";
 
 const Scan = ({ navigation }) => {
   const [hasPermission, setPersmission] = useState(false);
@@ -35,18 +36,10 @@ const Scan = ({ navigation }) => {
       {hasPermission ? (
         <BarCodeScanner
           onBarCodeScanned={handleCodeScanned}
-          style={{ height: "100%", display: "flex", position: "relative" }}
+          style={ScanStyles.scanner}
         >
-          <View
-            style={{
-              width: "100%",
-              position: "absolute",
-              paddingBottom: 84,
-              display: "flex",
-              alignItems: "center",
-              bottom: 0,
-            }}
-          >
+          <View style={ScanStyles.frame} />
+          <View style={ScanStyles.actionsContainer}>
             <Text
               style={[typography.button, effects.glow, { marginBottom: 24 }]}
             >
@@ -69,6 +62,30 @@ const Scan = ({ navigation }) => {
   );
 };
 
-const ScanStyles = StyleSheet.create({});
+const ScanStyles = StyleSheet.create({
+  scanner: {
+    height: "100%",
+    display: "flex",
+    position: "relative",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  frame: {
+    width: "80%",
+    aspectRatio: 1,
+    borderColor: colors.limeAccent,
+    borderWidth: 2,
+    borderStyle: "dashed",
+    borderRadius: 10,
+  },
+  actionsContainer: {
+    width: "100%",
+    position: "absolute",
+    paddingBottom: 84,
+    display: "flex",
+    alignItems: "center",
+    bottom: 0,
+  },
+});
 
 export default Scan;

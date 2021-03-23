@@ -10,7 +10,7 @@ const fabColors = {
 };
 
 const Fab = ({
-  color,
+  color = "lime",
   action,
   secondary = false,
   large = false,
