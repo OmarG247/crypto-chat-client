@@ -12,7 +12,6 @@ import Contacts from "./screens/Contacts";
 import NewMessage from "./screens/NewMessage";
 import NewContact from "./screens/NewContact";
 import AppOptions from "./screens/AppOptions";
-import Scan from "./screens/Scan";
 
 const Stack = createStackNavigator();
 
@@ -50,7 +49,6 @@ const App = () => {
           <Stack.Screen name="NewMessage" component={NewMessage} />
           <Stack.Screen name="NewContact" component={NewContact} />
           <Stack.Screen name="AppOptions" component={AppOptions} />
-          <Stack.Screen name="Scan" component={Scan} />
         </Stack.Navigator>
       </NavigationContainer>
     )

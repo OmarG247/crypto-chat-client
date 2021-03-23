@@ -10,6 +10,7 @@ import ColorPicker from "../components/ColorPicker";
 import Button from "../components/Button";
 import Icon from "../components/Icon";
 import QRKeyModal from "../components/QRKeyModal";
+import ScanModal from "../components/ScanModal";
 
 const NewContact = ({ navigation }) => {
   const [userInfo, setUserInfo] = useState({
@@ -19,6 +20,7 @@ const NewContact = ({ navigation }) => {
   });
   const [keyScanned, setKeyScanned] = useState(false);
   const [keyModalOpen, setKeyModalOpen] = useState(false);
+  const [scanModalOpen, setScanModalOpen] = useState(false);
   const cipherKey = "https://omarflores.dev";
 
   const handleInput = (type, input) => {
@@ -27,6 +29,11 @@ const NewContact = ({ navigation }) => {
 
   const handleColor = (color) => {
     setUserInfo({ ...userInfo, color });
+  };
+
+  const onScan = (data) => {
+    setScanModalOpen(false);
+    alert(`key scanned!: ${data}`);
   };
 
   const formIsValid = () => userInfo.firstName && userInfo.lastName;
@@ -75,7 +82,8 @@ const NewContact = ({ navigation }) => {
             <Button
               expanded
               text="scan key"
-              onPress={() => navigation.navigate("Scan")}
+              // onPress={() => navigation.navigate("Scan")}
+              onPress={() => setScanModalOpen(true)}
             />
             <Button
               secondary
@@ -98,6 +106,9 @@ const NewContact = ({ navigation }) => {
           cipherKey={cipherKey}
           onClose={() => setKeyModalOpen(false)}
         />
+      )}
+      {scanModalOpen && (
+        <ScanModal onScan={onScan} closeModal={() => setScanModalOpen(false)} />
       )}
     </>
   );

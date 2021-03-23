@@ -9,7 +9,7 @@ import { colors } from "../styles/colors";
 import Fab from "../components/Fab";
 import Button from "../components/Button";
 
-const Scan = ({ navigation }) => {
+const ScanModal = ({ onScan, closeModal }) => {
   const [hasPermission, setPersmission] = useState(false);
   const [scanned, setScanned] = useState(null);
 
@@ -21,8 +21,7 @@ const Scan = ({ navigation }) => {
 
   useEffect(() => {
     if (scanned) {
-      alert(`scanned: ${scanned}`);
-      navigation.goBack();
+      onScan(scanned);
     }
   }, [scanned]);
 
@@ -33,35 +32,37 @@ const Scan = ({ navigation }) => {
   };
 
   return (
-    <View style={[containers.parent, { paddingTop: 0 }]}>
-      {hasPermission ? (
-        <BarCodeScanner
-          onBarCodeScanned={handleCodeScanned}
-          style={ScanStyles.scanner}
-        >
-          <View style={ScanStyles.frame} />
-          <View style={ScanStyles.actionsContainer}>
-            <Text
-              style={[typography.button, effects.glow, { marginBottom: 24 }]}
-            >
-              scan a crypto chat QR key
+    <View style={{ position: "absolute", height: "100%", width: "100%" }}>
+      <View style={[containers.parent, { paddingTop: 0 }]}>
+        {hasPermission ? (
+          <BarCodeScanner
+            onBarCodeScanned={handleCodeScanned}
+            style={ScanStyles.scanner}
+          >
+            <View style={ScanStyles.frame} />
+            <View style={ScanStyles.actionsContainer}>
+              <Text
+                style={[typography.button, effects.glow, { marginBottom: 24 }]}
+              >
+                scan a crypto chat QR key
+              </Text>
+              <Fab
+                action="cancel"
+                secondary
+                large
+                onPress={() => closeModal()}
+              />
+            </View>
+          </BarCodeScanner>
+        ) : (
+          <View style={ScanStyles.noPermissions}>
+            <Text style={[typography.button, { marginBottom: 24 }]}>
+              Permissions are needed to scan key codes
             </Text>
-            <Fab
-              action="cancel"
-              secondary
-              large
-              onPress={() => navigation.goBack()}
-            />
+            <Button text="go back" onPress={() => closeModal()} />
           </View>
-        </BarCodeScanner>
-      ) : (
-        <View style={ScanStyles.noPermissions}>
-          <Text style={[typography.button, { marginBottom: 24 }]}>
-            Permissions are needed to scan key codes
-          </Text>
-          <Button text="go back" onPress={() => navigation.goBack()} />
-        </View>
-      )}
+        )}
+      </View>
     </View>
   );
 };
@@ -98,4 +99,4 @@ const ScanStyles = StyleSheet.create({
   },
 });
 
-export default Scan;
+export default ScanModal;
