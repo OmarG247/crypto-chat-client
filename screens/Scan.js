@@ -4,9 +4,10 @@ import { Camera } from "expo-camera";
 import { containers } from "../styles/containers";
 import { typography } from "../styles/typography";
 import { effects } from "../styles/effects";
-import Fab from "../components/Fab";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { colors } from "../styles/colors";
+import Fab from "../components/Fab";
+import Button from "../components/Button";
 
 const Scan = ({ navigation }) => {
   const [hasPermission, setPersmission] = useState(false);
@@ -54,8 +55,11 @@ const Scan = ({ navigation }) => {
           </View>
         </BarCodeScanner>
       ) : (
-        <View>
-          <Text>Permissions are needed to scan key codes</Text>
+        <View style={ScanStyles.noPermissions}>
+          <Text style={[typography.button, { marginBottom: 24 }]}>
+            Permissions are needed to scan key codes
+          </Text>
+          <Button text="go back" onPress={() => navigation.goBack()} />
         </View>
       )}
     </View>
@@ -63,6 +67,12 @@ const Scan = ({ navigation }) => {
 };
 
 const ScanStyles = StyleSheet.create({
+  noPermissions: {
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   scanner: {
     height: "100%",
     display: "flex",
