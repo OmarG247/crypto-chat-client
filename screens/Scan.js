@@ -5,10 +5,11 @@ import { containers } from "../styles/containers";
 import { typography } from "../styles/typography";
 import { effects } from "../styles/effects";
 import Fab from "../components/Fab";
+import { BarCodeScanner } from "expo-barcode-scanner";
 
 const Scan = ({ navigation }) => {
   const [hasPermission, setPersmission] = useState(false);
-  const [scanned, setScanned] = useState(false);
+  const [scanned, setScanned] = useState(null);
 
   useEffect(() => {
     Camera.requestPermissionsAsync().then(({ status }) => {
@@ -16,10 +17,24 @@ const Scan = ({ navigation }) => {
     });
   }, []);
 
+  useEffect(() => {
+    if (scanned) {
+      alert(`scanned: ${scanned}`);
+      navigation.goBack();
+    }
+  }, [scanned]);
+
+  const handleCodeScanned = ({ type, data }) => {
+    if (type === "org.iso.QRCode") {
+      setScanned(data);
+    }
+  };
+
   return (
-    <View style={containers.parent}>
+    <View style={[containers.parent, { paddingTop: 0 }]}>
       {hasPermission ? (
-        <Camera
+        <BarCodeScanner
+          onBarCodeScanned={handleCodeScanned}
           style={{ height: "100%", display: "flex", position: "relative" }}
         >
           <View
@@ -37,9 +52,14 @@ const Scan = ({ navigation }) => {
             >
               scan a crypto chat QR key
             </Text>
-            <Fab action="cancel" secondary large onPress={() => navigation.goBack()} />
+            <Fab
+              action="cancel"
+              secondary
+              large
+              onPress={() => navigation.goBack()}
+            />
           </View>
-        </Camera>
+        </BarCodeScanner>
       ) : (
         <View>
           <Text>Permissions are needed to scan key codes</Text>
