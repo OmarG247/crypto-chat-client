@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import { ScrollView, StyleSheet, View, Text, Keyboard } from "react-native";
 import { colors } from "../styles/colors";
-import { containers } from "../styles/containers";
+import { containers, headerHeight } from "../styles/containers";
 import { typography } from "../styles/typography";
 import Divider from "../components/Divider";
 import Header from "../components/Header";
@@ -124,19 +124,11 @@ const Chat = ({ navigation }) => {
 
   return (
     <View style={containers.parent}>
-      <Header
-        options
-        handleOptions={() => {}}
-        cancelText="back"
-        handleCancel={() => navigation.goBack()}
-        text="Nick Kazan"
-      />
       <View
         style={[
           containers.main,
           {
-            flex: 1,
-            paddingVertical: 0,
+            paddingTop: 0,
           },
         ]}
       >
@@ -145,6 +137,7 @@ const Chat = ({ navigation }) => {
           onContentSizeChange={(_, height) => setMessagesHeight(height)}
           ref={_scrollView}
           onScroll={handleScroll}
+          contentContainerStyle={{ paddingTop: headerHeight }}
         >
           <Spacer height={16} />
           {messages.length > 0 &&
@@ -168,6 +161,13 @@ const Chat = ({ navigation }) => {
             ))}
         </ScrollView>
       </View>
+      <Header
+        options
+        handleOptions={() => {}}
+        cancelText="back"
+        handleCancel={() => navigation.goBack()}
+        text="Nick Kazan"
+      />
       <KeyboardInput
         disabled={messageText.trim() === ""}
         type="action"

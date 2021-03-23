@@ -1,6 +1,6 @@
 import React from "react";
-import { View } from "react-native";
-import { containers } from "../styles/containers";
+import { View, ScrollView } from "react-native";
+import { containers, headerHeight } from "../styles/containers";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Option from "../components/Option";
@@ -8,8 +8,11 @@ import Option from "../components/Option";
 const TestNavigation = ({ navigation }) => {
   return (
     <View style={containers.parent}>
-      <Header text="Screens" />
-      <View style={containers.main}>
+      <ScrollView
+        contentContainerStyle={{ paddingTop: headerHeight }}
+        style={containers.main}
+        scrollEnabled={false}
+      >
         <Option onPress={() => navigation.navigate("Home")} text="Home" />
         <Option onPress={() => navigation.navigate("Chat")} text="Chat" />
         <Option onPress={() => navigation.navigate("Welcome")} text="Welcome" />
@@ -29,7 +32,8 @@ const TestNavigation = ({ navigation }) => {
           onPress={() => navigation.navigate("AppOptions")}
           text="App Options"
         />
-      </View>
+      </ScrollView>
+      <Header text="Screens" />
       <Footer />
     </View>
   );

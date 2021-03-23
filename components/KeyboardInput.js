@@ -22,7 +22,7 @@ const KeyboardInput = ({
   return (
     <KeyboardAvoidingView
       behavior="padding"
-      keyboardVerticalOffset={28}
+      keyboardVerticalOffset={8}
       style={[KeyboardInputStyles.container, style]}
     >
       {type === "action" ? (

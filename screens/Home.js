@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { View, ScrollView } from "react-native";
 import { colors } from "../styles/colors";
-import { containers } from "../styles/containers";
+import { containers, headerHeight } from "../styles/containers";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Spacer from "../components/Spacer";
-import Option from "../components/Option";
-import Button from "../components/Button";
-import Fab from "../components/Fab";
-import Input from "../components/Input";
 
 const sampleContacts = [
   {
@@ -47,16 +43,10 @@ const Home = ({ navigation }) => {
 
   return (
     <View style={containers.parent}>
-      <Header
-        options
-        handleOptions={() => navigation.navigate("AppOptions")}
-        cancelText="back"
-        handleCancel={() => {
-          navigation.goBack();
-        }}
-        text="Messages"
-      />
-      <ScrollView style={containers.main}>
+      <ScrollView
+        style={containers.main}
+        contentContainerStyle={{ paddingTop: headerHeight }}
+      >
         {contacts.map((contact, index) => (
           <Contact
             key={`contact-${index}`}
@@ -67,6 +57,15 @@ const Home = ({ navigation }) => {
         ))}
         <Spacer height={200} />
       </ScrollView>
+      <Header
+        options
+        handleOptions={() => navigation.navigate("AppOptions")}
+        cancelText="back"
+        handleCancel={() => {
+          navigation.goBack();
+        }}
+        text="Messages"
+      />
       <Footer action="new" handleAction={() => {}} />
     </View>
   );
