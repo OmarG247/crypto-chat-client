@@ -135,8 +135,7 @@ const Chat = ({ navigation }) => {
         style={[
           containers.main,
           {
-            flex: 1,
-            paddingVertical: 0,
+            paddingTop: 0,
           },
         ]}
       >
