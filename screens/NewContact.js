@@ -72,7 +72,11 @@ const NewContact = ({ navigation }) => {
             )}
           </View>
           <View style={NewContactStyles.block}>
-            <Button expanded text="scan key" />
+            <Button
+              expanded
+              text="scan key"
+              onPress={() => navigation.navigate("Scan")}
+            />
             <Button
               secondary
               expanded
