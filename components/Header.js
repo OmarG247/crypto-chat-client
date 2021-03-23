@@ -1,10 +1,15 @@
 import React from "react";
-import { StyleSheet, View, Text, TouchableHighlight } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableHighlight,
+} from "react-native";
 import { colors } from "../styles/colors";
 import { typography } from "../styles/typography";
 import Fab from "./Fab";
-import { BlurView } from 'expo-blur';
-import { headerHeight } from "../styles/containers";
+import { BlurView } from "expo-blur";
+import { headerHeight, STATUS_BAR_HEIGHT } from "../styles/containers";
 
 const Header = ({
   text,
@@ -43,7 +48,7 @@ const HeaderStyles = StyleSheet.create({
   container: {
     position: "absolute",
     display: "flex",
-    height: headerHeight,
+    height: headerHeight + STATUS_BAR_HEIGHT,
     width: "100%",
     alignItems: "flex-start",
     justifyContent: "flex-end",
