@@ -32,6 +32,7 @@ const TestNavigation = ({ navigation }) => {
           onPress={() => navigation.navigate("AppOptions")}
           text="App Options"
         />
+        <Option onPress={() => navigation.navigate("Scan")} text="Scan" />
       </ScrollView>
       <Header text="Screens" />
       <Footer />

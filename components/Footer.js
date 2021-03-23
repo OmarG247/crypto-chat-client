@@ -13,7 +13,7 @@ const Footer = ({ action, handleAction, actionDisabled = false, style }) => (
         disabled={actionDisabled}
         action={action}
         color="lime"
-        size="large"
+        large
         onPress={handleAction}
       ></Fab>
     )}

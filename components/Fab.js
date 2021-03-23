@@ -13,12 +13,12 @@ const Fab = ({
   color,
   action,
   secondary = false,
-  size = "medium",
+  large = false,
   onPress,
   disabled = false,
   style,
 }) => {
-  const dimensions = size === "large" ? 48 : 36;
+  const dimensions = large ? 48 : 36;
   const fabColor = fabColors[color];
 
   const fabShadow = () =>
