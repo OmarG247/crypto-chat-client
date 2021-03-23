@@ -19,7 +19,7 @@ const NewContact = ({ navigation }) => {
   });
   const [keyScanned, setKeyScanned] = useState(false);
   const [keyModalOpen, setKeyModalOpen] = useState(false);
-  const key = "https://omarflores.dev";
+  const cipherKey = "https://omarflores.dev";
 
   const handleInput = (type, input) => {
     setUserInfo({ ...userInfo, [type]: input });
@@ -90,7 +90,10 @@ const NewContact = ({ navigation }) => {
         <Footer actionDisabled={!isReady()} action="save" />
       </View>
       {keyModalOpen && (
-        <QRKeyModal key={key} onClose={() => setKeyModalOpen(false)} />
+        <QRKeyModal
+          cipherKey={cipherKey}
+          onClose={() => setKeyModalOpen(false)}
+        />
       )}
     </>
   );

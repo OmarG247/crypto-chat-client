@@ -4,10 +4,10 @@ import { BlurView } from "expo-blur";
 import QRCode from "react-native-qrcode-svg";
 import Fab from "./Fab";
 
-const QRKeyModal = ({ key, onClose }) => (
+const QRKeyModal = ({ cipherKey, onClose }) => (
   <BlurView intensity={90} tint="dark" style={Styles.modalContainer}>
     <View style={Styles.modal}>
-      <QRCode value={key} size={264} />
+      <QRCode value={cipherKey} size={264} />
       <Fab
         style={{ marginTop: 24 }}
         action="cancel"
@@ -21,6 +21,8 @@ const QRKeyModal = ({ key, onClose }) => (
 
 const Styles = StyleSheet.create({
   modalContainer: {
+    position: 'absolute',
+    width: '100%',
     height: "100%",
     display: "flex",
     alignItems: "center",
