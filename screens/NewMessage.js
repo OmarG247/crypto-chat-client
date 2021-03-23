@@ -67,9 +67,9 @@ const NewMessage = ({ navigation }) => {
         <KeyboardInput
           type="search"
           onChangeText={(input) => setSearch(input)}
-          style={{ marginBottom: 8, marginTop: 24 }}
+          style={{ marginBottom: 8, marginTop: 16 }}
         />
-        <ScrollView style={[containers.main, { paddingTop: 8 }]}>
+        <ScrollView style={[containers.main, { paddingVertical: 8 }]}>
           <View style={{ paddingVertical: 16, paddingHorizontal: 12 }}>
             <Button
               text="create new contact"
