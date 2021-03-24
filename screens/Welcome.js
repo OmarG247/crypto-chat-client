@@ -35,12 +35,13 @@ const Welcome = ({ navigation }) => {
 
 const WelcomeStyles = StyleSheet.create({
   container: {
-    paddingTop: 56,
+    paddingTop: 32,
     paddingBottom: 32,
   },
   icon: {
     resizeMode: "contain",
     width: 80,
+    aspectRatio: 1,
     marginBottom: -20,
   },
   iconContainer: {
@@ -48,7 +49,7 @@ const WelcomeStyles = StyleSheet.create({
     alignItems: "center",
   },
   input: {
-    paddingVertical: 24,
+    paddingVertical: 16,
   },
   text: {
     paddingHorizontal: 16,
