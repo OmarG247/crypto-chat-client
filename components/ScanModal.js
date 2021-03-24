@@ -26,7 +26,7 @@ const ScanModal = ({ onScan, closeModal }) => {
   }, [scanned]);
 
   const handleCodeScanned = ({ type, data }) => {
-    if (type === "org.iso.QRCode") {
+    if (type === "org.iso.QRCode" || type === 256) {
       setScanned(data);
     }
   };

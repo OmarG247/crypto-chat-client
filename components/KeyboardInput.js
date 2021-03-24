@@ -4,6 +4,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   View,
+  Platform,
 } from "react-native";
 import { colors } from "../styles/colors";
 import { typography } from "../styles/typography";
@@ -21,12 +22,18 @@ const KeyboardInput = ({
 }) => {
   return (
     <KeyboardAvoidingView
-      behavior="padding"
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={8}
       style={[KeyboardInputStyles.container, style]}
     >
       {type === "action" ? (
-        <>
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
           <TextInput
             value={value}
             keyboardAppearance="dark"
@@ -42,7 +49,7 @@ const KeyboardInput = ({
             onPress={onPress}
             disabled={disabled}
           />
-        </>
+        </View>
       ) : (
         <View style={KeyboardInputStyles.searchContainer}>
           <TextInput
