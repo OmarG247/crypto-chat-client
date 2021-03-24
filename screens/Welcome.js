@@ -8,7 +8,7 @@ import Footer from "../components/Footer";
 import Input from "../components/Input";
 import icon from "../assets/icon-color.png";
 
-const Welcome = () => {
+const Welcome = ({ navigation }) => {
   return (
     <View style={containers.parent}>
       <View style={[containers.main, WelcomeStyles.container]}>
@@ -18,12 +18,15 @@ const Welcome = () => {
         <Text style={[typography.display, WelcomeStyles.text, effects.glow]}>
           Welcome to a new kind of security
         </Text>
+        {/* get value from input */}
         <Input style={WelcomeStyles.input} label="username" />
         <Input style={WelcomeStyles.input} label="password" />
         <View style={WelcomeStyles.actions}>
           <Button text="register" color="lime" secondary style={WelcomeStyles.button} />
           <Button text="login" color="lime" />
         </View>
+        {/* onClick save user to async storage */}
+        {/* once saved use navigation to go to chat screen */}
       </View>
       <Footer />
     </View>

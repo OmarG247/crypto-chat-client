@@ -77,6 +77,8 @@ const Chat = ({ navigation }) => {
 
   useEffect(() => {
     addKeyboardListeners();
+    // get user ID from async storage
+    // (also save user ID to async storage)
     setUserId("nick");
   }, []);
 
@@ -111,15 +113,20 @@ const Chat = ({ navigation }) => {
   const sendMessage = () => {
     const cleanText = messageText.trim();
 
+    
+    // send to server logic
+
+    // run this after promise is resolved
     setMessages([
       ...messages,
       {
-        senderId: messages.length % 2 === 0 ? "nick" : "zach",
+        senderId:  userId,
         time: new Date(),
         text: cleanText,
       },
     ]);
     setMessageText("");
+
   };
 
   return (
