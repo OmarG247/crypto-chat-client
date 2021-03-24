@@ -1,5 +1,11 @@
 import React from "react";
-import { StyleSheet, View, Text, TouchableHighlight } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableHighlight,
+  Platform,
+} from "react-native";
 import { colors } from "../styles/colors";
 import { typography } from "../styles/typography";
 import Fab from "./Fab";
@@ -43,7 +49,7 @@ const HeaderStyles = StyleSheet.create({
   container: {
     position: "absolute",
     display: "flex",
-    height: headerHeight + STATUS_BAR_HEIGHT,
+    height: headerHeight + (Platform.OS === "ios" ? STATUS_BAR_HEIGHT : 0),
     width: "100%",
     alignItems: "flex-start",
     justifyContent: "flex-end",

@@ -3,7 +3,7 @@ import { colors } from "./colors";
 
 export const typography = StyleSheet.create({
   display: {
-    fontSize: 48,
+    fontSize: 40,
     fontFamily: "DMSans-Regular",
     color: colors.light,
   },
