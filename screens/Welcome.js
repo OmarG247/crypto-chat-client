@@ -25,7 +25,6 @@ const Welcome = () => {
           <Button text="login" color="lime" />
         </View>
       </View>
-      <Footer />
     </View>
   );
 };

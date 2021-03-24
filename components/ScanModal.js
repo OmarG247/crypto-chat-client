@@ -59,7 +59,11 @@ const ScanModal = ({ onScan, closeModal }) => {
             <Text style={[typography.button, { marginBottom: 24 }]}>
               Permissions are needed to scan key codes
             </Text>
-            <Button text="go back" onPress={() => closeModal()} />
+            <Button
+              style={{ alignSelf: "center", }}
+              text="go back"
+              onPress={() => closeModal()}
+            />
           </View>
         )}
       </View>
