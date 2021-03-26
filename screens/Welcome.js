@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
 import { containers } from "../styles/containers";
 import { effects } from "../styles/effects";
@@ -8,7 +8,44 @@ import Footer from "../components/Footer";
 import Input from "../components/Input";
 import icon from "../assets/icon-color.png";
 
+import Amplify, { Auth } from 'aws-amplify';
+import awsconfig from '../crypto-chat-client/aws-exports';
+Amplify.configure(awsconfig);
+
+const handleRegister = async (email, username, password) => {
+  try {
+    const { user } = await Auth.signUp({
+      username,
+      password,
+      attributes: {
+        email
+      }
+  });
+  console.log(user);
+  }
+  catch (err) {
+    console.log('sign up err: ', err)
+  }
+}
+
+const handleLogin = async (email, username, password) => {
+  try {
+    const user = await Auth.signIn(email, username, password);
+    console.log(user)
+    } catch (error) {
+        console.log('error signing in', error);
+    }
+
+    const token = (await Auth.currentSession()).getAccessToken().getJwtToken();
+    console.log('token', token)
+}
+
 const Welcome = ({ navigation }) => {
+
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
   return (
     <View style={containers.parent}>
       <View style={[containers.main, WelcomeStyles.container]}>
@@ -19,14 +56,13 @@ const Welcome = ({ navigation }) => {
           Welcome to a new kind of security
         </Text>
         {/* get value from input */}
-        <Input style={WelcomeStyles.input} label="username" />
-        <Input style={WelcomeStyles.input} label="password" />
+        <Input style={WelcomeStyles.input} label="email" value={email} onChangeText={val => setEmail(val)} />
+        <Input style={WelcomeStyles.input} label="username" value={username} onChangeText={val => setUsername(val)} />
+        <Input style={WelcomeStyles.input} label="password" value={password} onChangeText={val => setPassword(val)} />
         <View style={WelcomeStyles.actions}>
-          <Button text="register" color="lime" secondary style={WelcomeStyles.button} />
-          <Button text="login" color="lime" />
+          <Button text="register" color="lime" secondary style={WelcomeStyles.button} onPress={() => handleRegister(email, username, password)} />
+          <Button text="login" color="lime" onPress={() => handleLogin(email, username, password)} />
         </View>
-        {/* onClick save user to async storage */}
-        {/* once saved use navigation to go to chat screen */}
       </View>
       <Footer />
     </View>
@@ -63,7 +99,7 @@ const WelcomeStyles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: 'flex-end',
-    margin: 16,
+    margin: 0,
   }
 });
 

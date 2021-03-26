@@ -9,8 +9,11 @@
   },
   "dependencies": {
     "@react-native-community/masked-view": "0.1.10",
+    "@react-native-community/netinfo": "^6.0.0",
     "@react-navigation/native": "^5.9.3",
     "@react-navigation/stack": "^5.14.3",
+    "amazon-cognito-identity-js": "^4.6.0",
+    "aws-amplify": "^3.3.25",
     "expo": "~40.0.0",
     "expo-barcode-scanner": "~9.1.0",
     "expo-blur": "~8.2.2",
