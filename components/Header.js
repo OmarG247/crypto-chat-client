@@ -1,5 +1,11 @@
 import React from "react";
-import { StyleSheet, View, Text, TouchableHighlight } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableHighlight,
+  Platform,
+} from "react-native";
 import { colors } from "../styles/colors";
 import { typography } from "../styles/typography";
 import Fab from "./Fab";
@@ -13,37 +19,51 @@ const Header = ({
   cancelText,
   handleCancel = null,
   style,
-}) => (
-  <BlurView tint="dark" intensity={90} style={[HeaderStyles.container, style]}>
-    {cancelText && (
-      <TouchableHighlight style={{ padding: 16 }} onPress={handleCancel}>
-        <Text style={typography.detail}>{cancelText}</Text>
-      </TouchableHighlight>
-    )}
-    <View
-      style={[
-        HeaderStyles.content,
-        { justifyContent: options ? "space-between" : "flex-start" },
-      ]}
-    >
-      <Text style={typography.header2}>{text}</Text>
-      {options && (
-        <Fab
-          onPress={handleOptions}
-          action="options"
-          secondary
-          color="lime"
-        ></Fab>
+}) => {
+  const content = (
+    <>
+      {cancelText && (
+        <TouchableHighlight style={{ padding: 16 }} onPress={handleCancel}>
+          <Text style={typography.detail}>{cancelText}</Text>
+        </TouchableHighlight>
       )}
-    </View>
-  </BlurView>
-);
+      <View
+        style={[
+          HeaderStyles.content,
+          { justifyContent: options ? "space-between" : "flex-start" },
+        ]}
+      >
+        <Text style={typography.header2}>{text}</Text>
+        {options && (
+          <Fab
+            onPress={handleOptions}
+            action="options"
+            secondary
+            color="lime"
+          ></Fab>
+        )}
+      </View>
+    </>
+  );
+
+  return Platform.OS === "ios" ? (
+    <BlurView
+      tint="dark"
+      intensity={90}
+      style={[HeaderStyles.container, style]}
+    >
+      {content}
+    </BlurView>
+  ) : (
+    <View style={[HeaderStyles.container, style]}>{content}</View>
+  );
+};
 
 const HeaderStyles = StyleSheet.create({
   container: {
     position: "absolute",
     display: "flex",
-    height: headerHeight + STATUS_BAR_HEIGHT,
+    height: headerHeight + (Platform.OS === "ios" ? STATUS_BAR_HEIGHT : 0),
     width: "100%",
     alignItems: "flex-start",
     justifyContent: "flex-end",

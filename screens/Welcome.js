@@ -64,7 +64,6 @@ const Welcome = ({ navigation }) => {
           <Button text="login" color="lime" onPress={() => handleLogin(email, username, password)} />
         </View>
       </View>
-      <Footer />
     </View>
   );
 };

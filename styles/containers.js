@@ -3,7 +3,7 @@ import { colors } from "./colors";
 import { Platform } from "react-native";
 
 export const headerHeight = 124;
-export const STATUS_BAR_HEIGHT = Platform.OS === "ios" ? 20 : 20;
+export const STATUS_BAR_HEIGHT = Platform.OS === "ios" ? 20 : 0;
 
 export const containers = StyleSheet.create({
   parent: {

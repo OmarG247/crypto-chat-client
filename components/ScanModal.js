@@ -26,7 +26,7 @@ const ScanModal = ({ onScan, closeModal }) => {
   }, [scanned]);
 
   const handleCodeScanned = ({ type, data }) => {
-    if (type === "org.iso.QRCode") {
+    if (type === "org.iso.QRCode" || type === 256) {
       setScanned(data);
     }
   };
@@ -59,7 +59,11 @@ const ScanModal = ({ onScan, closeModal }) => {
             <Text style={[typography.button, { marginBottom: 24 }]}>
               Permissions are needed to scan key codes
             </Text>
-            <Button text="go back" onPress={() => closeModal()} />
+            <Button
+              style={{ alignSelf: "center", }}
+              text="go back"
+              onPress={() => closeModal()}
+            />
           </View>
         )}
       </View>

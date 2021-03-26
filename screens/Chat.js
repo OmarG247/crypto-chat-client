@@ -1,6 +1,13 @@
 import React, { useEffect, useRef } from "react";
 import { useState } from "react";
-import { ScrollView, StyleSheet, View, Text, Keyboard } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  Text,
+  Keyboard,
+  Platform,
+} from "react-native";
 import { colors } from "../styles/colors";
 import { containers, headerHeight } from "../styles/containers";
 import { typography } from "../styles/typography";
@@ -181,7 +188,7 @@ const Chat = ({ navigation }) => {
         onChangeText={(input) => setMessageText(input)}
         value={messageText}
         onPress={() => sendMessage()}
-        style={{ marginBottom: 40 }}
+        style={{ marginBottom: Platform.OS === "ios" ? 40 : 0 }}
         action="send"
       />
     </View>

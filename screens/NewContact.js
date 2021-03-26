@@ -46,7 +46,6 @@ const NewContact = ({ navigation }) => {
         <ScrollView
           style={containers.main}
           contentContainerStyle={{ paddingTop: headerHeight }}
-          scrollEnabled={false}
         >
           <Input
             style={NewContactStyles.block}
