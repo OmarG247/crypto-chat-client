@@ -12,6 +12,7 @@ import Contacts from "./screens/Contacts";
 import NewMessage from "./screens/NewMessage";
 import NewContact from "./screens/NewContact";
 import AppOptions from "./screens/AppOptions";
+import Store from "./services/signal.service"
 
 const Stack = createStackNavigator();
 
