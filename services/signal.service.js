@@ -1,7 +1,7 @@
 import {encode} from "base64-arraybuffer";
-// import libsignal from "signal-protocol";
+import libsignal from "../signal-protocol";
 
-// console.log(libsignal);
+const {KeyHelper} = libsignal;
 
 const util = {
     ab2str: buf => {
@@ -140,4 +140,75 @@ SignalProtocolStore.prototype = {
     }
 };
 
-export default SignalProtocolStore;
+const store = new SignalProtocolStore();
+
+
+function generateIdentity() {
+    return Promise.all([
+        KeyHelper.generateIdentityKeyPair(),
+        KeyHelper.generateRegistrationId()
+    ]).then(function (result) {
+        store.put("identityKey", result[0]);
+        store.put("registrationId", result[1]);
+    });
+}
+
+function generatePreKeyBundle(preKeyId, signedPreKeyId) {
+    return Promise.all([
+        store.getIdentityKeyPair(),
+        store.getLocalRegistrationId()
+    ]).then(function (result) {
+        var identity = result[0];
+        var registrationId = result[1];
+
+        return Promise.all([
+            KeyHelper.generatePreKey(preKeyId),
+            KeyHelper.generateSignedPreKey(identity, signedPreKeyId)
+        ]).then(function (keys) {
+            var preKey = keys[0];
+            var signedPreKey = keys[1];
+
+            store.storePreKey(preKeyId, preKey.keyPair);
+            store.storeSignedPreKey(signedPreKeyId, signedPreKey.keyPair);
+
+            return {
+                identityKey: identity.pubKey,
+                registrationId: registrationId,
+                preKey: {
+                    keyId: preKeyId,
+                    publicKey: preKey.keyPair.pubKey
+                },
+                signedPreKey: {
+                    keyId: signedPreKeyId,
+                    publicKey: signedPreKey.keyPair.pubKey,
+                    signature: signedPreKey.signature
+                }
+            };
+        });
+    });
+}
+
+const getPreKeysString = async () => {
+    await KeyHelper.ensureSecure();
+    // PreKeyId and signedKeyId will eventually be unique identifiers
+    await generateIdentity();
+
+    const preKeyId = 1;
+    const signedKeyId = 1;
+
+    const preKeyBundle = await generatePreKeyBundle(
+        preKeyId,
+        signedKeyId
+    );
+
+    preKeyBundle.identityKey = encode(preKeyBundle.identityKey);
+    preKeyBundle.preKey.publicKey = encode(preKeyBundle.preKey.publicKey);
+    preKeyBundle.signedPreKey.publicKey = encode(preKeyBundle.signedPreKey.publicKey);
+    preKeyBundle.signedPreKey.signature = encode(preKeyBundle.signedPreKey.signature);
+
+    return JSON.stringify(preKeyBundle)
+};
+
+console.log("Generating pre key bundle:")
+
+getPreKeysString().then(res => console.log(res))
