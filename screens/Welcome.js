@@ -8,7 +8,45 @@ import Footer from "../components/Footer";
 import Input from "../components/Input";
 import icon from "../assets/icon-color.png";
 
-const Welcome = () => {
+import Amplify, { Auth } from 'aws-amplify';
+import awsconfig from '../crypto-chat-client/aws-exports';
+Amplify.configure(awsconfig);
+
+const handleRegister = async (email, username, password) => {
+  try {
+    const { user } = await Auth.signUp({
+      username,
+      password,
+      attributes: {
+        email
+      }
+    });
+  console.log(user);  
+  }
+  catch (err) {
+    console.log('sign up err: ', err)
+  }
+}
+
+const handleLogin = async (username, password) => {
+  try {
+    const user = await Auth.signIn(username, password);
+    console.log(user)
+    } catch (error) {
+        console.log('error signing in', error);
+    }
+
+    const token = (await Auth.currentSession()).getAccessToken().getJwtToken();
+    console.log('token', token)
+}
+
+const Welcome = ({ navigation }) => {
+
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [register, setRegister] = useState(true)
+
   return (
     <View style={containers.parent}>
       <View style={[containers.main, WelcomeStyles.container]}>
@@ -18,8 +56,26 @@ const Welcome = () => {
         <Text style={[typography.display, WelcomeStyles.text, effects.glow]}>
           Welcome to a new kind of security
         </Text>
-        <Input style={WelcomeStyles.input} label="username" />
-        <Button text="chat" color="lime" style={WelcomeStyles.button} />
+        {/* get value from input */}
+        {register ? <Input style={WelcomeStyles.input} label="email" value={email} onChangeText={val => setEmail(val)} /> : null}
+        <Input style={WelcomeStyles.input} label="username" value={username} onChangeText={val => setUsername(val)} />
+        <Input style={WelcomeStyles.input} secure={true} label="password" value={password} onChangeText={val => setPassword(val)} />
+        <View style={WelcomeStyles.actions}>
+          {register ? 
+            <Button text="register" color="lime" secondary style={WelcomeStyles.button} onPress={() => {
+                handleRegister(email, username, password)
+                navigation.navigate('ConfirmSignup', { username: username, password: password })
+            }}/> : 
+            <Button text="login" color="lime" onPress={() => {
+              handleLogin(username, password)
+              navigation.navigate('Contacts')
+            }} />
+          }
+        </View>
+        {register ? 
+          <Text style={WelcomeStyles.setRegister}>Already have an account? <Text onPress={() => setRegister(false)}>Sign In</Text></Text> : 
+          <Text style={WelcomeStyles.setRegister}>Don't have an account? <Text onPress={() => setRegister(true)}>Sign Up</Text></Text>
+        }
       </View>
       <Footer />
     </View>
@@ -51,6 +107,16 @@ const WelcomeStyles = StyleSheet.create({
     margin: 16,
     alignSelf: "flex-end",
   },
+  actions: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: 'flex-end',
+    margin: 0,
+  },
+  setRegister: {
+    color: "#fff"
+  }
 });
 
 export default Welcome;

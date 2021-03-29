@@ -1,0 +1,37 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-cryptochatclient-dev-202121-authRole",
+      "UnauthRoleArn": "arn:aws:iam::282779986706:role/amplify-cryptochatclient-dev-202121-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::282779986706:role/amplify-cryptochatclient-dev-202121-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-cryptochatclient-dev-202121-deployment",
+      "UnauthRoleName": "amplify-cryptochatclient-dev-202121-unauthRole",
+      "StackName": "amplify-cryptochatclient-dev-202121",
+      "StackId": "arn:aws:cloudformation:us-east-2:282779986706:stack/amplify-cryptochatclient-dev-202121/de407160-8c36-11eb-b1d3-02726f7f311c",
+      "AmplifyAppId": "d3hp0jcjwrzlhp"
+    }
+  },
+  "auth": {
+    "cryptochatcliente7558548": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-cryptochatclient-dev-202121-deployment/amplify-cfn-templates/auth/cryptochatcliente7558548-cloudformation-template.yml",
+        "logicalId": "authcryptochatcliente7558548"
+      },
+      "lastPushTimeStamp": "2021-03-24T01:07:22.991Z",
+      "output": {
+        "UserPoolId": "us-east-2_5GvAzSWkt",
+        "AppClientIDWeb": "61j01n3tm24cuipkunt9k6sj4t",
+        "AppClientID": "6p0m0lmccefpciv9q1b94sf97j",
+        "IdentityPoolId": "us-east-2:5550681d-1ac9-415d-99af-c57eab1971e8",
+        "IdentityPoolName": "cryptochatcliente7558548_identitypool_e7558548__dev",
+        "UserPoolName": "cryptochatcliente7558548_userpool_e7558548"
+      },
+      "lastPushDirHash": "pR815SHpj5g6dDAv+R9QOeG+7Pw="
+    }
+  }
+}

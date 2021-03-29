@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TextInput } from "react-native";
 import { colors } from "../styles/colors";
 import { typography } from "../styles/typography";
 
-const Input = ({ label, error, placeholder, onChangeText, value, style }) => (
+const Input = ({ label, error, placeholder, onChangeText, value, style, secure = false }) => (
   <View style={[InputStyles.container, style]}>
     <Text style={[typography.detail, InputStyles.label]}>{label}</Text>
     <TextInput
@@ -11,6 +11,7 @@ const Input = ({ label, error, placeholder, onChangeText, value, style }) => (
       placeholderTextColor={colors.surface}
       onChangeText={onChangeText}
       value={value}
+      secureTextEntry={secure}
       style={[
         InputStyles.input,
         typography.body,

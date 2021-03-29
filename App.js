@@ -12,8 +12,8 @@ import Welcome from "./screens/Welcome";
 import Contacts from "./screens/Contacts";
 import NewMessage from "./screens/NewMessage";
 import NewContact from "./screens/NewContact";
-
-const ANDROID_STATUSBAR_HEIGHT = 20;
+import AppOptions from "./screens/AppOptions";
+import ConfirmSignup from './screens/ConfirmSignup';
 
 const Stack = createStackNavigator();
 
@@ -51,6 +51,8 @@ const App = () => {
           <Stack.Screen name="Contacts" component={Contacts} />
           <Stack.Screen name="NewMessage" component={NewMessage} />
           <Stack.Screen name="NewContact" component={NewContact} />
+          <Stack.Screen name="AppOptions" component={AppOptions} />
+          <Stack.Screen name="ConfirmSignup" component={ConfirmSignup} />
         </Stack.Navigator>
       </NavigationContainer>
     )
