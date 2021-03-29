@@ -1,11 +1,16 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Fab from "./Fab";
 
 const Footer = ({ action, handleAction, actionDisabled = false, style }) => (
   <LinearGradient
-    colors={["rgba(33, 33, 33, 0)", "rgba(239, 239, 239, 0.1)"]}
+    colors={[
+      "rgba(33, 33, 33, 0)",
+      Platform.OS === "ios"
+        ? "rgba(239, 239, 239, 0.1)"
+        : "rgba(239, 239, 239, 0.03)",
+    ]}
     style={[FooterStyles.container, style]}
   >
     {action && (
@@ -13,7 +18,7 @@ const Footer = ({ action, handleAction, actionDisabled = false, style }) => (
         disabled={actionDisabled}
         action={action}
         color="lime"
-        size="large"
+        large
         onPress={handleAction}
       ></Fab>
     )}

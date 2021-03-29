@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Platform } from "react-native";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -14,6 +13,7 @@ import NewMessage from "./screens/NewMessage";
 import NewContact from "./screens/NewContact";
 import AppOptions from "./screens/AppOptions";
 import ConfirmSignup from './screens/ConfirmSignup';
+import Store from "./services/signal.service"
 
 const Stack = createStackNavigator();
 
@@ -39,7 +39,6 @@ const App = () => {
           screenOptions={{
             headerShown: false,
             cardStyle: {
-              paddingTop: Platform.OS === "ios" ? 20 : ANDROID_STATUSBAR_HEIGHT,
               backgroundColor: colors.dark,
             },
           }}
@@ -53,6 +52,7 @@ const App = () => {
           <Stack.Screen name="NewContact" component={NewContact} />
           <Stack.Screen name="AppOptions" component={AppOptions} />
           <Stack.Screen name="ConfirmSignup" component={ConfirmSignup} />
+
         </Stack.Navigator>
       </NavigationContainer>
     )

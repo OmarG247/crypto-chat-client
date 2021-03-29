@@ -1,12 +1,20 @@
 import React, { useEffect, useRef } from "react";
 import { useState } from "react";
-import { ScrollView, StyleSheet, View, Text, Keyboard } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  Text,
+  Keyboard,
+  Platform,
+} from "react-native";
 import { colors } from "../styles/colors";
-import { containers } from "../styles/containers";
+import { containers, headerHeight } from "../styles/containers";
 import { typography } from "../styles/typography";
 import Divider from "../components/Divider";
 import Header from "../components/Header";
 import KeyboardInput from "../components/KeyboardInput";
+import Spacer from "../components/Spacer";
 
 const TIME_DIFFERENCE = 10;
 
@@ -127,22 +135,11 @@ const Chat = ({ navigation, route }) => {
 
   return (
     <View style={containers.parent}>
-      <Header
-        options
-        handleOptions={() => {}}
-        cancelText="back"
-        handleCancel={() => {
-          Keyboard.removeAllListeners();
-          navigation.goBack();
-        }}
-        text="Nick Kazan"
-      />
       <View
         style={[
           containers.main,
           {
-            flex: 1,
-            paddingBottom: 0,
+            paddingTop: 0,
           },
         ]}
       >
@@ -151,7 +148,9 @@ const Chat = ({ navigation, route }) => {
           onContentSizeChange={(_, height) => setMessagesHeight(height)}
           ref={_scrollView}
           onScroll={handleScroll}
+          contentContainerStyle={{ paddingTop: headerHeight }}
         >
+          <Spacer height={16} />
           {messages.length > 0 &&
             messages.map((message, index) => (
               <View key={`message-${index}`}>
@@ -186,7 +185,7 @@ const Chat = ({ navigation, route }) => {
         onChangeText={(input) => setMessageText(input)}
         value={messageText}
         onPress={() => sendMessage()}
-        style={{ marginBottom: 40 }}
+        style={{ marginBottom: Platform.OS === "ios" ? 40 : 0 }}
         action="send"
       />
     </View>

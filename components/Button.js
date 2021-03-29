@@ -11,10 +11,11 @@ const buttonColors = {
 
 const Button = ({
   text,
-  color,
+  color = "lime",
   secondary = false,
   onPress,
   disabled = false,
+  expanded = false,
   style,
 }) => {
   const buttonColor = buttonColors[color];
@@ -32,6 +33,8 @@ const Button = ({
           shadowRadius: 12,
         };
 
+  const buttonWidth = () => (expanded ? { width: "100%" } : {});
+
   const buttonBase = {
     borderColor: disabled ? colors.surface : buttonColor,
     backgroundColor: disabled
@@ -40,6 +43,7 @@ const Button = ({
       ? colors.dark
       : buttonColor,
     ...buttonShadows(),
+    ...buttonWidth(),
   };
 
   return (
@@ -58,6 +62,7 @@ const Button = ({
 const ButtonStyles = StyleSheet.create({
   container: {
     display: "flex",
+    alignItems: "center",
     paddingVertical: 8,
     paddingHorizontal: 12,
     borderRadius: 10,

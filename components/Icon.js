@@ -16,6 +16,10 @@ import searchDark from "../assets/icons/search-dark.png";
 import searchLight from "../assets/icons/search-light.png";
 import sendDark from "../assets/icons/send-dark.png";
 import sendLight from "../assets/icons/send-light.png";
+import unlockDark from "../assets/icons/unlock-dark.png";
+import unlockLight from "../assets/icons/unlock-light.png";
+import cancelDark from "../assets/icons/cancel-dark.png";
+import cancelLight from "../assets/icons/cancel-light.png";
 
 const Icons = {
   back: {
@@ -50,6 +54,14 @@ const Icons = {
     dark: sendDark,
     light: sendLight,
   },
+  unlock: {
+    dark: unlockDark,
+    light: unlockLight,
+  },
+  cancel: {
+    dark: cancelDark,
+    light: cancelLight
+  }
 };
 
 const Icon = ({ name, color, style }) => {
