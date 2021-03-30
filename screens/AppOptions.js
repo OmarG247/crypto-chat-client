@@ -5,6 +5,8 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Option from "../components/Option";
 import { colors } from "../styles/colors";
+import { Auth } from 'aws-amplify';
+
 
 const AppOptions = ({ navigation }) => (
   <View style={containers.parent}>
@@ -28,7 +30,15 @@ const AppOptions = ({ navigation }) => (
       <Option
         color={colors.redError}
         text="Logout"
-        onPress={() => navigation.goBack()}
+        onPress={async () => {
+          try {
+              await Auth.signOut();
+          } 
+          catch (error) {
+              console.log('error signing out: ', error);
+          }
+          navigation.navigate('Welcome')
+        }}
       />
     </ScrollView>
     <Header

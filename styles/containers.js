@@ -19,4 +19,23 @@ export const containers = StyleSheet.create({
     flexDirection: "column",
     paddingTop: 16,
   },
+  modalContainer: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 6,
+    backgroundColor: colors.darkSurface,
+  },
+  modal: {
+    display: "flex",
+    padding: 24,
+    alignItems: "center",
+    backgroundColor: colors.dark,
+    borderRadius: 10,
+    borderColor: colors.surface10,
+    borderWidth: 1,
+  },
 });
