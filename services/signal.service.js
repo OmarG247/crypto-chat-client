@@ -192,7 +192,6 @@ function generateIdentity() {
 function generatePreKeyBundle(preKeyId, signedPreKeyId) {
     return Promise.all([
         store.getIdentityKeyPair(),
-        store.getLocalRegistrationId(),
     ]).then(function (result) {
         var identity = result[0];
 
@@ -218,8 +217,8 @@ const getPreKeysString = async (preKeyId, signedPreKeyId) => {
     ]).then((keys) => {
         const identity = keys[0];
         const registrationId = keys[1];
-        const preKey = keys[0];
-        const signedPreKey = keys[1];
+        const preKey = keys[2];
+        const signedPreKey = keys[3];
 
         const preKeyBundle = {
             identityKey: encode(identity.pubKey),
