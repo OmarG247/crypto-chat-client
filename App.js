@@ -12,13 +12,20 @@ import Contacts from "./screens/Contacts";
 import NewMessage from "./screens/NewMessage";
 import NewContact from "./screens/NewContact";
 import AppOptions from "./screens/AppOptions";
-import ConfirmSignup from './screens/ConfirmSignup';
-import Store from "./services/signal.service"
+import ConfirmSignup from "./screens/ConfirmSignup";
+import { initService } from "./services/signal.service";
 
 const Stack = createStackNavigator();
 
 const App = () => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
+  const [singalInit, setSingalInit] = useState(false);
+
+  useEffect(() => {
+    initService().then(() => {
+      setSingalInit(true);
+    });
+  }, []);
 
   useEffect(() => {
     loadAsync({
@@ -33,7 +40,8 @@ const App = () => {
   }, []);
 
   return (
-    fontsLoaded && (
+    fontsLoaded &&
+    singalInit && (
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
@@ -52,7 +60,6 @@ const App = () => {
           <Stack.Screen name="NewContact" component={NewContact} />
           <Stack.Screen name="AppOptions" component={AppOptions} />
           <Stack.Screen name="ConfirmSignup" component={ConfirmSignup} />
-
         </Stack.Navigator>
       </NavigationContainer>
     )
