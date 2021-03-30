@@ -179,13 +179,13 @@ function generateIdentity() {
     });
 }
 
-function generatePreKeyBundle(preKeyId, signedPreKeyId) {
+export function generatePreKeyBundle(preKeyId, signedPreKeyId) {
     return Promise.all([
         store.getIdentityKeyPair(),
         store.getLocalRegistrationId(),
     ]).then(function (result) {
         var identity = result[0];
-        var registrationId = result[0];
+        var registrationId = result[1];
 
         return Promise.all([
             KeyHelper.generatePreKey(preKeyId),

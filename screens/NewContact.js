@@ -11,7 +11,7 @@ import Button from "../components/Button";
 import Icon from "../components/Icon";
 import QRKeyModal from "../components/QRKeyModal";
 import ScanModal from "../components/ScanModal";
-import { getPreKeysString, initService } from "../services/signal.service";
+import { generatePreKeyBundle } from "../services/signal.service";
 
 const NewContact = ({ navigation }) => {
   const [userInfo, setUserInfo] = useState({
@@ -25,11 +25,9 @@ const NewContact = ({ navigation }) => {
   const [cipherKey, setCipherKey] = useState("");
 
   useEffect(() => {
-    initService().then(() => {
-      getPreKeysString(1, 1).then((result) => {
-        console.log(result);
-        setCipherKey(result);
-      });
+    generatePreKeyBundle(1, 1).then((result) => {
+      console.log(result);
+      setCipherKey(result);
     });
   }, [keyModalOpen]);
 
