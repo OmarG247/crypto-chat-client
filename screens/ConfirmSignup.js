@@ -1,42 +1,59 @@
-import React, { useState } from "react";
-import { StyleSheet, View, Text, Image } from "react-native";
+import React from "react";
+import { View, Text, Platform } from "react-native";
 import { containers } from "../styles/containers";
 import Input from "../components/Input";
-import Button from "../components/Button";
-import { Auth } from 'aws-amplify';
+import { typography } from "../styles/typography";
+import Fab from "../components/Fab";
+import { BlurView } from "expo-blur";
 
-const confirmSignUp = async (username, code) => {
-    try {
-      await Auth.confirmSignUp(username, code);
-    } catch (error) {
-        console.log('error confirming sign up', error);
-    }
-}
+const ConfirmSignupModal = ({
+  email,
+  handleConfirm,
+  handleCode,
+  code,
+  handleCancel,
+}) => {
+  const content = (
+    <View style={[containers.modal, { alignItems: "flex-start", width: 264 }]}>
+      <Text style={typography.button}>enter the code sent to</Text>
+      <Text style={[typography.button, { marginBottom: 24 }]}>{email}</Text>
+      <Input
+        error={code.trim() === "" && "please enter a code"}
+        label="Code"
+        value={code}
+        style={{
+          paddingVertical: 0,
+          paddingHorizontal: 0,
+          paddingBottom: 16,
+          width: "100%",
+        }}
+        onChangeText={handleCode}
+      />
+      <View
+        style={{
+          marginTop: 24,
+          display: "flex",
+          flexDirection: "row",
+          alignSelf: "flex-end",
+        }}
+      >
+        <Fab secondary action="cancel" onPress={() => handleCancel()} />
+        <Fab
+          style={{ marginLeft: 12 }}
+          action="save"
+          onPress={() => handleConfirm()}
+        />
+      </View>
+    </View>
+  );
 
-const handleSignIn = async (username, password) => {
-	try {
-        const user = await Auth.signIn(username, password);
-    } catch (error) {
-        console.log('error signing in', error);
-    }
-}
+  return Platform.OS === "ios" ? (
+    <BlurView intensity={90} tint="dark" style={containers.modalContainer}>
+      {content}
+    </BlurView>
+  ) : (
+    <View style={containers.modalContainer}>{content}</View>
+  );
+};
 
-const ConfirmSignup = ({ navigation, route }) => {
-
-	const [code, setCode] = useState('');
-	console.log(route)
-
-	return (
-		<View>
-			<Input label="Code" value={code} onChangeText={val => setCode(val)} />
-			<Button text="Submit" color="lime" secondary onPress={async () => {
-                await confirmSignUp(route.params.username, code)
-				await handleSignIn(route.params.username, route.params.password)
-                navigation.navigate('Contacts')
-            }} />
-		</View>
-	)
-
-}
-
-export default ConfirmSignup;
+export default ConfirmSignupModal;

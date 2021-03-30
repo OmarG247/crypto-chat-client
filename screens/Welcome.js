@@ -1,83 +1,199 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
 import { containers } from "../styles/containers";
 import { effects } from "../styles/effects";
 import { typography } from "../styles/typography";
 import Button from "../components/Button";
-import Footer from "../components/Footer";
 import Input from "../components/Input";
 import icon from "../assets/icon-color.png";
-
-import Amplify, { Auth } from 'aws-amplify';
-import awsconfig from '../crypto-chat-client/aws-exports';
+import Amplify, { Auth } from "aws-amplify";
+import awsconfig from "../crypto-chat-client/aws-exports";
+import { colors } from "../styles/colors";
+import ConfirmSignUpModal from "./ConfirmSignup";
 Amplify.configure(awsconfig);
 
 const handleRegister = async (email, username, password) => {
+  const clearEmail = email.trim();
+  const clearUsername = username.trim();
+  const clearPassword = password.trim();
+
   try {
     const { user } = await Auth.signUp({
-      username,
-      password,
+      username: clearUsername,
+      password: clearPassword,
       attributes: {
-        email
-      }
+        email: clearEmail,
+      },
     });
-  console.log(user);  
+    console.log(user);
+  } catch (err) {
+    console.log("sign up err: ", err);
   }
-  catch (err) {
-    console.log('sign up err: ', err)
-  }
-}
+};
 
 const handleLogin = async (username, password) => {
+  const clearUsername = username.trim();
+  const clearPassword = password.trim();
+
+  try {
+    const user = await Auth.signIn(clearUsername, clearPassword);
+    console.log(user);
+  } catch (error) {
+    console.log("error signing in", error);
+  }
+
+  const token = (await Auth.currentSession()).getAccessToken().getJwtToken();
+  console.log("token", token);
+};
+
+const confirmSignUp = async (username, code) => {
+  try {
+    await Auth.confirmSignUp(username, code);
+  } catch (error) {
+    console.log("error confirming sign up", error);
+  }
+};
+
+const handleSignIn = async (username, password) => {
   try {
     const user = await Auth.signIn(username, password);
-    console.log(user)
-    } catch (error) {
-        console.log('error signing in', error);
-    }
-
-    const token = (await Auth.currentSession()).getAccessToken().getJwtToken();
-    console.log('token', token)
-}
+  } catch (error) {
+    console.log("error signing in", error);
+  }
+};
 
 const Welcome = ({ navigation }) => {
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [register, setRegister] = useState(true);
+  const [code, setCode] = useState("");
+  const [confirmModalOpen, setConfirmModalOpen] = useState(true);
 
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [register, setRegister] = useState(true)
+  const inputIsValid = () =>
+    email !== "" &&
+    username !== "" &&
+    (register ? password !== "" && password.length >= 8 : true);
+
+  const emailIsValid = () => {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    if (email.trim() === "") {
+      return "mandatory field";
+    }
+
+    if (!re.test(email)) {
+      return "invalid email";
+    }
+
+    return false;
+  };
+
+  const handleCode = (val) => setCode(val);
+
+  const handleConfirm = async () => {
+    await confirmSignUp(route.params.username, code);
+    await handleSignIn(route.params.username, route.params.password);
+    navigation.navigate("Contacts");
+  };
 
   return (
-    <View style={containers.parent}>
-      <View style={[containers.main, WelcomeStyles.container]}>
-        <View style={[WelcomeStyles.iconContainer, effects.glow]}>
-          <Image style={[WelcomeStyles.icon]} source={icon} />
+    <>
+      <View style={containers.parent}>
+        <View style={[containers.main, WelcomeStyles.container]}>
+          <View style={[WelcomeStyles.iconContainer, effects.glow]}>
+            <Image style={[WelcomeStyles.icon]} source={icon} />
+          </View>
+          <Text style={[typography.display, WelcomeStyles.text, effects.glow]}>
+            Welcome to a new kind of security
+          </Text>
+          {register && (
+            <Input
+              style={WelcomeStyles.input}
+              label="email"
+              error={emailIsValid()}
+              value={email}
+              onChangeText={(val) => setEmail(val)}
+            />
+          )}
+          <Input
+            style={WelcomeStyles.input}
+            label="username"
+            value={username}
+            error={
+              username.trim() === ""
+                ? "mandatory field"
+                : username.trim().includes(" ")
+                ? "username contains invalid characters"
+                : false
+            }
+            onChangeText={(val) => setUsername(val)}
+          />
+          <Input
+            style={WelcomeStyles.input}
+            secure={true}
+            label="password"
+            value={password}
+            error={
+              password.trim() === ""
+                ? "mandatory field"
+                : password.trim().includes(" ")
+                ? "password contains invalid characters"
+                : password.length < 8
+                ? "password is too short"
+                : false
+            }
+            onChangeText={(val) => setPassword(val)}
+          />
+          <View style={WelcomeStyles.actions}>
+            {register ? (
+              <>
+                <Text
+                  style={WelcomeStyles.actionType}
+                  onPress={() => setRegister(false)}
+                >
+                  I have an account
+                </Text>
+                <Button
+                  text="register"
+                  disabled={!inputIsValid()}
+                  onPress={async () => {
+                    await handleRegister(email, username, password);
+                    setConfirmModalOpen(true);
+                  }}
+                />
+              </>
+            ) : (
+              <>
+                <Text
+                  style={WelcomeStyles.actionType}
+                  onPress={() => setRegister(true)}
+                >
+                  I'm new here
+                </Text>
+                <Button
+                  text="login"
+                  disabled={!inputIsValid()}
+                  onPress={() => {
+                    handleLogin(username, password);
+                    navigation.navigate("Contacts");
+                  }}
+                />
+              </>
+            )}
+          </View>
         </View>
-        <Text style={[typography.display, WelcomeStyles.text, effects.glow]}>
-          Welcome to a new kind of security
-        </Text>
-        {/* get value from input */}
-        {register ? <Input style={WelcomeStyles.input} label="email" value={email} onChangeText={val => setEmail(val)} /> : null}
-        <Input style={WelcomeStyles.input} label="username" value={username} onChangeText={val => setUsername(val)} />
-        <Input style={WelcomeStyles.input} secure={true} label="password" value={password} onChangeText={val => setPassword(val)} />
-        <View style={WelcomeStyles.actions}>
-          {register ? 
-            <Button text="register" color="lime" secondary style={WelcomeStyles.button} onPress={() => {
-                handleRegister(email, username, password)
-                navigation.navigate('ConfirmSignup', { username: username, password: password })
-            }}/> : 
-            <Button text="login" color="lime" onPress={() => {
-              handleLogin(username, password)
-              navigation.navigate('Contacts')
-            }} />
-          }
-        </View>
-        {register ? 
-          <Text style={WelcomeStyles.setRegister}>Already have an account? <Text onPress={() => setRegister(false)}>Sign In</Text></Text> : 
-          <Text style={WelcomeStyles.setRegister}>Don't have an account? <Text onPress={() => setRegister(true)}>Sign Up</Text></Text>
-        }
       </View>
-    </View>
+      {confirmModalOpen && (
+        <ConfirmSignUpModal
+          code={code}
+          email={email}
+          handleConfirm={handleConfirm}
+          handleCode={handleCode}
+          handleCancel={() => setConfirmModalOpen(false)}
+        />
+      )}
+    </>
   );
 };
 
@@ -88,9 +204,9 @@ const WelcomeStyles = StyleSheet.create({
   },
   icon: {
     resizeMode: "contain",
-    width: 80,
+    width: 60,
     aspectRatio: 1,
-    marginBottom: -20,
+    marginBottom: -32,
   },
   iconContainer: {
     display: "flex",
@@ -103,19 +219,22 @@ const WelcomeStyles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 24,
   },
-  button: {
-    marginRight: 12,
-  },
   actions: {
     display: "flex",
+    width: "100%",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: 'flex-end',
-    margin: 16
+    justifyContent: "flex-end",
+    paddingHorizontal: 16,
+    marginVertical: 24,
   },
-  setRegister: {
-    color: "#fff"
-  }
+  actionType: {
+    ...typography.body,
+    ...typography.medium,
+    color: colors.limeAccent,
+    ...effects.glow,
+    marginRight: 12,
+  },
 });
 
 export default Welcome;

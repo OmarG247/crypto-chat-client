@@ -7,8 +7,7 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Spacer from "../components/Spacer";
 
-import { Auth } from 'aws-amplify';
-
+import { Auth } from "aws-amplify";
 
 const sampleContacts = [
   {
@@ -38,14 +37,14 @@ const sampleContacts = [
 ];
 
 const getUserInfo = () => {
-  return Auth.currentUserInfo().then(res => console.log('user', res))
-}
+  return Auth.currentUserInfo().then((res) => console.log("user", res));
+};
 
 const Contacts = ({ navigation }) => {
   const [contacts, setContacts] = useState([]);
 
   let user = getUserInfo();
-  console.log('user', user)
+  console.log("user", user);
 
   useEffect(() => {
     setContacts(sampleContacts);
@@ -58,19 +57,11 @@ const Contacts = ({ navigation }) => {
         contentContainerStyle={{ paddingTop: headerHeight }}
       >
         {contacts.map((contact, index) => (
-          <Contact key={`contact-${index}`} contact={contact} onPress={() => navigation.navigate('Chat', { contact: contact })} />
-        ))}
-        <Spacer height={200} />
-      </ScrollView>
-      <Header
-        text="Contacts"
-        cancelText="back"
-        handleCancel={() => navigation.goBack()}
-      />
-      <ScrollView style={contacts.main}>
-
-        {contacts.map((contact, index) => (
-          <Contact key={`contact-${index}`} contact={contact} />
+          <Contact
+            key={`contact-${index}`}
+            contact={contact}
+            onPress={() => navigation.navigate("Chat", { contact: contact })}
+          />
         ))}
         <Spacer height={200} />
       </ScrollView>
