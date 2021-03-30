@@ -68,14 +68,15 @@ const Welcome = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [register, setRegister] = useState(true);
   const [code, setCode] = useState("");
-  const [confirmModalOpen, setConfirmModalOpen] = useState(true);
+  const [confirmModalOpen, setConfirmModalOpen] = useState(false);
 
   const inputIsValid = () =>
     email !== "" &&
-    username !== "" &&
+    username !== "" && 
+    !emailIsInvalid() &&
     (register ? password !== "" && password.length >= 8 : true);
 
-  const emailIsValid = () => {
+  const emailIsInvalid = () => {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if (email.trim() === "") {
@@ -92,8 +93,8 @@ const Welcome = ({ navigation }) => {
   const handleCode = (val) => setCode(val);
 
   const handleConfirm = async () => {
-    await confirmSignUp(route.params.username, code);
-    await handleSignIn(route.params.username, route.params.password);
+    await confirmSignUp(username, code);
+    await handleSignIn(username, password);
     navigation.navigate("Contacts");
   };
 
@@ -111,7 +112,7 @@ const Welcome = ({ navigation }) => {
             <Input
               style={WelcomeStyles.input}
               label="email"
-              error={emailIsValid()}
+              error={emailIsInvalid()}
               value={email}
               onChangeText={(val) => setEmail(val)}
             />
