@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Text, ScrollView } from "react-native";
 import { containers, headerHeight } from "../styles/containers";
 import { colors } from "../styles/colors";
@@ -11,6 +11,7 @@ import Button from "../components/Button";
 import Icon from "../components/Icon";
 import QRKeyModal from "../components/QRKeyModal";
 import ScanModal from "../components/ScanModal";
+import { getPreKeysString, initService } from "../services/signal.service";
 
 const NewContact = ({ navigation }) => {
   const [userInfo, setUserInfo] = useState({
@@ -21,7 +22,16 @@ const NewContact = ({ navigation }) => {
   const [keyScanned, setKeyScanned] = useState(false);
   const [keyModalOpen, setKeyModalOpen] = useState(false);
   const [scanModalOpen, setScanModalOpen] = useState(false);
-  const cipherKey = "https://omarflores.dev";
+  const [cipherKey, setCipherKey] = useState("");
+
+  useEffect(() => {
+    initService().then(() => {
+      getPreKeysString(1, 1).then((result) => {
+        console.log(result);
+        setCipherKey(result);
+      });
+    });
+  }, [keyModalOpen]);
 
   const handleInput = (type, input) => {
     setUserInfo({ ...userInfo, [type]: input });
@@ -81,7 +91,6 @@ const NewContact = ({ navigation }) => {
             <Button
               expanded
               text="scan key"
-              // onPress={() => navigation.navigate("Scan")}
               onPress={() => setScanModalOpen(true)}
             />
             <Button

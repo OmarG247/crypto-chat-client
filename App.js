@@ -19,13 +19,13 @@ const Stack = createStackNavigator();
 
 const App = () => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
-  const [singalInit, setSingalInit] = useState(false);
+  const [singalInit, setSingalInit] = useState(true);
 
-  useEffect(() => {
-    initService().then(() => {
-      setSingalInit(true);
-    });
-  }, []);
+  // useEffect(() => {
+  //   initService().then(() => {
+  //     setSingalInit(true);
+  //   });
+  // }, []);
 
   useEffect(() => {
     loadAsync({
