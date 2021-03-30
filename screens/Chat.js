@@ -74,7 +74,7 @@ const sampleMessages = [
 const timeBetween = (timeA, timeB) =>
   (timeA.getTime() - timeB.getTime()) / 60 / 1000 > TIME_DIFFERENCE;
 
-const Chat = ({ navigation }) => {
+const Chat = ({ navigation, route }) => {
   const [messages, setMessages] = useState(sampleMessages);
   const [userId, setUserId] = useState("");
   const [messageText, setMessageText] = useState("");
@@ -82,9 +82,13 @@ const Chat = ({ navigation }) => {
   const [scrollOffset, setScrollOffset] = useState(0);
   const _scrollView = useRef();
 
+  console.log(route)
+
   useEffect(() => {
     addKeyboardListeners();
-    setUserId("nick");
+    // get user ID from async storage
+    // (also save user ID to async storage)
+    
   }, []);
 
   useEffect(() => {
@@ -173,7 +177,7 @@ const Chat = ({ navigation }) => {
         handleOptions={() => {}}
         cancelText="back"
         handleCancel={() => navigation.goBack()}
-        text="Nick Kazan"
+        text={route.params.contact.name}
       />
       <KeyboardInput
         disabled={messageText.trim() === ""}

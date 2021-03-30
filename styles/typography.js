@@ -37,4 +37,7 @@ export const typography = StyleSheet.create({
     fontFamily: "SourceSansPro-Regular",
     color: colors.light,
   },
+  medium: {
+    fontFamily: "DMSans-Medium",
+  }
 });
