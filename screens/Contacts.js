@@ -37,14 +37,13 @@ const sampleContacts = [
 ];
 
 const getUserInfo = () => {
-  return Auth.currentUserInfo().then((res) => console.log("user", res));
+  return Auth.currentUserInfo()
 };
 
 const Contacts = ({ navigation }) => {
   const [contacts, setContacts] = useState([]);
 
   let user = getUserInfo();
-  console.log("user", user);
 
   useEffect(() => {
     setContacts(sampleContacts);

@@ -6,6 +6,7 @@ import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Spacer from "../components/Spacer";
+import { Auth } from 'aws-amplify';
 
 const sampleContacts = [
   {
@@ -32,10 +33,25 @@ const sampleContacts = [
     name: "Aidan",
     color: colors.grey,
   },
+  {
+    name: 'Memer2',
+    color: colors.redError
+  },
+  {
+    name: 'Memer3',
+    color: colors.tealSecondary
+  }
 ];
+
+const handleGetUser = () => {
+  return Auth.currentUserInfo()
+}
 
 const Home = ({ navigation }) => {
   const [contacts, setContacts] = useState([]);
+  let user;
+  handleGetUser().then(res => { console.log(res); user = res });
+
 
   useEffect(() => {
     setContacts(sampleContacts);
@@ -50,7 +66,7 @@ const Home = ({ navigation }) => {
         {contacts.map((contact, index) => (
           <Contact
             key={`contact-${index}`}
-            onPress={() => {}}
+            onPress={() => navigation.navigate("Chat", { contact: contact, user })}
             newMessage
             contact={contact}
           />
