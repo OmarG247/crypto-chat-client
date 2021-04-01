@@ -50,7 +50,10 @@ const handleGetUser = () => {
 const Home = ({ navigation }) => {
   const [contacts, setContacts] = useState([]);
   let user;
-  handleGetUser().then(res => { console.log(res); user = res });
+  handleGetUser().then(res => {
+    // console.log(res);
+    user = res
+  });
 
 
   useEffect(() => {

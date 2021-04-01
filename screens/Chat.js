@@ -76,7 +76,7 @@ const timeBetween = (timeA, timeB) =>
   (timeA.getTime() - timeB.getTime()) / 60 / 1000 > TIME_DIFFERENCE;
 
 const Chat = ({ navigation, route }) => {
-  const { messages, sendMessage, disconnectFromSocket } = useChat(route.params.user.username)
+  const { messages, sendMessage } = useChat(route.params.user.username)
 
   const [userId, setUserId] = useState("");
   const [messageText, setMessageText] = useState("");
@@ -166,7 +166,6 @@ const Chat = ({ navigation, route }) => {
         handleOptions={() => {}}
         cancelText="back"
         handleCancel={() => {
-          disconnectFromSocket()
           navigation.goBack()
         }}
         text={route.params.contact.name}
