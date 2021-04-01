@@ -25,7 +25,6 @@ const handleRegister = async (email, username, password) => {
         email: clearEmail,
       },
     });
-    console.log(user);
   } catch (err) {
     console.log("sign up err: ", err);
   }
@@ -37,7 +36,6 @@ const handleLogin = async (username, password) => {
 
   try {
     const user = await Auth.signIn(clearUsername, clearPassword);
-    console.log(user);
   } catch (error) {
     console.log("error signing in", error);
   }
@@ -95,7 +93,7 @@ const Welcome = ({ navigation }) => {
   const handleConfirm = async () => {
     await confirmSignUp(username, code);
     await handleSignIn(username, password);
-    navigation.navigate("Contacts");
+    navigation.navigate("Home");
   };
 
   return (
@@ -174,10 +172,10 @@ const Welcome = ({ navigation }) => {
                 </Text>
                 <Button
                   text="login"
-                  disabled={!inputIsValid()}
+                  // disabled={!inputIsValid()}
                   onPress={() => {
                     handleLogin(username, password);
-                    navigation.navigate("Contacts");
+                    navigation.navigate("Home");
                   }}
                 />
               </>

@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-cryptochatclient-dev-202121-authRole",
+      "UnauthRoleArn": "arn:aws:iam::282779986706:role/amplify-cryptochatclient-dev-202121-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::282779986706:role/amplify-cryptochatclient-dev-202121-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-cryptochatclient-dev-202121-deployment",
+      "UnauthRoleName": "amplify-cryptochatclient-dev-202121-unauthRole",
+      "StackName": "amplify-cryptochatclient-dev-202121",
+      "StackId": "arn:aws:cloudformation:us-east-2:282779986706:stack/amplify-cryptochatclient-dev-202121/de407160-8c36-11eb-b1d3-02726f7f311c",
+      "AmplifyAppId": "d3hp0jcjwrzlhp"
+    },
+    "categories": {
+      "auth": {
+        "cryptochatcliente7558548": {}
+      }
+    }
+  }
+}

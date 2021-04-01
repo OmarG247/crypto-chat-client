@@ -9,9 +9,10 @@
   },
   "dependencies": {
     "@react-native-community/masked-view": "0.1.10",
-    "@react-native-community/netinfo": "^6.0.0",
+    "@react-native-community/netinfo": "5.9.7",
     "@react-navigation/native": "^5.9.3",
     "@react-navigation/stack": "^5.14.3",
+    "amazon-cognito-identity-js": "^4.6.0",
     "aws-amplify": "^3.3.26",
     "base64-arraybuffer": "^0.2.0",
     "bytebuffer": "^5.0.1",
