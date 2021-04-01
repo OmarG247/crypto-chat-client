@@ -22,7 +22,7 @@ const useChat = username => {
 				const prevConversation = messages[from] || [];
 				return {
 					...messages,
-					[from]: [...prevConversation, {content: message, fromSelf: false, time: new Date()}]
+					[from]: [...prevConversation, {content, fromSelf: false, time: new Date()}]
 				};
 			});
 		});

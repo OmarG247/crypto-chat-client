@@ -30,7 +30,7 @@ const sampleContacts = [
     color: colors.bluePrimary,
   },
   {
-    name: "Aidan",
+    name: "aiden",
     color: colors.grey,
   },
   {
