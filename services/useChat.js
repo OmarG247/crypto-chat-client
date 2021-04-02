@@ -1,31 +1,29 @@
 import React, {useEffect, useRef, useState} from "react";
 import { io } from "socket.io-client";
-import { Auth } from "aws-amplify";
+import { encryptMessage, decryptMessage } from "./signal.service";
 
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
 
 const SOCKET_SERVER_URL = 'http://Gettingstartedapp-env.eba-sm3mz4hp.us-east-2.elasticbeanstalk.com';
 
-const useChat = username => {
+const useChat = token => {
 	const [messages, setMessages] = useState({});
     let socketRef = useRef();
-    const token = (await Auth.currentSession()).getAccessToken().getJwtToken();
-    console.log("token", token);
 
     useEffect(() => {
         socketRef.current = io(SOCKET_SERVER_URL, {
 			auth: {
-				userID: token // Replace this with token eventually
+                token: token
 			}
 		});
 
         socketRef.current.on(NEW_CHAT_MESSAGE_EVENT, async ({ to, from, content }) => {
-			console.log('Message: ', content);
+			const decryptedMessage = decryptMessage(content, from);
 			setMessages(messages => {
 				const prevConversation = messages[from] || [];
 				return {
 					...messages,
-					[from]: [...prevConversation, {content, fromSelf: false, time: new Date()}]
+					[from]: [...prevConversation, {content: decryptedMessage, fromSelf: false, time: new Date()}]
 				};
 			});
 		});
@@ -36,8 +34,10 @@ const useChat = username => {
 	}, []);
 
     const sendMessage = (to, content) => {
+        const encryptedMessage = encryptMessage(content, to);
+
         socketRef.current.emit(NEW_CHAT_MESSAGE_EVENT, {
-            content: content,
+            content: encryptedMessage,
             to
         });
 

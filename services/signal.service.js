@@ -1,44 +1,5 @@
-import {encode} from "base64-arraybuffer";
+import {encode, decode} from "base64-arraybuffer";
 import libsignal from "../signal-protocol";
-
-const {KeyHelper} = libsignal;
-
-export const initService = async () => {
-    await KeyHelper.ensureSecure();
-    await verifyIndetity();
-    return Promise.resolve();
-};
-
-const verifyIndetity = async () => {
-    const identityKeyPair = await store.getIdentityKeyPair();
-    const localRegistrationId = await store.getLocalRegistrationId();
-
-    if (
-        !identityKeyPair ||
-        identityKeyPair === undefined ||
-        !localRegistrationId ||
-        localRegistrationId === undefined
-    ) {
-        console.log("keys do not exist, generating new identity");
-        await generateIdentity();
-    }
-
-    return Promise.resolve();
-};
-
-const util = {
-    ab2str: (buf) => {
-        return String.fromCharCode.apply(null, new Uint16Array(buf));
-    },
-    str2ab: (str) => {
-        var buf = new ArrayBuffer(str.length * 2); // 2 bytes for each char
-        var bufView = new Uint16Array(buf);
-        for (var i = 0, strLen = str.length; i < strLen; i++) {
-            bufView[i] = str.charCodeAt(i);
-        }
-        return buf;
-    },
-};
 
 function SignalProtocolStore() {
     this.store = {};
@@ -166,8 +127,50 @@ SignalProtocolStore.prototype = {
         return Promise.resolve();
     },
 };
+const {KeyHelper, SignalProtocolAddress, SessionBuilder, SessionCipher} = libsignal;
+
+const DEVICE_ID = 0;
+let preKeyId = 1;
+let signedPreKeyId = 1;
 
 const store = new SignalProtocolStore();
+
+const util = {
+    ab2str: (buf) => {
+        return String.fromCharCode.apply(null, new Uint16Array(buf));
+    },
+    str2ab: (str) => {
+        var buf = new ArrayBuffer(str.length * 2); // 2 bytes for each char
+        var bufView = new Uint16Array(buf);
+        for (var i = 0, strLen = str.length; i < strLen; i++) {
+            bufView[i] = str.charCodeAt(i);
+        }
+        return buf;
+    },
+};
+
+export const initService = async () => {
+    await KeyHelper.ensureSecure();
+    await verifyIndetity();
+    return Promise.resolve();
+};
+
+const verifyIndetity = async () => {
+    const identityKeyPair = await store.getIdentityKeyPair();
+    const localRegistrationId = await store.getLocalRegistrationId();
+
+    if (
+        !identityKeyPair ||
+        identityKeyPair === undefined ||
+        !localRegistrationId ||
+        localRegistrationId === undefined
+    ) {
+        console.log("keys do not exist, generating new identity");
+        await generateIdentity();
+    }
+
+    return Promise.resolve();
+};
 
 function generateIdentity() {
     return Promise.all([
@@ -179,11 +182,13 @@ function generateIdentity() {
     });
 }
 
-export function generatePreKeyBundle(preKeyId, signedPreKeyId) {
+// Creates preKey bundle as a string for a userId
+export function generatePreKeyBundle(userId) {
     return Promise.all([
         store.getIdentityKeyPair(),
         store.getLocalRegistrationId(),
     ]).then(function (result) {
+        console.log(`generating bundle for: ${userId}`);
         var identity = result[0];
         var registrationId = result[1];
 
@@ -198,6 +203,7 @@ export function generatePreKeyBundle(preKeyId, signedPreKeyId) {
             store.storeSignedPreKey(signedPreKeyId, signedPreKey.keyPair);
 
             const preKeyBundle = {
+                userId: userId,
                 identityKey: encode(identity.pubKey),
                 registrationId: registrationId,
                 preKey: {
@@ -211,7 +217,71 @@ export function generatePreKeyBundle(preKeyId, signedPreKeyId) {
                 },
             };
 
+            preKeyId = preKeyId + 1;
+            signedPreKeyId = signedPreKeyId + 1;
+
             return JSON.stringify(preKeyBundle);
         });
     });
+}
+
+// Must be called after initializeSession and when a message is sent
+// Returns promise of signal message
+export function encryptMessage(plaintext, recipientUserId, recipientDeviceId) {
+    console.log(`Encrypting: ${plaintext}`);
+    const bytes = util.str2ab(plaintext);
+
+    const recipientAddress = new SignalProtocolAddress(recipientUserId, DEVICE_ID);
+    const sessionCipher = new SessionCipher(
+        store,
+        recipientAddress
+    );
+
+    return sessionCipher.encrypt(bytes)
+}
+
+// Returns promise of decrypted plaintext
+// TODO: What if you receive a whisper message for an address you have already processed a prekey for?
+export function decryptMessage(message, senderUserId, senderDeviceId) {
+    const senderAddress = new SignalProtocolAddress(senderUserId, DEVICE_ID);
+    const sessionCipher = new SessionCipher(
+        store,
+        senderAddress
+    );
+
+    if (message.type === 3) {
+        return sessionCipher.decryptPreKeyWhisperMessage(
+            message.body,
+            "binary"
+        ).then(function (decryptedMessageBytes) {
+            return util.ab2str(decryptedMessageBytes)
+        });
+    } else {
+         return sessionCipher.decryptWhisperMessage(
+            message.body,
+            "binary"
+        ).then(function (decryptedMessageBytes) {
+             return util.ab2str(decryptedMessageBytes);
+         });
+    }
+}
+
+// Call this function after scanning QR code
+// Returns promise of promised pre key
+// TODO: What if two bundles are processed for the same address?
+// TODO: What if both users process each others bundles and try sending messages?
+export function initializeSession(preKeyBundleString, recipientDeviceId) {
+    // decode pre key bundle
+    const preKeyBundle = JSON.parse(preKeyBundleString);
+    preKeyBundle.identityKey = decode(preKeyBundle.identityKey);
+    preKeyBundle.preKey.publicKey = decode(preKeyBundle.preKey.publicKey);
+    preKeyBundle.signedPreKey.publicKey = decode(preKeyBundle.signedPreKey.publicKey);
+    preKeyBundle.signedPreKey.signature = decode(preKeyBundle.signedPreKey.signature);
+
+    // Create address object for recipient
+    const recipientAddress = new SignalProtocolAddress(preKeyBundle.userId, DEVICE_ID);
+    // Creation session builder object for address
+    const builder = new SessionBuilder(store, recipientAddress);
+    // Process Pre Key for the session
+    return builder.processPreKey(preKeyBundle);
 }

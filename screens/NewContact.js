@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState} from "react";
 import { StyleSheet, View, Text, ScrollView } from "react-native";
 import { containers, headerHeight } from "../styles/containers";
 import { colors } from "../styles/colors";
@@ -13,23 +13,22 @@ import QRKeyModal from "../components/QRKeyModal";
 import ScanModal from "../components/ScanModal";
 import { generatePreKeyBundle } from "../services/signal.service";
 
-const NewContact = ({ navigation }) => {
+const NewContact = ({ navigation, user }) => {
+  // They will get this info from the prekey bundle
   const [userInfo, setUserInfo] = useState({
     firstName: "",
     lastName: "",
     color: colors.limeAccent,
   });
   const [keyScanned, setKeyScanned] = useState(false);
-  const [keyModalOpen, setKeyModalOpen] = useState(false);
   const [scanModalOpen, setScanModalOpen] = useState(false);
-  const [cipherKey, setCipherKey] = useState("");
+  const [cipherKey, setCipherKey] = useState(null); // This should be called preKey bundle
 
-  useEffect(() => {
-    generatePreKeyBundle(1, 1).then((result) => {
-      console.log(result);
+  const generatePreKeyBundleString = () => {
+    generatePreKeyBundle(user.userId).then((result) => {
       setCipherKey(result);
     });
-  }, [keyModalOpen]);
+  };
 
   const handleInput = (type, input) => {
     setUserInfo({ ...userInfo, [type]: input });
@@ -42,6 +41,8 @@ const NewContact = ({ navigation }) => {
   const onScan = (data) => {
     setScanModalOpen(false);
     alert(`key scanned!: ${data}`);
+    // call initializeSession(data) (async)
+    // Navigate to new message page?
   };
 
   const formIsValid = () => userInfo.firstName && userInfo.lastName;
@@ -96,7 +97,7 @@ const NewContact = ({ navigation }) => {
               expanded
               style={{ marginTop: 12 }}
               text="display key"
-              onPress={() => setKeyModalOpen(true)}
+              onPress={generatePreKeyBundleString}
             />
           </View>
         </ScrollView>
@@ -107,10 +108,10 @@ const NewContact = ({ navigation }) => {
         />
         <Footer actionDisabled={!isReady()} action="save" />
       </View>
-      {keyModalOpen && (
+      {!!cipherKey && (
         <QRKeyModal
           cipherKey={cipherKey}
-          onClose={() => setKeyModalOpen(false)}
+          onClose={() => setCipherKey(null)}
         />
       )}
       {scanModalOpen && (

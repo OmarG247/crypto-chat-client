@@ -6,7 +6,6 @@ import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Spacer from "../components/Spacer";
-import { Auth } from 'aws-amplify';
 
 const sampleContacts = [
   {
@@ -43,18 +42,8 @@ const sampleContacts = [
   }
 ];
 
-const handleGetUser = () => {
-  return Auth.currentUserInfo()
-}
-
-const Home = ({ navigation }) => {
+const Home = ({ navigation, user }) => {
   const [contacts, setContacts] = useState([]);
-  let user;
-  handleGetUser().then(res => {
-    // console.log(res);
-    user = res
-  });
-
 
   useEffect(() => {
     setContacts(sampleContacts);

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef} from "react";
 import { useState } from "react";
 import {
   ScrollView,
@@ -75,10 +75,10 @@ const sampleMessages = [
 const timeBetween = (timeA, timeB) =>
   (timeA.getTime() - timeB.getTime()) / 60 / 1000 > TIME_DIFFERENCE;
 
-const Chat = ({ navigation, route }) => {
-  const { messages, sendMessage } = useChat(route.params.user.username)
+const Chat = ({ navigation, route, user }) => {
 
-  const [userId, setUserId] = useState("");
+  const { messages, sendMessage } = useChat(user.token);
+
   const [messageText, setMessageText] = useState("");
   const [messagesHeight, setMessagesHeight] = useState(0);
   const [scrollOffset, setScrollOffset] = useState(0);
@@ -87,9 +87,6 @@ const Chat = ({ navigation, route }) => {
 
   useEffect(() => {
     addKeyboardListeners();
-    // get user ID from async storage
-    // (also save user ID to async storage)A
-    
   }, []);
 
   useEffect(() => {
