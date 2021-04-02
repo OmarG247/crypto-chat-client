@@ -1,0 +1,17 @@
+{
+  "projectName": "cryptochatclient",
+  "version": "3.1",
+  "frontend": "javascript",
+  "javascript": {
+    "framework": "react-native",
+    "config": {
+      "SourceDir": "crypto-chat-client",
+      "DistributionDir": "/",
+      "BuildCommand": "npm start",
+      "StartCommand": "npm start"
+    }
+  },
+  "providers": [
+    "awscloudformation"
+  ]
+}

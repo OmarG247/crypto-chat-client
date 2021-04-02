@@ -1,53 +1,56 @@
 import React, {useEffect, useRef, useState} from "react";
-import io from "socket.io-client";
+import { io } from "socket.io-client";
+import { Auth } from "aws-amplify";
 
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
 
+const SOCKET_SERVER_URL = 'http://Gettingstartedapp-env.eba-sm3mz4hp.us-east-2.elasticbeanstalk.com';
+
 const useChat = username => {
 	const [messages, setMessages] = useState({});
-    const socketRef = useRef();
+    let socketRef = useRef();
+    const token = (await Auth.currentSession()).getAccessToken().getJwtToken();
+    console.log("token", token);
 
     useEffect(() => {
         socketRef.current = io(SOCKET_SERVER_URL, {
-            auth: {
-                userID: username // Replace this with token eventually
-            }
+			auth: {
+				userID: token // Replace this with token eventually
+			}
 		});
 
-		socketRef.on(NEW_CHAT_MESSAGE_EVENT, async ({ to, from, content }) => {
+        socketRef.current.on(NEW_CHAT_MESSAGE_EVENT, async ({ to, from, content }) => {
 			console.log('Message: ', content);
 			setMessages(messages => {
 				const prevConversation = messages[from] || [];
 				return {
 					...messages,
-					[from]: [...prevConversation, {content: message, fromSelf: false}]
+					[from]: [...prevConversation, {content, fromSelf: false, time: new Date()}]
 				};
 			});
 		});
 
 		return () => {
             socketRef.current.disconnect();
-        };
+		}
+	}, []);
 
-	}, [])
+    const sendMessage = (to, content) => {
+        socketRef.current.emit(NEW_CHAT_MESSAGE_EVENT, {
+            content: content,
+            to
+        });
 
-	const sendMessage = (to, content) => {
-		setMessages(messages => {
+        setMessages(messages => {
             const prevConversation = messages[to] || [];
             return {
                 ...messages,
-                [to]: [...prevConversation, {content, fromSelf: true}]
+                [to]: [...prevConversation, {content, fromSelf: true, time: new Date()}]
             };
         });
-	}
-
-	const disconnectFromSocket = () => {
-        console.log("Socket: " + socketRef.current.id + " has been disconnected.");
-        socketRef.current.disconnect();
     };
 
-	return { messages, sendMessage, disconnectFromSocket } 
-
-}
+    return { messages, sendMessage }
+};
 
 export default useChat;
