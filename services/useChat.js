@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import { io } from "socket.io-client";
+import { Auth } from "aws-amplify";
 
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
 
@@ -8,11 +9,13 @@ const SOCKET_SERVER_URL = 'http://Gettingstartedapp-env.eba-sm3mz4hp.us-east-2.e
 const useChat = username => {
 	const [messages, setMessages] = useState({});
     let socketRef = useRef();
+    const token = (await Auth.currentSession()).getAccessToken().getJwtToken();
+    console.log("token", token);
 
     useEffect(() => {
         socketRef.current = io(SOCKET_SERVER_URL, {
 			auth: {
-				userID: username // Replace this with token eventually
+				userID: token // Replace this with token eventually
 			}
 		});
 
