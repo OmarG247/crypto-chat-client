@@ -7,38 +7,38 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Spacer from "../components/Spacer";
 
-const sampleContacts = [
-  {
-    name: "Bob",
-    color: colors.tealSecondary,
-  },
-  {
-    name: "Nick Kazan",
-    color: colors.tealSecondary,
-  },
-  {
-    name: "Rachel",
-    color: colors.bluePrimary,
-  },
-  {
-    name: "Susan",
-    color: colors.redError,
-  },
-  {
-    name: "memer2",
-    color: colors.bluePrimary,
-  },
-  {
-    name: "aiden",
-    color: colors.grey,
-  },
-];
+// const sampleContacts = [
+//   {
+//     name: "Bob",
+//     color: colors.tealSecondary,
+//   },
+//   {
+//     name: "Nick Kazan",
+//     color: colors.tealSecondary,
+//   },
+//   {
+//     name: "Rachel",
+//     color: colors.bluePrimary,
+//   },
+//   {
+//     name: "Susan",
+//     color: colors.redError,
+//   },
+//   {
+//     name: "memer2",
+//     color: colors.bluePrimary,
+//   },
+//   {
+//     name: "aiden",
+//     color: colors.grey,
+//   },
+// ];
 
 const Contacts = ({ navigation }) => {
     const [contacts, setContacts] = useState([]);
 
   useEffect(() => {
-    setContacts(sampleContacts);
+    // setContacts();
   }, []);
 
   return (

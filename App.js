@@ -14,6 +14,7 @@ import NewContact from "./screens/NewContact";
 import AppOptions from "./screens/AppOptions";
 import ConfirmSignup from "./screens/ConfirmSignup";
 import {initService} from "./services/signal.service";
+import { init } from "./services/storage.service";
 import Amplify, {Auth} from "aws-amplify";
 import awsconfig from "./crypto-chat-client/aws-exports";
 
@@ -83,15 +84,15 @@ const App = () => {
                         },
                     }}
                 >
-                    <Stack.Screen name="TestNav" component={TestNavigation}/>
+                    {/* <Stack.Screen name="TestNav" component={TestNavigation}/> */}
+                    <Stack.Screen name="Welcome">
+                        {props => <Welcome {...props} user={user} login={login}/>}
+                    </Stack.Screen>
                     <Stack.Screen name="Chat">
                         {props => <Chat {...props} user={user}/>}
                     </Stack.Screen>
                     <Stack.Screen name="Home">
                         {props => <Home {...props} user={user}/>}
-                    </Stack.Screen>
-                    <Stack.Screen name="Welcome">
-                        {props => <Welcome {...props} user={user} login={login}/>}
                     </Stack.Screen>
                     <Stack.Screen name="Contacts" component={Contacts}/>
                     <Stack.Screen name="NewMessage">
