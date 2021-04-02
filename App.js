@@ -27,6 +27,7 @@ const App = () => {
     const [singalInit, setSingalInit] = useState(false);
 
     useEffect(() => {
+        init();
         loadAsync({
             "DMSans-Regular": require("./assets/fonts/DMSans-Regular.ttf"),
             "DMSans-Medium": require("./assets/fonts/DMSans-Medium.ttf"),

@@ -222,7 +222,6 @@ const baseMessageBox = {
   paddingVertical: 8,
   paddingHorizontal: 12,
   borderRadius: 10,
-  borderWidth: 1,
   maxWidth: "80%",
 };
 const MessageStyles = StyleSheet.create({
@@ -233,14 +232,12 @@ const MessageStyles = StyleSheet.create({
   },
   messageIncoming: {
     ...baseMessageBox,
-    backgroundColor: colors.dark,
-    borderColor: colors.light,
+    backgroundColor: colors.grey,
     alignSelf: "flex-start",
   },
   messageOutgoing: {
     ...baseMessageBox,
     backgroundColor: colors.bluePrimary,
-    borderColor: colors.bluePrimary,
     alignSelf: "flex-end",
   },
   timeStamp: {
