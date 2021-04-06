@@ -37,7 +37,7 @@ const sampleContacts = [
   },
 ];
 
-const NewMessage = ({ navigation }) => {
+const NewMessage = ({ navigation, user }) => {
   const [contacts, setContacts] = useState([]);
   const [searchResults, setSearchResult] = useState([]);
   const [search, setSearch] = useState("");

@@ -33,9 +33,9 @@ const Fab = ({
   const fabBase = {
     height: dimensions,
     width: dimensions,
-    borderColor: disabled ? colors.surface : fabColor,
+    borderColor: disabled ? colors.grey : fabColor,
     backgroundColor: disabled
-      ? colors.surface
+      ? colors.grey
       : secondary
       ? colors.darkSurface
       : fabColor,

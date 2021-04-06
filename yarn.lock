@@ -2981,6 +2981,13 @@
     tslib "^2.1.0"
     webcrypto-core "^1.2.0"
 
+"@react-native-async-storage/async-storage@^1.15.0":
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/@react-native-async-storage/async-storage/-/async-storage-1.15.0.tgz#21a7396c3b17ec93da9dacf1cb7bb68c29feb5e0"
+  integrity sha512-4/z5GkSK+XIGJC9YloMPbpxhaRsFXJK5ZCQ50ah0koOIWFObD2GnCLP3BWKWymbmvTwaEWcbVr3PuufvvUvY8g==
+  dependencies:
+    deep-assign "^3.0.0"
+
 "@react-native-community/cli-debugger-ui@^4.13.1":
   version "4.13.1"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-debugger-ui/-/cli-debugger-ui-4.13.1.tgz#07de6d4dab80ec49231de1f1fbf658b4ad39b32c"

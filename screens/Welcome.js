@@ -6,67 +6,66 @@ import { typography } from "../styles/typography";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import icon from "../assets/icon-color.png";
-import Amplify, { Auth } from "aws-amplify";
-import awsconfig from "../crypto-chat-client/aws-exports";
+import  { Auth } from "aws-amplify";
 import { colors } from "../styles/colors";
 import ConfirmSignUpModal from "./ConfirmSignup";
-Amplify.configure(awsconfig);
 
-const handleRegister = async (email, username, password) => {
-  const clearEmail = email.trim();
-  const clearUsername = username.trim();
-  const clearPassword = password.trim();
+const Welcome = ({ navigation, user, login }) => {
 
-  try {
-    const { user } = await Auth.signUp({
-      username: clearUsername,
-      password: clearPassword,
-      attributes: {
-        email: clearEmail,
-      },
-    });
-  } catch (err) {
-    console.log("sign up err: ", err);
-  }
-};
-
-const handleLogin = async (username, password) => {
-  const clearUsername = username.trim();
-  const clearPassword = password.trim();
-
-  try {
-    const user = await Auth.signIn(clearUsername, clearPassword);
-  } catch (error) {
-    console.log("error signing in", error);
-  }
-
-  const token = (await Auth.currentSession()).getAccessToken().getJwtToken();
-  console.log("token", token);
-};
-
-const confirmSignUp = async (username, code) => {
-  try {
-    await Auth.confirmSignUp(username, code);
-  } catch (error) {
-    console.log("error confirming sign up", error);
-  }
-};
-
-const handleSignIn = async (username, password) => {
-  try {
-    const user = await Auth.signIn(username, password);
-  } catch (error) {
-    console.log("error signing in", error);
-  }
-};
-
-const Welcome = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [register, setRegister] = useState(true);
   const [code, setCode] = useState("");
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
+
+    const handleRegister = async (email, username, password) => {
+        const clearEmail = email.trim();
+        const clearUsername = username.trim();
+        const clearPassword = password.trim();
+
+        try {
+            await Auth.signUp({
+                username: clearUsername,
+                password: clearPassword,
+                attributes: {
+                    email: clearEmail,
+                },
+            });
+        } catch (err) {
+            console.log("sign up err: ", err);
+        }
+    };
+
+    const handleLogin = async (username, password) => {
+        const clearUsername = username.trim();
+        const clearPassword = password.trim();
+
+        try {
+            await Auth.signIn(clearUsername, clearPassword);
+            await login();
+        } catch (error) {
+            console.log("error signing in", error);
+        }
+    };
+
+    const confirmSignUp = async (username, code) => {
+        try {
+            await Auth.confirmSignUp(username, code);
+            await login();
+        } catch (error) {
+            console.log("error confirming sign up", error);
+        }
+    };
+
+    const handleSignIn = async (username, password) => {
+        try {
+            await Auth.signIn(username, password);
+            await login();
+        } catch (error) {
+            console.log("error signing in", error);
+        }
+    };
 
   const inputIsValid = () =>
     email !== "" &&

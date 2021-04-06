@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState} from "react";
 import { View, ScrollView } from "react-native";
 import { colors } from "../styles/colors";
 import { containers, headerHeight } from "../styles/containers";
@@ -7,46 +7,38 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Spacer from "../components/Spacer";
 
-import { Auth } from "aws-amplify";
-
-const sampleContacts = [
-  {
-    name: "Bob",
-    color: colors.tealSecondary,
-  },
-  {
-    name: "Nick Kazan",
-    color: colors.tealSecondary,
-  },
-  {
-    name: "Rachel",
-    color: colors.bluePrimary,
-  },
-  {
-    name: "Susan",
-    color: colors.redError,
-  },
-  {
-    name: "Zach",
-    color: colors.bluePrimary,
-  },
-  {
-    name: "Aidan",
-    color: colors.grey,
-  },
-];
-
-const getUserInfo = () => {
-  return Auth.currentUserInfo()
-};
+// const sampleContacts = [
+//   {
+//     name: "Bob",
+//     color: colors.tealSecondary,
+//   },
+//   {
+//     name: "Nick Kazan",
+//     color: colors.tealSecondary,
+//   },
+//   {
+//     name: "Rachel",
+//     color: colors.bluePrimary,
+//   },
+//   {
+//     name: "Susan",
+//     color: colors.redError,
+//   },
+//   {
+//     name: "memer2",
+//     color: colors.bluePrimary,
+//   },
+//   {
+//     name: "aiden",
+//     color: colors.grey,
+//   },
+// ];
 
 const Contacts = ({ navigation }) => {
-  const [contacts, setContacts] = useState([]);
-
-  let user = getUserInfo();
+    const [contacts, setContacts] = useState([]);
 
   useEffect(() => {
-    setContacts(sampleContacts);
+    // setContacts();
   }, []);
 
   return (

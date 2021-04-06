@@ -36,9 +36,9 @@ const Button = ({
   const buttonWidth = () => (expanded ? { width: "100%" } : {});
 
   const buttonBase = {
-    borderColor: disabled ? colors.surface : buttonColor,
+    borderColor: disabled ? colors.grey : buttonColor,
     backgroundColor: disabled
-      ? colors.surface
+      ? colors.grey
       : secondary
       ? colors.dark
       : buttonColor,
