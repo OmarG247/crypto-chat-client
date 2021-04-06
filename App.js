@@ -16,6 +16,7 @@ import {initService} from "./services/signal.service";
 import { init } from "./services/storage.service";
 import Amplify, {Auth} from "aws-amplify";
 import awsconfig from "./crypto-chat-client/aws-exports";
+import useChat from "./services/useChat";
 
 const Stack = createStackNavigator();
 Amplify.configure(awsconfig);

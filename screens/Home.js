@@ -25,11 +25,9 @@ const Home = ({ navigation, user }) => {
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    if (isFocused) {
-      const localContacts = getContacts();
-      setContacts(localContacts);
-    }
-  }, []);
+    const localContacts = getContacts();
+    setContacts(localContacts);
+  }, [isFocused]);
 
   return (
     <View style={containers.parent}>

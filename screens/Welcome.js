@@ -195,8 +195,8 @@ const Welcome = ({ navigation, user, login }) => {
 
 const WelcomeStyles = StyleSheet.create({
   container: {
-    paddingTop: 32,
-    paddingBottom: 32,
+    paddingTop: 24,
+    paddingBottom: 24,
   },
   icon: {
     resizeMode: "contain",

@@ -31,7 +31,6 @@ const timeBetween = (timeA, timeB) =>
   (timeA.getTime() - timeB.getTime()) / 60 / 1000 > TIME_DIFFERENCE;
 
 const Chat = ({ navigation, route, messages, sendMessage }) => {
-
   const [messageText, setMessageText] = useState("");
   const [messagesHeight, setMessagesHeight] = useState(0);
   const [scrollOffset, setScrollOffset] = useState(0);
@@ -42,9 +41,7 @@ const Chat = ({ navigation, route, messages, sendMessage }) => {
     addKeyboardListeners();
   }, []);
 
-  useEffect(() => {
-    
-  }, [isFocused]);
+  useEffect(() => {}, [isFocused]);
 
   useEffect(() => {
     scrollTo(messagesHeight);
@@ -127,7 +124,7 @@ const Chat = ({ navigation, route, messages, sendMessage }) => {
         handleCancel={() => {
           navigation.goBack();
         }}
-        text={route.params.contact.name}
+        text={`${route.params.contact.firstName} ${route.params.contact.lastName}`}
       />
       <KeyboardInput
         disabled={messageText.trim() === ""}
@@ -135,7 +132,7 @@ const Chat = ({ navigation, route, messages, sendMessage }) => {
         onChangeText={(input) => setMessageText(input)}
         value={messageText}
         onPress={() => {
-          sendMessage(route.params.contact.name, messageText);
+          sendMessage(route.params.contact.id, messageText);
           setMessageText("");
         }}
         style={{ marginBottom: Platform.OS === "ios" ? 40 : 0 }}
