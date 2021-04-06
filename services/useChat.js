@@ -25,10 +25,10 @@ const useChat = token => {
                 const currentTime = new Date();
 				return {
 					...messages,
-					[from]: [...prevConversation, {content: decryptMessage, fromSelf: false, time: currentTime}]
+					[from]: [...prevConversation, {content: decryptedMessage, fromSelf: false, time: currentTime}]
 				};
             });
-            saveMessage(from, {content: decryptMessage, fromSelf: false, time: currentTime})
+            saveMessage(from, {content: decryptedMessage, fromSelf: false, time: currentTime})
 		});
 
 		return () => {
