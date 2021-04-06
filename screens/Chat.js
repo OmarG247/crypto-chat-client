@@ -15,7 +15,6 @@ import Divider from "../components/Divider";
 import Header from "../components/Header";
 import KeyboardInput from "../components/KeyboardInput";
 import Spacer from "../components/Spacer";
-import useChat from "../services/useChat";
 import { useIsFocused } from "@react-navigation/native";
 
 const TIME_DIFFERENCE = 10;
@@ -31,13 +30,11 @@ const sampleMessages = [
 const timeBetween = (timeA, timeB) =>
   (timeA.getTime() - timeB.getTime()) / 60 / 1000 > TIME_DIFFERENCE;
 
-const Chat = ({ navigation, route, user }) => {
-  const { messages, sendMessage } = useChat(user.token);
+const Chat = ({ navigation, route, messages }) => {
 
   const [messageText, setMessageText] = useState("");
   const [messagesHeight, setMessagesHeight] = useState(0);
   const [scrollOffset, setScrollOffset] = useState(0);
-  const [allMessages, setAllMessages] = useState([]);
   const isFocused = useIsFocused();
   const _scrollView = useRef();
 

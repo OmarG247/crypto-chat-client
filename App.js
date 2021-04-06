@@ -25,6 +25,8 @@ const App = () => {
     const [fontsLoaded, setFontsLoaded] = useState(false);
     const [singalInit, setSingalInit] = useState(false);
 
+    const { messages, sendMessage } = useChat(user?.token);
+
     useEffect(() => {
         init();
         loadAsync({
@@ -83,10 +85,10 @@ const App = () => {
                         {props => <Welcome {...props} user={user} login={login}/>}
                     </Stack.Screen>
                     <Stack.Screen name="Chat">
-                        {props => <Chat {...props} user={user}/>}
+                        {props => <Chat {...props} user={user} messages={messages} sendMessage={sendMessage}/>}
                     </Stack.Screen>
                     <Stack.Screen name="Home">
-                        {props => <Home {...props} user={user}/>}
+                        {props => <Home {...props} user={user} messages={messages}/>}
                     </Stack.Screen>
                     <Stack.Screen name="Contacts" component={Contacts}/>
                     <Stack.Screen name="NewMessage">
