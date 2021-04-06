@@ -52,6 +52,7 @@ const NewContact = ({ navigation, user }) => {
 
   const confirm = () => {
     initializeSession(keyScanned);
+    const parsedData = JSON.parse(keyScanned);
     createContact(
       userInfo.firstName,
       userInfo.lastName,

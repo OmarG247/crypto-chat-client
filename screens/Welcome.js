@@ -6,12 +6,11 @@ import { typography } from "../styles/typography";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import icon from "../assets/icon-color.png";
-import  { Auth } from "aws-amplify";
+import { Auth } from "aws-amplify";
 import { colors } from "../styles/colors";
 import ConfirmSignUpModal from "./ConfirmSignup";
 
 const Welcome = ({ navigation, user, login }) => {
-
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -19,59 +18,58 @@ const Welcome = ({ navigation, user, login }) => {
   const [code, setCode] = useState("");
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
 
-    const handleRegister = async (email, username, password) => {
-        const clearEmail = email.trim();
-        const clearUsername = username.trim();
-        const clearPassword = password.trim();
+  const handleRegister = async (email, username, password) => {
+    const clearEmail = email.trim();
+    const clearUsername = username.trim();
+    const clearPassword = password.trim();
 
-        try {
-            await Auth.signUp({
-                username: clearUsername,
-                password: clearPassword,
-                attributes: {
-                    email: clearEmail,
-                },
-            });
-        } catch (err) {
-            console.log("sign up err: ", err);
-        }
-    };
+    try {
+      await Auth.signUp({
+        username: clearUsername,
+        password: clearPassword,
+        attributes: {
+          email: clearEmail,
+        },
+      });
+    } catch (err) {
+      console.log("sign up err: ", err);
+    }
+  };
 
-    const handleLogin = async (username, password) => {
-        const clearUsername = username.trim();
-        const clearPassword = password.trim();
+  const handleLogin = async (username, password) => {
+    const clearUsername = username.trim();
+    const clearPassword = password.trim();
 
-        try {
-            await Auth.signIn(clearUsername, clearPassword);
-            await login();
-        } catch (error) {
-            console.log("error signing in", error);
-        }
-    };
+    try {
+      await Auth.signIn(clearUsername, clearPassword);
+      await login();
+    } catch (error) {
+      console.log("error signing in", error);
+    }
+  };
 
-    const confirmSignUp = async (username, code) => {
-        try {
-            await Auth.confirmSignUp(username, code);
-            await login();
-        } catch (error) {
-            console.log("error confirming sign up", error);
-        }
-    };
+  const confirmSignUp = async (username, code) => {
+    try {
+      await Auth.confirmSignUp(username, code);
+      await login();
+    } catch (error) {
+      console.log("error confirming sign up", error);
+    }
+  };
 
-    const handleSignIn = async (username, password) => {
-        try {
-            await Auth.signIn(username, password);
-            await login();
-        } catch (error) {
-            console.log("error signing in", error);
-        }
-    };
+  const handleSignIn = async (username, password) => {
+    try {
+      await Auth.signIn(username, password);
+      await login();
+    } catch (error) {
+      console.log("error signing in", error);
+    }
+  };
 
   const inputIsValid = () =>
-    email !== "" &&
-    username !== "" && 
-    !emailIsInvalid() &&
-    (register ? password !== "" && password.length >= 8 : true);
+    username !== "" && password !== "" && password.length >= 8 && register
+      ? email !== "" && !emailIsInvalid()
+      : true;
 
   const emailIsInvalid = () => {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -171,7 +169,7 @@ const Welcome = ({ navigation, user, login }) => {
                 </Text>
                 <Button
                   text="login"
-                  // disabled={!inputIsValid()}
+                  disabled={!inputIsValid()}
                   onPress={() => {
                     handleLogin(username, password);
                     navigation.navigate("Home");
