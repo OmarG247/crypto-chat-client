@@ -1,4 +1,4 @@
-import React, { useEffect, useRef} from "react";
+import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import {
   ScrollView,
@@ -15,7 +15,7 @@ import Divider from "../components/Divider";
 import Header from "../components/Header";
 import KeyboardInput from "../components/KeyboardInput";
 import Spacer from "../components/Spacer";
-import useChat from '../services/useChat';
+import useChat from "../services/useChat";
 
 const TIME_DIFFERENCE = 10;
 
@@ -25,65 +25,18 @@ const sampleMessages = [
     time: new Date("March 12, 2021 12:05:00"),
     text: "test message",
   },
-  {
-    senderId: "nick",
-    time: new Date("March 12, 2021 12:06:00"),
-    text: "test message very very very very very very very long message",
-  },
-  {
-    senderId: "zach",
-    time: new Date("March 12, 2021 12:06:30"),
-    text: "test message",
-  },
-  {
-    senderId: "zach",
-    time: new Date("March 12, 2021 12:37:00"),
-    text: "test message",
-  },
-  {
-    senderId: "nick",
-    time: new Date("March 13, 2021 12:32:00"),
-    text: "long message",
-  },
-  {
-    senderId: "nick",
-    time: new Date("March 14, 2021 12:37:00"),
-    text: "test message",
-  },
-  {
-    senderId: "nick",
-    time: new Date("March 17, 2021 12:32:00"),
-    text: "long message",
-  },
-  {
-    senderId: "zach",
-    time: new Date("March 17, 2021 12:34:00"),
-    text: "long message",
-  },
-  {
-    senderId: "zach",
-    time: new Date("March 17, 2021 13:34:00"),
-    text: "test message",
-  },
-  {
-    senderId: "zach",
-    time: new Date("March 17, 2021 13:36:00"),
-    text: "long message",
-  },
 ];
 
 const timeBetween = (timeA, timeB) =>
   (timeA.getTime() - timeB.getTime()) / 60 / 1000 > TIME_DIFFERENCE;
 
 const Chat = ({ navigation, route, user }) => {
-
   const { messages, sendMessage } = useChat(user.token);
 
   const [messageText, setMessageText] = useState("");
   const [messagesHeight, setMessagesHeight] = useState(0);
   const [scrollOffset, setScrollOffset] = useState(0);
   const _scrollView = useRef();
-
 
   useEffect(() => {
     addKeyboardListeners();
@@ -114,8 +67,7 @@ const Chat = ({ navigation, route, user }) => {
     });
   };
 
-  const messageType = (type) =>
-    type ? "outgoing" : "incoming";
+  const messageType = (type) => (type ? "outgoing" : "incoming");
 
   return (
     <View style={containers.parent}>
@@ -135,27 +87,33 @@ const Chat = ({ navigation, route, user }) => {
           contentContainerStyle={{ paddingTop: headerHeight }}
         >
           <Spacer height={16} />
-          {messages[route.params.contact.name] ?
-            messages[route.params.contact.name].length > 0 &&
-            messages[route.params.contact.name].map((message, index) => {
-              return (
-              <View key={`message-${index}`}>
-                {index > 1 &&
-                  timeBetween(message.time, messages[route.params.contact.name][index - 1].time) && (
-                    <Divider />
-                  )}
-                <Message
-                  timeStamp={
-                    index > 1 &&
-                    timeBetween(message.time, messages[route.params.contact.name][index - 1].time)
-                      ? message.time
-                      : false
-                  }
-                  type={messageType(message.fromSelf)}
-                  text={message.content}
-                />
-              </View>
-            )}): null }
+          {messages[route.params.contact.name]
+            ? messages[route.params.contact.name].length > 0 &&
+              messages[route.params.contact.name].map((message, index) => {
+                return (
+                  <View key={`message-${index}`}>
+                    {index > 1 &&
+                      timeBetween(
+                        message.time,
+                        messages[route.params.contact.name][index - 1].time
+                      ) && <Divider />}
+                    <Message
+                      timeStamp={
+                        index > 1 &&
+                        timeBetween(
+                          message.time,
+                          messages[route.params.contact.name][index - 1].time
+                        )
+                          ? message.time
+                          : false
+                      }
+                      type={messageType(message.fromSelf)}
+                      text={message.content}
+                    />
+                  </View>
+                );
+              })
+            : null}
         </ScrollView>
       </View>
       <Header
@@ -163,7 +121,7 @@ const Chat = ({ navigation, route, user }) => {
         handleOptions={() => {}}
         cancelText="back"
         handleCancel={() => {
-          navigation.goBack()
+          navigation.goBack();
         }}
         text={route.params.contact.name}
       />
@@ -173,8 +131,8 @@ const Chat = ({ navigation, route, user }) => {
         onChangeText={(input) => setMessageText(input)}
         value={messageText}
         onPress={() => {
-          sendMessage(route.params.contact.name, messageText)
-          setMessageText('')
+          sendMessage(route.params.contact.name, messageText);
+          setMessageText("");
         }}
         style={{ marginBottom: Platform.OS === "ios" ? 40 : 0 }}
         action="send"

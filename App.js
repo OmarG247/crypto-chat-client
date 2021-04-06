@@ -4,7 +4,6 @@ import {NavigationContainer} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
 import {loadAsync} from "expo-font";
 import {colors} from "./styles/colors";
-import TestNavigation from "./screens/TestNavigation";
 import Home from "./screens/Home";
 import Chat from "./screens/Chat";
 import Welcome from "./screens/Welcome";
@@ -67,11 +66,6 @@ const App = () => {
         })
     };
 
-    const logout = async () => {
-        await Auth.signOut();
-        setUser(null)
-    };
-
     // Show login unless user is not null
     return (
         fontsLoaded &&
@@ -85,7 +79,6 @@ const App = () => {
                         },
                     }}
                 >
-                    {/* <Stack.Screen name="TestNav" component={TestNavigation}/> */}
                     <Stack.Screen name="Welcome">
                         {props => <Welcome {...props} user={user} login={login}/>}
                     </Stack.Screen>

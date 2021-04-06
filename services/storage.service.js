@@ -2,7 +2,7 @@ const CRYPTO_CHAT_DATA = "CRYPTO_CHAT_DATA";
 const emptyData = {
   contacts: [],
 };
-const localData = {};
+let localData = {};
 
 const sampleContact = {
   firstName: "",
@@ -14,13 +14,7 @@ const sampleContact = {
 };
 
 export const init = () => {
-  const currData = localStorage.getItem(CRYPTO_CHAT_DATA);
-
-  if (currData) {
-    localStorage.setItem(CRYPTO_CHAT_DATA, emptyData);
-  } else {
-    localData = currData;
-  }
+  localData = emptyData;
 };
 
 export const getMessages = (id) => {
@@ -35,7 +29,7 @@ export const saveMessage = (id, message) => {
   localData.contacts[targetIndex].messages.push(message);
 
   const updatedData = { ...localData };
-  localStorage.setItem(CRYPTO_CHAT_DATA, updatedData);
+  localData = updatedData;
 };
 
 export const createContact = (firstName, lastName, id, identityKey, color) => {
@@ -51,5 +45,7 @@ export const createContact = (firstName, lastName, id, identityKey, color) => {
 
   localData.contacts.push(newContact);
   const updatedData = { ...localData };
-  localStorage.setItem(CRYPTO_CHAT_DATA, updatedData);
+  localData = updatedData;
 };
+
+export const getContacts = () => localData.contacts;

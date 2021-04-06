@@ -6,6 +6,7 @@ import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Spacer from "../components/Spacer";
+import { getContacts } from "../services/storage.service";
 
 const sampleContacts = [
   {
@@ -46,7 +47,8 @@ const Home = ({ navigation, user }) => {
   const [contacts, setContacts] = useState([]);
 
   useEffect(() => {
-    setContacts(sampleContacts);
+    const localContacts = getContacts();
+    setContacts(localContacts);
   }, []);
 
   return (

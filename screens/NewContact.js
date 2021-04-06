@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Text, ScrollView } from "react-native";
 import { containers, headerHeight } from "../styles/containers";
 import { colors } from "../styles/colors";
@@ -11,7 +11,11 @@ import Button from "../components/Button";
 import Icon from "../components/Icon";
 import QRKeyModal from "../components/QRKeyModal";
 import ScanModal from "../components/ScanModal";
-import { generatePreKeyBundle } from "../services/signal.service";
+import {
+  generatePreKeyBundle,
+  initializeSession,
+} from "../services/signal.service";
+import { createContact } from "../services/storage.service";
 
 const NewContact = ({ navigation, user }) => {
   // They will get this info from the prekey bundle
@@ -20,7 +24,7 @@ const NewContact = ({ navigation, user }) => {
     lastName: "",
     color: colors.limeAccent,
   });
-  const [keyScanned, setKeyScanned] = useState(false);
+  const [keyScanned, setKeyScanned] = useState(null);
   const [scanModalOpen, setScanModalOpen] = useState(false);
   const [cipherKey, setCipherKey] = useState(null); // This should be called preKey bundle
 
@@ -40,9 +44,22 @@ const NewContact = ({ navigation, user }) => {
 
   const onScan = (data) => {
     setScanModalOpen(false);
-    alert(`key scanned!: ${data}`);
-    // call initializeSession(data) (async)
-    // Navigate to new message page?
+    setKeyScanned(data);
+    const parsedData = JSON.parse(data);
+    console.log(parsedData);
+    setKeyScanned(data);
+  };
+
+  const confirm = () => {
+    initializeSession(keyScanned);
+    createContact(
+      userInfo.firstName,
+      userInfo.lastName,
+      parsedData.userId,
+      parsedData.identityKey,
+      userInfo.color
+    );
+    navigation.navigate("Home");
   };
 
   const formIsValid = () => userInfo.firstName && userInfo.lastName;
@@ -106,13 +123,14 @@ const NewContact = ({ navigation, user }) => {
           cancelText="cancel"
           handleCancel={() => navigation.goBack()}
         />
-        <Footer actionDisabled={!isReady()} action="save" />
+        <Footer
+          actionDisabled={!isReady()}
+          action="save"
+          handleAction={() => confirm()}
+        />
       </View>
       {!!cipherKey && (
-        <QRKeyModal
-          cipherKey={cipherKey}
-          onClose={() => setCipherKey(null)}
-        />
+        <QRKeyModal cipherKey={cipherKey} onClose={() => setCipherKey(null)} />
       )}
       {scanModalOpen && (
         <ScanModal onScan={onScan} closeModal={() => setScanModalOpen(false)} />
