@@ -20,6 +20,7 @@ const useChat = token => {
             });
 
             socketRef.current.on(NEW_CHAT_MESSAGE_EVENT, async ({to, from, content}) => {
+                console.log(`Decrypting: ${JSON.stringify(content)}`);
                 const decryptedMessage = decryptMessage(content, from);
                 verifyContactAndMessage(from, decryptedMessage);
 
@@ -40,9 +41,9 @@ const useChat = token => {
         }
     }, [token]);
 
-    const sendMessage = (to, content) => {
+    const sendMessage = async (to, content) => {
         if (token) {
-            const encryptedMessage = encryptMessage(content, to);
+            const encryptedMessage = await encryptMessage(content, to);
 
             socketRef.current.emit(NEW_CHAT_MESSAGE_EVENT, {
                 content: encryptedMessage,
