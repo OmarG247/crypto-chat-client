@@ -22,11 +22,11 @@ export const getMessages = (id) => {
   return targetContact.messages;
 };
 
-export const saveMessage = (id, message) => {
+export const saveMessages = (id, messages) => {
   const targetIndex = localData.contacts.findIndex(
     (contact) => contact.id === id
   );
-  localData.contacts[targetIndex].messages.push(message);
+  localData.contacts[targetIndex].messages = messages;
 
   const updatedData = { ...localData };
   localData = updatedData;

@@ -7,6 +7,7 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Spacer from "../components/Spacer";
 import { getContacts } from "../services/storage.service";
+import { useIsFocused } from "@react-navigation/native";
 
 const sampleContacts = [
   {
@@ -17,38 +18,17 @@ const sampleContacts = [
     name: "Nick Kazan",
     color: colors.tealSecondary,
   },
-  {
-    name: "Rachel",
-    color: colors.bluePrimary,
-  },
-  {
-    name: "Susan",
-    color: colors.redError,
-  },
-  {
-    name: "Zach",
-    color: colors.bluePrimary,
-  },
-  {
-    name: "aiden",
-    color: colors.grey,
-  },
-  {
-    name: 'Memer2',
-    color: colors.redError
-  },
-  {
-    name: 'Memer3',
-    color: colors.tealSecondary
-  }
 ];
 
 const Home = ({ navigation, user }) => {
   const [contacts, setContacts] = useState([]);
+  const isFocused = useIsFocused();
 
   useEffect(() => {
-    const localContacts = getContacts();
-    setContacts(localContacts);
+    if (isFocused) {
+      const localContacts = getContacts();
+      setContacts(localContacts);
+    }
   }, []);
 
   return (
@@ -60,7 +40,9 @@ const Home = ({ navigation, user }) => {
         {contacts.map((contact, index) => (
           <Contact
             key={`contact-${index}`}
-            onPress={() => navigation.navigate("Chat", { contact: contact, user })}
+            onPress={() =>
+              navigation.navigate("Chat", { contact: contact, user })
+            }
             newMessage
             contact={contact}
           />
