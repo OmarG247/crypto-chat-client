@@ -50,14 +50,13 @@ const NewContact = ({ navigation, user }) => {
     setKeyScanned(data);
   };
 
-  const confirm = () => {
-    initializeSession(keyScanned);
+  const confirm = async () => {
+    await initializeSession(keyScanned);
     const parsedData = JSON.parse(keyScanned);
     createContact(
       userInfo.firstName,
       userInfo.lastName,
       parsedData.userId,
-      parsedData.identityKey,
       userInfo.color
     );
     navigation.navigate("Home");
