@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import {io} from "socket.io-client";
 import {encryptMessage, decryptMessage} from "./signal.service";
-import { verifyContact } from "./storage.service";
+import { verifyContactAndMessage } from "./storage.service";
 
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
 
@@ -21,7 +21,7 @@ const useChat = token => {
 
             socketRef.current.on(NEW_CHAT_MESSAGE_EVENT, async ({to, from, content}) => {
                 const decryptedMessage = decryptMessage(content, from);
-                verifyContact(from, decryptMessage);
+                verifyContactAndMessage(from, decryptedMessage);
 
                 setMessages(messages => {
                     const prevConversation = messages[from] || [];
