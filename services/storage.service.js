@@ -48,4 +48,26 @@ export const createContact = (firstName, lastName, id, identityKey, color) => {
   localData = updatedData;
 };
 
+export const verifyContactAndMessage = (id, message) => {
+  const targetIndex = localData.contacts.findIndex((contact) => contact.id === id);
+
+  if (targetIndex > 0) {
+    localData.contacts[targetIndex].messages.push(message);
+  } else {
+    const newContact = {
+      firstName: "new",
+      lastName: "sender",
+      color: "lime",
+      id,
+      identityKey: "",
+      messages: [],
+    };
+
+    localData.contacts.push(newContact);
+  }
+
+  const updatedData = { ...localData };
+  localData = updatedData;
+};
+
 export const getContacts = () => localData.contacts;
