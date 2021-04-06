@@ -61,7 +61,7 @@ const App = () => {
     const login = async () => {
         const {signInUserSession: {accessToken: {payload}}} = await Auth.currentAuthenticatedUser();
         const token = (await Auth.currentSession()).getAccessToken().getJwtToken();
-        const userId = payload.username
+        const userId = payload.username;
         setUser({
             userId,
             token,

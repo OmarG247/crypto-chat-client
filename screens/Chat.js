@@ -30,7 +30,7 @@ const sampleMessages = [
 const timeBetween = (timeA, timeB) =>
   (timeA.getTime() - timeB.getTime()) / 60 / 1000 > TIME_DIFFERENCE;
 
-const Chat = ({ navigation, route, messages }) => {
+const Chat = ({ navigation, route, messages, sendMessage }) => {
 
   const [messageText, setMessageText] = useState("");
   const [messagesHeight, setMessagesHeight] = useState(0);
