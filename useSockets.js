@@ -34,7 +34,7 @@ const useSockets = (token, saveMessage) => {
     }, [token]);
 
     const sendMessage = async (to, content) => {
-        if (token) {
+        if (socketRef.current) {
             const encryptedMessage = await encryptMessage(content, to);
 
             socketRef.current.emit(NEW_CHAT_MESSAGE_EVENT, {
