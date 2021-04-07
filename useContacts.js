@@ -5,7 +5,7 @@ const useContacts = () => {
     const [contacts, setContacts] = useState({});
 
     const saveMessage = (id, message) => {
-        if (!(id in contacts)) {
+        if (!contacts.hasOwnProperty(id)) {
             createContact(id, "new", "sender", colors.limeAccent)
         }
 
