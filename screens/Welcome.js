@@ -36,7 +36,7 @@ const Welcome = ({ navigation, login }) => {
     }
   };
 
-  const handleLogin = async (username, password) => {
+  const handleLogin = async () => {
     const clearUsername = username.trim();
     const clearPassword = password.trim();
 
@@ -46,6 +46,7 @@ const Welcome = ({ navigation, login }) => {
     } catch (error) {
       console.log("error signing in", error);
     }
+    navigation.navigate("Home");
   };
 
   const confirmSignUp = async (username, code) => {
@@ -170,9 +171,7 @@ const Welcome = ({ navigation, login }) => {
                 <Button
                   text="login"
                   disabled={!inputIsValid()}
-                  onPress={() => {
-                    handleLogin(username, password);
-                  }}
+                  onPress={handleLogin}
                 />
               </>
             )}
