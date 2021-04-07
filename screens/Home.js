@@ -21,7 +21,7 @@ const Home = ({navigation, contacts}) => {
                                 contact: {
                                     id: contactId,
                                     firstname: contacts[contactId].firstname,
-                                    lastname: contacts[contactId].firstname.lastname,
+                                    lastname: contacts[contactId].lastname,
                                 }
                             })
                         }
