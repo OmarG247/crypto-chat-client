@@ -1,6 +1,7 @@
 import React, {useEffect, useRef} from "react";
 import {io} from "socket.io-client";
 import {encryptMessage, decryptWhisperMessage, decryptPreKeyWhisperMessage} from "./services/signal.service";
+import {colors} from "./styles/colors";
 
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
 

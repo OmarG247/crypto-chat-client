@@ -18,7 +18,6 @@ const useContacts = () => {
     };
 
     const createContact = (id, firstName, lastName, color) => {
-        console.log(`creating contact ${id}`);
         const newContact = {
             firstName,
             lastName,
