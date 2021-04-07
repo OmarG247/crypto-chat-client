@@ -28,10 +28,6 @@ const Home = ({navigation, contacts}) => {
             <Header
                 options
                 handleOptions={() => navigation.navigate("AppOptions")}
-                cancelText="back"
-                handleCancel={() => {
-                    navigation.goBack();
-                }}
                 text="Messages"
             />
             <Footer action="new" handleAction={() => {
