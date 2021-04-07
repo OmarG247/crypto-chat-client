@@ -9,14 +9,12 @@ import Input from "../components/Input";
 import ColorPicker from "../components/ColorPicker";
 import Button from "../components/Button";
 import Icon from "../components/Icon";
-import QRKeyModal from "../components/QRKeyModal";
 import ScanModal from "../components/ScanModal";
 import {
-  generatePreKeyBundle,
   initializeSession,
 } from "../services/signal.service";
 
-const NewContact = ({ navigation, user, createContact }) => {
+const NewContact = ({ navigation, createContact }) => {
   // They will get this info from the prekey bundle
   const [userInfo, setUserInfo] = useState({
     firstName: "",
@@ -25,13 +23,6 @@ const NewContact = ({ navigation, user, createContact }) => {
   });
   const [keyScanned, setKeyScanned] = useState(null);
   const [scanModalOpen, setScanModalOpen] = useState(false);
-  const [cipherKey, setCipherKey] = useState(null); // This should be called preKey bundle
-
-  const generatePreKeyBundleString = () => {
-    generatePreKeyBundle(user.userId).then((result) => {
-      setCipherKey(result);
-    });
-  };
 
   const handleInput = (type, input) => {
     setUserInfo({ ...userInfo, [type]: input });
@@ -61,9 +52,7 @@ const NewContact = ({ navigation, user, createContact }) => {
     navigation.navigate("Home");
   };
 
-  const formIsValid = () => userInfo.firstName && userInfo.lastName;
-
-  const isReady = () => formIsValid() && keyScanned;
+  const isReady = () => userInfo.firstName && keyScanned;
 
   return (
     <>
@@ -108,13 +97,6 @@ const NewContact = ({ navigation, user, createContact }) => {
               text="scan key"
               onPress={() => setScanModalOpen(true)}
             />
-            <Button
-              secondary
-              expanded
-              style={{ marginTop: 12 }}
-              text="display key"
-              onPress={generatePreKeyBundleString}
-            />
           </View>
         </ScrollView>
         <Header
@@ -128,9 +110,6 @@ const NewContact = ({ navigation, user, createContact }) => {
           handleAction={() => confirm()}
         />
       </View>
-      {!!cipherKey && (
-        <QRKeyModal cipherKey={cipherKey} onClose={() => setCipherKey(null)} />
-      )}
       {scanModalOpen && (
         <ScanModal onScan={onScan} closeModal={() => setScanModalOpen(false)} />
       )}

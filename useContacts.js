@@ -1,11 +1,12 @@
 import React, {useState} from "react";
+import { colors } from "./styles/colors";
 
 const useContacts = () => {
     const [contacts, setContacts] = useState({});
 
     const saveMessage = (id, message) => {
         if (!contacts[id]) {
-            createContact("new", "sender", id, "lime")
+            createContact("new", "sender", id, colors.limeAccent)
         }
 
         setContacts(contacts => {

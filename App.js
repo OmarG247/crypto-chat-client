@@ -98,7 +98,9 @@ const App = () => {
                     <Stack.Screen name="NewContact">
                         {props => <NewContact {...props} user={user} createContact={createContact}/>}
                     </Stack.Screen>
-                    <Stack.Screen name="AppOptions" component={AppOptions}/>
+                    <Stack.Screen name="AppOptions">
+                    {props => <AppOptions {...props} user={user}/>}
+                    </Stack.Screen>
                     <Stack.Screen name="ConfirmSignup" component={ConfirmSignup}/>
                 </Stack.Navigator>
             </NavigationContainer>
