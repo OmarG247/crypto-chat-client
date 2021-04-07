@@ -17,7 +17,13 @@ const Home = ({navigation, contacts}) => {
                     <Contact
                         key={`contact-${index}`}
                         onPress={() =>
-                            navigation.navigate("Chat", {contact: contactId})
+                            navigation.navigate("Chat", {
+                                contact: {
+                                    id: contactId,
+                                    firstname: contacts[contactId].firstname,
+                                    lastname: contacts[contactId].firstname.lastname,
+                                }
+                            })
                         }
                         newMessage
                         contact={contacts[contactId]}

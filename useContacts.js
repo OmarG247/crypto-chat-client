@@ -1,16 +1,17 @@
 import React, {useState} from "react";
-import { colors } from "./styles/colors";
+import {colors} from "./styles/colors";
 
 const useContacts = () => {
     const [contacts, setContacts] = useState({});
 
     const saveMessage = (id, message) => {
         if (!contacts[id]) {
-            createContact("new", "sender", id, colors.limeAccent)
+            createContact(id, "new", "sender", colors.limeAccent)
         }
 
         setContacts(contacts => {
             const prevConversation = contacts[id].messages;
+            console.log(JSON.stringify(prevConversation))
             return {
                 ...contacts,
                 [id]: {
@@ -22,24 +23,23 @@ const useContacts = () => {
     };
 
     const createContact = (id, firstName, lastName, color) => {
-        console.log("creating contact")
-        if (!contacts[id]) {
-            const newContact = {
-                firstName,
-                lastName,
-                color,
-                messages: [],
-            };
+        console.log(`creating contact ${id}`);
+        const newContact = {
+            firstName,
+            lastName,
+            color,
+            messages: [],
+        };
 
-            setContacts(contacts => {
-                return {
-                    ...contacts,
-                    [id]: {
-                        ...newContact
-                    }
+        setContacts(contacts => {
+            return {
+                ...contacts,
+                [id]: {
+                    ...newContact
                 }
-            });
-        }
+            }
+        });
+
     };
 
     return {contacts, saveMessage, createContact}
