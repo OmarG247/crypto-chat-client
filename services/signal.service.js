@@ -242,28 +242,33 @@ export function encryptMessage(plaintext, recipientUserId, recipientDeviceId) {
 
 // Returns promise of decrypted plaintext
 // TODO: What if you receive a whisper message for an address you have already processed a prekey for?
-export function decryptMessage(message, senderUserId, senderDeviceId) {
+export function decryptPreKeyWhisperMessage(message, senderUserId, senderDeviceId) {
     const senderAddress = new SignalProtocolAddress(senderUserId, DEVICE_ID);
     const sessionCipher = new SessionCipher(
         store,
         senderAddress
     );
+    return sessionCipher.decryptPreKeyWhisperMessage(
+        message.body,
+        "binary"
+    ).then(function (decryptedMessageBytes) {
+        return util.ab2str(decryptedMessageBytes)
+    });
+}
 
-    if (message.type === 3) {
-        return sessionCipher.decryptPreKeyWhisperMessage(
-            message.body,
-            "binary"
-        ).then(function (decryptedMessageBytes) {
-            return util.ab2str(decryptedMessageBytes)
-        });
-    } else {
-         return sessionCipher.decryptWhisperMessage(
-            message.body,
-            "binary"
-        ).then(function (decryptedMessageBytes) {
-             return util.ab2str(decryptedMessageBytes);
-         });
-    }
+export function decryptWhisperMessage(message, senderUserId, senderDeviceId) {
+    const senderAddress = new SignalProtocolAddress(senderUserId, DEVICE_ID);
+    const sessionCipher = new SessionCipher(
+        store,
+        senderAddress
+    );
+    return sessionCipher.decryptWhisperMessage(
+        message.body,
+        "binary"
+    ).then(function (decryptedMessageBytes) {
+        return util.ab2str(decryptedMessageBytes);
+    });
+
 }
 
 // Call this function after scanning QR code

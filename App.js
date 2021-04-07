@@ -26,7 +26,7 @@ const App = () => {
     const [singalInit, setSingalInit] = useState(false);
 
     const {contacts, saveMessage, createContact} = useContacts();
-    const {sendMessage} = useSockets(user?.token, saveMessage);
+    const {sendMessage} = useSockets(user?.token, saveMessage, createContact);
 
     useEffect(() => {
         loadAsync({

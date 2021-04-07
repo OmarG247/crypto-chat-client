@@ -1,12 +1,12 @@
 import React, {useEffect, useRef} from "react";
 import {io} from "socket.io-client";
-import {encryptMessage, decryptMessage} from "./services/signal.service";
+import {encryptMessage, decryptWhisperMessage, decryptPreKeyWhisperMessage} from "./services/signal.service";
 
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
 
 const SOCKET_SERVER_URL = 'http://Gettingstartedapp-env.eba-sm3mz4hp.us-east-2.elasticbeanstalk.com';
 
-const useSockets = (token, saveMessage) => {
+const useSockets = (token, saveMessage, createContact) => {
     let socketRef = useRef();
 
     useEffect(() => {
@@ -18,7 +18,13 @@ const useSockets = (token, saveMessage) => {
             });
 
             socketRef.current.on(NEW_CHAT_MESSAGE_EVENT, async ({to, from, content}) => {
-                const decryptedMessage = await decryptMessage(content, from);
+                let decryptedMessage;
+                if (content.type === 3) {
+                    createContact(from, "new", "sender", colors.limeAccent);
+                    decryptedMessage = await decryptPreKeyWhisperMessage(content, from);
+                } else {
+                    decryptedMessage = await decryptWhisperMessage(content, from);
+                }
 
                 const currentTime = new Date();
                 const message = {content: decryptedMessage, fromSelf: false, time: currentTime};

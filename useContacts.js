@@ -5,10 +5,6 @@ const useContacts = () => {
     const [contacts, setContacts] = useState({});
 
     const saveMessage = (id, message) => {
-        if (!contacts.hasOwnProperty(id)) {
-            createContact(id, "new", "sender", colors.limeAccent)
-        }
-
         setContacts(contacts => {
             const prevConversation = contacts[id].messages;
             return {
