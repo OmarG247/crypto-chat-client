@@ -13,22 +13,22 @@ const Home = ({navigation, contacts}) => {
                 style={containers.main}
                 contentContainerStyle={{paddingTop: headerHeight}}
             >
-                {Object.keys(contacts).map((contactId, index) => (
-                    <Contact
+                {Object.keys(contacts).map((contactId, index) => {
+                    return <Contact
                         key={`contact-${index}`}
                         onPress={() =>
                             navigation.navigate("Chat", {
                                 contact: {
                                     id: contactId,
-                                    firstname: contacts[contactId].firstname,
-                                    lastname: contacts[contactId].lastname,
+                                    firstName: contacts[contactId].firstName,
+                                    lastName: contacts[contactId].lastName,
                                 }
                             })
                         }
                         newMessage
                         contact={contacts[contactId]}
                     />
-                ))}
+                })}
                 <Spacer height={200}/>
             </ScrollView>
             <Header
