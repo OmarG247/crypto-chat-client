@@ -66,7 +66,8 @@ const App = () => {
         setUser({
             userId,
             token,
-        })
+        });
+        navigation.navigate("Home");
     };
 
     // Show login unless user is not null

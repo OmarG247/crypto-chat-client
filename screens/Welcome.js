@@ -172,7 +172,6 @@ const Welcome = ({ navigation, login }) => {
                   disabled={!inputIsValid()}
                   onPress={() => {
                     handleLogin(username, password);
-                    navigation.navigate("Home");
                   }}
                 />
               </>
