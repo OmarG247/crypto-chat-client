@@ -64,7 +64,7 @@ const Chat = ({navigation, route, sendMessage, contacts}) => {
         });
     };
 
-    const messages = contacts[route.params.contact.id].messages;
+    const messages = contacts[route.params.contact].messages;
 
     const messageType = (type) => (type ? "outgoing" : "incoming");
 

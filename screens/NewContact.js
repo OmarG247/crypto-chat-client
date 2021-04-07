@@ -44,9 +44,9 @@ const NewContact = ({ navigation, createContact }) => {
     await initializeSession(keyScanned);
     const parsedData = JSON.parse(keyScanned);
     createContact(
+      parsedData.userId,
       userInfo.firstName,
       userInfo.lastName,
-      parsedData.userId,
       userInfo.color
     );
     navigation.navigate("Home");

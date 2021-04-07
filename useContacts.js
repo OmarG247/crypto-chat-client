@@ -21,13 +21,13 @@ const useContacts = () => {
         });
     };
 
-    const createContact = (firstName, lastName, id, color) => {
+    const createContact = (id, firstName, lastName, color) => {
+        console.log("creating contact")
         if (!contacts[id]) {
             const newContact = {
                 firstName,
                 lastName,
                 color,
-                id,
                 messages: [],
             };
 
