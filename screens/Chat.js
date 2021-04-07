@@ -15,8 +15,6 @@ import Divider from "../components/Divider";
 import Header from "../components/Header";
 import KeyboardInput from "../components/KeyboardInput";
 import Spacer from "../components/Spacer";
-import {useIsFocused} from "@react-navigation/native";
-import {getMessages} from '../services/storage.service';
 
 const TIME_DIFFERENCE = 10;
 
@@ -31,19 +29,15 @@ const sampleMessages = [
 const timeBetween = (timeA, timeB) =>
     (timeA.getTime() - timeB.getTime()) / 60 / 1000 > TIME_DIFFERENCE;
 
-const Chat = ({navigation, route, sendMessage}) => {
+const Chat = ({navigation, route, sendMessage, contacts}) => {
     const [messageText, setMessageText] = useState("");
     const [messagesHeight, setMessagesHeight] = useState(0);
     const [scrollOffset, setScrollOffset] = useState(0);
-    const isFocused = useIsFocused();
     const _scrollView = useRef();
 
     useEffect(() => {
         addKeyboardListeners();
     }, []);
-
-    useEffect(() => {
-    }, [isFocused]);
 
     useEffect(() => {
         scrollTo(messagesHeight);
@@ -70,7 +64,7 @@ const Chat = ({navigation, route, sendMessage}) => {
         });
     };
 
-    const messages = getMessages(route.params.contact.id);
+    const messages = contacts[route.params.contact.id].messages;
 
     const messageType = (type) => (type ? "outgoing" : "incoming");
 

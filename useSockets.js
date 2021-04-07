@@ -1,13 +1,12 @@
 import React, {useEffect, useRef} from "react";
 import {io} from "socket.io-client";
-import {encryptMessage, decryptMessage} from "./signal.service";
-import {verifyContactAndSaveMessage, saveMessage} from "./storage.service";
+import {encryptMessage, decryptMessage} from "./services/signal.service";
 
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
 
 const SOCKET_SERVER_URL = 'http://Gettingstartedapp-env.eba-sm3mz4hp.us-east-2.elasticbeanstalk.com';
 
-const useChat = token => {
+const useSockets = (token, saveMessage) => {
     let socketRef = useRef();
 
     useEffect(() => {
@@ -24,7 +23,7 @@ const useChat = token => {
                 const currentTime = new Date();
                 const message = {content: decryptedMessage, fromSelf: false, time: currentTime};
 
-                verifyContactAndSaveMessage(from, message);
+                saveMessage(from, message);
             });
         }
         return () => {
@@ -52,4 +51,4 @@ const useChat = token => {
     return {sendMessage}
 };
 
-export default useChat;
+export default useSockets;

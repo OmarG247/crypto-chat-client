@@ -13,10 +13,10 @@ import NewContact from "./screens/NewContact";
 import AppOptions from "./screens/AppOptions";
 import ConfirmSignup from "./screens/ConfirmSignup";
 import {initService} from "./services/signal.service";
-import { init } from "./services/storage.service";
 import Amplify, {Auth} from "aws-amplify";
 import awsconfig from "./crypto-chat-client/aws-exports";
-import useChat from "./services/useChat";
+import useSockets from "./useSockets";
+import useContacts from "./useContacts";
 
 const Stack = createStackNavigator();
 Amplify.configure(awsconfig);
@@ -26,7 +26,8 @@ const App = () => {
     const [fontsLoaded, setFontsLoaded] = useState(false);
     const [singalInit, setSingalInit] = useState(false);
 
-    const { sendMessage } = useChat(user?.token);
+    const {contacts, saveMessage, createContact} = useContacts();
+    const { sendMessage } = useSockets(user?.token, saveMessage);
 
     useEffect(() => {
         init();
@@ -83,17 +84,17 @@ const App = () => {
                     }}
                 >
                     <Stack.Screen name="Welcome">
-                        {props => <Welcome {...props} user={user} login={login}/>}
+                        {props => <Welcome {...props} login={login}/>}
                     </Stack.Screen>
                     <Stack.Screen name="Chat">
-                        {props => <Chat {...props} user={user} sendMessage={sendMessage}/>}
+                        {props => <Chat {...props} user={user} sendMessage={sendMessage} contacts={contacts}/>}
                     </Stack.Screen>
                     <Stack.Screen name="Home">
-                        {props => <Home {...props} user={user}/>}
+                        {props => <Home {...props} user={user} contacts={contacts}/>}
                     </Stack.Screen>
                     <Stack.Screen name="Contacts" component={Contacts}/>
                     <Stack.Screen name="NewMessage">
-                        {props => <NewMessage {...props} user={user}/>}
+                        {props => <NewMessage {...props} contacts={contacts}/>}
                     </Stack.Screen>
                     <Stack.Screen name="NewContact">
                         {props => <NewContact {...props} user={user}/>}

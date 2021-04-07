@@ -10,7 +10,7 @@ import { Auth } from "aws-amplify";
 import { colors } from "../styles/colors";
 import ConfirmSignUpModal from "./ConfirmSignup";
 
-const Welcome = ({ navigation, user, login }) => {
+const Welcome = ({ navigation, login }) => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
