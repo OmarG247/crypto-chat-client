@@ -43,10 +43,10 @@ const Welcome = ({ navigation, login }) => {
     try {
       await Auth.signIn(clearUsername, clearPassword);
       await login();
+      navigation.navigate("Home");
     } catch (error) {
       console.log("error signing in", error);
     }
-    navigation.navigate("Home");
   };
 
   const confirmSignUp = async (username, code) => {
