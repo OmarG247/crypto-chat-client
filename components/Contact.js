@@ -9,7 +9,7 @@ const Contact = ({ contact, newMessage, onPress, style }) => (
     <TouchableOpacity onPress={onPress} style={ContactStyles.content}>
       <View style={ContactStyles.name}>
         <View style={[ContactStyles.bar, { backgroundColor: contact.color }]} />
-        <Text style={typography.subtitle}>{contact.name}</Text>
+        <Text style={typography.subtitle}>{`${contact.firstName} ${contact.lastName}`}</Text>
       </View>
       {newMessage && <View style={ContactStyles.alert} />}
     </TouchableOpacity>

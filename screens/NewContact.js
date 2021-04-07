@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from "react";
+import React, {  useState } from "react";
 import { StyleSheet, View, Text, ScrollView } from "react-native";
 import { containers, headerHeight } from "../styles/containers";
 import { colors } from "../styles/colors";
@@ -9,26 +9,20 @@ import Input from "../components/Input";
 import ColorPicker from "../components/ColorPicker";
 import Button from "../components/Button";
 import Icon from "../components/Icon";
-import QRKeyModal from "../components/QRKeyModal";
 import ScanModal from "../components/ScanModal";
-import { generatePreKeyBundle } from "../services/signal.service";
+import {
+  initializeSession,
+} from "../services/signal.service";
 
-const NewContact = ({ navigation, user }) => {
+const NewContact = ({ navigation, createContact }) => {
   // They will get this info from the prekey bundle
   const [userInfo, setUserInfo] = useState({
     firstName: "",
     lastName: "",
     color: colors.limeAccent,
   });
-  const [keyScanned, setKeyScanned] = useState(false);
+  const [keyScanned, setKeyScanned] = useState(null);
   const [scanModalOpen, setScanModalOpen] = useState(false);
-  const [cipherKey, setCipherKey] = useState(null); // This should be called preKey bundle
-
-  const generatePreKeyBundleString = () => {
-    generatePreKeyBundle(user.userId).then((result) => {
-      setCipherKey(result);
-    });
-  };
 
   const handleInput = (type, input) => {
     setUserInfo({ ...userInfo, [type]: input });
@@ -40,14 +34,25 @@ const NewContact = ({ navigation, user }) => {
 
   const onScan = (data) => {
     setScanModalOpen(false);
-    alert(`key scanned!: ${data}`);
-    // call initializeSession(data) (async)
-    // Navigate to new message page?
+    setKeyScanned(data);
+    const parsedData = JSON.parse(data);
+    console.log(parsedData);
+    setKeyScanned(data);
   };
 
-  const formIsValid = () => userInfo.firstName && userInfo.lastName;
+  const confirm = async () => {
+    await initializeSession(keyScanned);
+    const parsedData = JSON.parse(keyScanned);
+    createContact(
+      parsedData.userId,
+      userInfo.firstName,
+      userInfo.lastName,
+      userInfo.color
+    );
+    navigation.navigate("Home");
+  };
 
-  const isReady = () => formIsValid() && keyScanned;
+  const isReady = () => userInfo.firstName && keyScanned;
 
   return (
     <>
@@ -68,7 +73,6 @@ const NewContact = ({ navigation, user }) => {
             onChangeText={(input) => handleInput("lastName", input)}
             label="Last name"
             value={userInfo.lastName}
-            error={!userInfo.lastName && "field is mandatory"}
           />
           <ColorPicker color={userInfo.color} handleColor={handleColor} />
           <View style={NewContactStyles.block}>
@@ -92,13 +96,6 @@ const NewContact = ({ navigation, user }) => {
               text="scan key"
               onPress={() => setScanModalOpen(true)}
             />
-            <Button
-              secondary
-              expanded
-              style={{ marginTop: 12 }}
-              text="display key"
-              onPress={generatePreKeyBundleString}
-            />
           </View>
         </ScrollView>
         <Header
@@ -106,14 +103,12 @@ const NewContact = ({ navigation, user }) => {
           cancelText="cancel"
           handleCancel={() => navigation.goBack()}
         />
-        <Footer actionDisabled={!isReady()} action="save" />
-      </View>
-      {!!cipherKey && (
-        <QRKeyModal
-          cipherKey={cipherKey}
-          onClose={() => setCipherKey(null)}
+        <Footer
+          actionDisabled={!isReady()}
+          action="save"
+          handleAction={() => confirm()}
         />
-      )}
+      </View>
       {scanModalOpen && (
         <ScanModal onScan={onScan} closeModal={() => setScanModalOpen(false)} />
       )}

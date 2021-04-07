@@ -1,82 +1,45 @@
-import React, { useEffect, useState } from "react";
-import { View, ScrollView } from "react-native";
-import { colors } from "../styles/colors";
-import { containers, headerHeight } from "../styles/containers";
+import React from "react";
+import {View, ScrollView} from "react-native";
+import {containers, headerHeight} from "../styles/containers";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Spacer from "../components/Spacer";
 
-const sampleContacts = [
-  {
-    name: "Bob",
-    color: colors.tealSecondary,
-  },
-  {
-    name: "Nick Kazan",
-    color: colors.tealSecondary,
-  },
-  {
-    name: "Rachel",
-    color: colors.bluePrimary,
-  },
-  {
-    name: "Susan",
-    color: colors.redError,
-  },
-  {
-    name: "Zach",
-    color: colors.bluePrimary,
-  },
-  {
-    name: "aiden",
-    color: colors.grey,
-  },
-  {
-    name: 'Memer2',
-    color: colors.redError
-  },
-  {
-    name: 'Memer3',
-    color: colors.tealSecondary
-  }
-];
-
-const Home = ({ navigation, user }) => {
-  const [contacts, setContacts] = useState([]);
-
-  useEffect(() => {
-    setContacts(sampleContacts);
-  }, []);
-
-  return (
-    <View style={containers.parent}>
-      <ScrollView
-        style={containers.main}
-        contentContainerStyle={{ paddingTop: headerHeight }}
-      >
-        {contacts.map((contact, index) => (
-          <Contact
-            key={`contact-${index}`}
-            onPress={() => navigation.navigate("Chat", { contact: contact, user })}
-            newMessage
-            contact={contact}
-          />
-        ))}
-        <Spacer height={200} />
-      </ScrollView>
-      <Header
-        options
-        handleOptions={() => navigation.navigate("AppOptions")}
-        cancelText="back"
-        handleCancel={() => {
-          navigation.goBack();
-        }}
-        text="Messages"
-      />
-      <Footer action="new" handleAction={() => {}} />
-    </View>
-  );
+const Home = ({navigation, contacts}) => {
+    return (
+        <View style={containers.parent}>
+            <ScrollView
+                style={containers.main}
+                contentContainerStyle={{paddingTop: headerHeight}}
+            >
+                {Object.keys(contacts).map((contactId, index) => {
+                    return <Contact
+                        key={`contact-${index}`}
+                        onPress={() =>
+                            navigation.navigate("Chat", {
+                                contact: {
+                                    id: contactId,
+                                    firstName: contacts[contactId].firstName,
+                                    lastName: contacts[contactId].lastName,
+                                }
+                            })
+                        }
+                        newMessage
+                        contact={contacts[contactId]}
+                    />
+                })}
+                <Spacer height={200}/>
+            </ScrollView>
+            <Header
+                options
+                handleOptions={() => navigation.navigate("AppOptions")}
+                text="Messages"
+            />
+            <Footer action="new" handleAction={() => {
+            }}/>
+        </View>
+    );
 };
 
 export default Home;
