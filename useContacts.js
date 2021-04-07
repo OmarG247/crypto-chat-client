@@ -5,13 +5,12 @@ const useContacts = () => {
     const [contacts, setContacts] = useState({});
 
     const saveMessage = (id, message) => {
-        if (!contacts[id]) {
+        if (!(id in contacts)) {
             createContact(id, "new", "sender", colors.limeAccent)
         }
 
         setContacts(contacts => {
             const prevConversation = contacts[id].messages;
-            console.log(JSON.stringify(prevConversation))
             return {
                 ...contacts,
                 [id]: {
