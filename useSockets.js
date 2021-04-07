@@ -10,7 +10,7 @@ const useSockets = (token, saveMessage) => {
     let socketRef = useRef();
 
     useEffect(() => {
-        if (token) {
+        if (!!token) {
             socketRef.current = io(SOCKET_SERVER_URL, {
                 auth: {
                     token: token
@@ -27,14 +27,14 @@ const useSockets = (token, saveMessage) => {
             });
         }
         return () => {
-            if (token) {
+            if (!!socketRef.current) {
                 socketRef.current.disconnect();
             }
         }
     }, [token]);
 
     const sendMessage = async (to, content) => {
-        if (socketRef.current) {
+        if (!!socketRef.current) {
             const encryptedMessage = await encryptMessage(content, to);
 
             socketRef.current.emit(NEW_CHAT_MESSAGE_EVENT, {
