@@ -9,7 +9,7 @@ import { Auth } from "aws-amplify";
 import { generatePreKeyBundle } from "../services/signal.service";
 import QRKeyModal from "../components/QRKeyModal";
 
-const AppOptions = ({ navigation, user }) => {
+const AppOptions = ({ navigation, user, logout }) => {
   const [cipherKey, setCipherKey] = useState(null); // This should be called preKey bundle
 
   const generatePreKeyBundleString = () => {
@@ -48,14 +48,7 @@ const AppOptions = ({ navigation, user }) => {
           <Option
             color={colors.redError}
             text="Logout"
-            onPress={async () => {
-              try {
-                await Auth.signOut();
-              } catch (error) {
-                console.log("error signing out: ", error);
-              }
-              navigation.navigate("Welcome");
-            }}
+            onPress={logout}
           />
         </ScrollView>
         <Header

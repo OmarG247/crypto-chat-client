@@ -68,6 +68,15 @@ const App = () => {
         });
     };
 
+    const logout = async () => {
+        try {
+            await Auth.signOut();
+            setUser(null)
+        } catch (error) {
+            console.log("error signing out: ", error);
+        }
+    };
+
     const isLoaded = fontsLoaded && singalInit;
     const isSignedIn = !!user;
 
@@ -101,7 +110,7 @@ const App = () => {
                                 {props => <NewContact {...props} user={user} createContact={createContact}/>}
                             </Stack.Screen>
                             <Stack.Screen name="AppOptions">
-                                {props => <AppOptions {...props} user={user}/>}
+                                {props => <AppOptions {...props} user={user} logout={logout}/>}
                             </Stack.Screen>
                         </>) : (
                         <>

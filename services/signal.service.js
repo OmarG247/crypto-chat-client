@@ -228,7 +228,6 @@ export function generatePreKeyBundle(userId) {
 // Must be called after initializeSession and when a message is sent
 // Returns promise of signal message
 export function encryptMessage(plaintext, recipientUserId, recipientDeviceId) {
-    console.log(`Encrypting: ${plaintext}`);
     const bytes = util.str2ab(plaintext);
 
     const recipientAddress = new SignalProtocolAddress(recipientUserId, DEVICE_ID);
