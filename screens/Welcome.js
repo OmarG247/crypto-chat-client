@@ -14,7 +14,7 @@ const Welcome = ({ navigation, login }) => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [register, setRegister] = useState(true);
+  const [register, setRegister] = useState(false);
   const [code, setCode] = useState("");
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
 
