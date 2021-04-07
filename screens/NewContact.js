@@ -73,7 +73,6 @@ const NewContact = ({ navigation, createContact }) => {
             onChangeText={(input) => handleInput("lastName", input)}
             label="Last name"
             value={userInfo.lastName}
-            error={!userInfo.lastName && "field is mandatory"}
           />
           <ColorPicker color={userInfo.color} handleColor={handleColor} />
           <View style={NewContactStyles.block}>
