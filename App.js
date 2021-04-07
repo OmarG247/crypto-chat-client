@@ -87,11 +87,11 @@ const App = () => {
                 {
                     isSignedIn ? (
                         <>
-                            <Stack.Screen name="Chat">
-                                {props => <Chat {...props} user={user} sendMessage={sendMessage} contacts={contacts}/>}
-                            </Stack.Screen>
                             <Stack.Screen name="Home">
                                 {props => <Home {...props} user={user} contacts={contacts}/>}
+                            </Stack.Screen>
+                            <Stack.Screen name="Chat">
+                                {props => <Chat {...props} user={user} sendMessage={sendMessage} contacts={contacts}/>}
                             </Stack.Screen>
                             <Stack.Screen name="Contacts" component={Contacts}/>
                             <Stack.Screen name="NewMessage">
