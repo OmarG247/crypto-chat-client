@@ -30,7 +30,6 @@ const App = () => {
     const { sendMessage } = useSockets(user?.token, saveMessage);
 
     useEffect(() => {
-        init();
         loadAsync({
             "DMSans-Regular": require("./assets/fonts/DMSans-Regular.ttf"),
             "DMSans-Medium": require("./assets/fonts/DMSans-Medium.ttf"),
@@ -97,7 +96,7 @@ const App = () => {
                         {props => <NewMessage {...props} contacts={contacts}/>}
                     </Stack.Screen>
                     <Stack.Screen name="NewContact">
-                        {props => <NewContact {...props} user={user}/>}
+                        {props => <NewContact {...props} user={user} createContact={createContact}/>}
                     </Stack.Screen>
                     <Stack.Screen name="AppOptions" component={AppOptions}/>
                     <Stack.Screen name="ConfirmSignup" component={ConfirmSignup}/>

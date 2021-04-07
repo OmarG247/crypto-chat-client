@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { StyleSheet, View, Text, ScrollView } from "react-native";
 import { containers, headerHeight } from "../styles/containers";
 import { colors } from "../styles/colors";
@@ -15,9 +15,8 @@ import {
   generatePreKeyBundle,
   initializeSession,
 } from "../services/signal.service";
-import { createContact } from "../services/storage.service";
 
-const NewContact = ({ navigation, user }) => {
+const NewContact = ({ navigation, user, createContact }) => {
   // They will get this info from the prekey bundle
   const [userInfo, setUserInfo] = useState({
     firstName: "",
